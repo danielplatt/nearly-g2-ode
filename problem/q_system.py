@@ -1,4 +1,4 @@
-"""Geometric q-equations and branch quantities."""
+"""Geometric q-equations, branch quantities, and volume diagnostics."""
 
 from __future__ import annotations
 
@@ -145,3 +145,26 @@ def q_rhs(t: Any, q: State[Any], params: ProblemParameters) -> State[Any]:
         q7_rhs(q, params, p, terms),
         q8_rhs(q, params, p, terms),
     )
+
+
+def product_derivative(q: State[Any], qdot: State[Any]) -> Any:
+    """Differentiate -(q2+q7)(q3+q6)(q4+q5) along one raw q-trajectory."""
+    sum27 = q.y2 + q.y7
+    sum36 = q.y3 + q.y6
+    gap = q.y4 + q.y5
+    dot27 = qdot.y2 + qdot.y7
+    dot36 = qdot.y3 + qdot.y6
+    dot_gap = qdot.y4 + qdot.y5
+    return -(dot27 * sum36 * gap + sum27 * dot36 * gap + sum27 * sum36 * dot_gap)
+
+
+def volume_density(_t: Any, q: State[Any], params: ProblemParameters) -> Any:
+    """Return the principal-orbit volume density V = p1 p2 p3."""
+    p = p_values(_t, q, params)
+    return p.p1 * p.p2 * p.p3
+
+
+def mean_curvature(q: State[Any], qdot: State[Any]) -> Any:
+    """Return l = V'/V using the branch-product identity."""
+    branch = branch_quantities(None, q, None)
+    return product_derivative(q, qdot) / (2 * branch.product)

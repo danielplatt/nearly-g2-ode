@@ -1,11 +1,11 @@
-"""Run the q-driven exploratory midpoint solver with baked-in configs."""
+"""Run the two-sided weighted Berger validation with baked-in configs."""
 
 from __future__ import annotations
 
 from mpmath import mp
 
 from problem import DEFAULT_CONFIG, DEFAULT_PARAMS, REFINED_CONFIG
-from solver import agreement_digits, solve_to_midpoint
+from solver import agreement_digits, solve_two_sided
 
 
 def _format_state(label: str, state) -> str:
@@ -15,35 +15,53 @@ def _format_state(label: str, state) -> str:
     return "\n".join(lines)
 
 
-def _run(label, params, config):
-    """Run one configuration and print the midpoint diagnostics."""
-    print(f"{label} params: a={params.a}, c={params.c}, alpha={params.alpha}, lambda={params.lam}")
-    print(f"{label} config: order={config.series_order}, dps={config.working_dps}, target_dps={config.target_dps}")
-    result = solve_to_midpoint(params, config)
-    print(f"{label} patches: {len(result.patches)}")
-    print(f"{label} centres: {result.diagnostics['patch_centres']}")
-    print(
-        f"{label} branch minima: "
-        f"sum27={result.diagnostics['min_sum27']}, "
-        f"sum36={result.diagnostics['min_sum36']}, "
-        f"gap={result.diagnostics['max_gap']}, "
-        f"product={result.diagnostics['min_product']}"
+def _format_side(label: str, side) -> str:
+    """Format one side's match-point diagnostics."""
+    lines = [f"{label} patches: {len(side.patches)}", f"{label} local centres: {side.diagnostics['patch_centres']}"]
+    lines.append(
+        f"{label} branch extrema: "
+        f"sum27={side.diagnostics['min_sum27']}, "
+        f"sum36={side.diagnostics['min_sum36']}, "
+        f"gap={side.diagnostics['max_gap']}, "
+        f"product={side.diagnostics['min_product']}"
     )
-    print(_format_state(f"{label} midpoint q:", result.midpoint_q))
-    print(_format_state(f"{label} midpoint y:", result.midpoint_y))
-    print(_format_state(f"{label} midpoint y':", result.midpoint_ydot))
+    lines.append(_format_state(f"{label} midpoint y:", side.match_y))
+    lines.append(_format_state(f"{label} midpoint q:", side.match_q))
+    lines.append(_format_state(f"{label} midpoint qdot:", side.match_qdot))
+    return "\n".join(lines)
+
+
+def _run(label, params, config):
+    """Run one two-sided configuration and print the matching diagnostics."""
+    print(
+        f"{label} left params: a={params.left.a}, c={params.left.c}, alpha={params.left.alpha}; "
+        f"right params: d={params.right.d}, f={params.right.f}, omega={params.right.omega}; "
+        f"lambda={params.lam}"
+    )
+    print(
+        f"{label} config: order={config.series_order}, dps={config.working_dps}, "
+        f"target_dps={config.target_dps}, match_t={config.match_t}"
+    )
+    result = solve_two_sided(params, config)
+    print(_format_side(f"{label} left", result.left))
+    print(_format_side(f"{label} right", result.right))
+    print(_format_state(f"{label} midpoint q mismatch:", result.mismatch_q))
+    print(f"{label} mismatch norm: {result.mismatch_norm}")
+    print(f"{label} l(match_t): left={result.left_l}, right={result.right_l}")
     return result
 
 
-def _compare(left, right) -> None:
-    """Print componentwise agreement for the recovered midpoint defect."""
+def _compare(baseline, refined) -> None:
+    """Print componentwise refinement agreement for the two-sided diagnostics."""
     print("refinement agreement:")
-    for idx, (left_value, right_value) in enumerate(zip(left.midpoint_ydot, right.midpoint_ydot), start=1):
-        print(f"  {idx}: {agreement_digits(left_value, right_value)} digits")
+    for idx, (left_value, right_value) in enumerate(zip(baseline.mismatch_q, refined.mismatch_q), start=1):
+        print(f"  mismatch q[{idx}]: {agreement_digits(left_value, right_value)} digits")
+    print(f"  left l: {agreement_digits(baseline.left_l, refined.left_l)} digits")
+    print(f"  right l: {agreement_digits(baseline.right_l, refined.right_l)} digits")
 
 
 def main() -> None:
-    """Run the baseline and refined exploratory midpoint solves."""
+    """Run the baseline and refined two-sided Berger validation."""
     with mp.workdps(max(DEFAULT_CONFIG.working_dps, REFINED_CONFIG.working_dps)):
         baseline = _run("baseline", DEFAULT_PARAMS, DEFAULT_CONFIG)
         refined = _run("refined", DEFAULT_PARAMS, REFINED_CONFIG)

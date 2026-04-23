@@ -1,11 +1,11 @@
-"""Public solver exports for the q-driven exploration code."""
+"""Public solver exports for the two-sided weighted exploration code."""
 
 from __future__ import annotations
 
 from importlib import import_module
 
 
-__all__ = ["MarchResult", "SeriesPatch", "agreement_digits", "solve_to_midpoint"]
+__all__ = ["BranchSample", "SeriesPatch", "SideResult", "TwoSidedResult", "agreement_digits", "solve_two_sided"]
 
 
 def __getattr__(name: str):

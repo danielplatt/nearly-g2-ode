@@ -1,6 +1,6 @@
 # Nearly G2 ODE Exploration
 
-This repository contains a first high-precision numerical exploration code for the weighted `q`-system coming from the cohomogeneity-one Einstein equations. The geometric `q` equations are treated as the source of truth, the weighted `y` variables are used for singular-end bookkeeping, and the midpoint diagnostics are reported in both variables.
+This repository contains a high-precision numerical exploration code for the nearly parallel `G_2` `q`-system coming from the cohomogeneity-one equations. The geometric raw `q` equations are the source of truth, while endpoint-adapted weighted `y` variables are used on both singular ends to build Taylor series and march inward to a common match point.
 
 ## Setup
 
@@ -36,16 +36,18 @@ If you prefer not to activate the virtual environment, run:
 .venv/bin/python run_exploration.py
 ```
 
-The script performs a baseline and a refined midpoint march and prints:
+The script performs a baseline and a refined two-sided Berger validation and prints:
 
-- the parameter point
+- left and right endpoint parameter data
 - the Taylor settings
-- the patch centres
-- branch-condition diagnostics
-- midpoint values for `q`
-- recovered midpoint values for `y`
-- recovered midpoint derivatives `y'`
+- the left and right patch centres
+- branch-condition diagnostics on both sides
+- midpoint values for raw `q` from both sides
+- the midpoint `q` mismatch vector and norm
+- the midpoint values of `l(t)` from both sides
 - refinement agreement digits
+
+For the Berger validation, the primary success criterion is that the left and right raw `q` states match at the midpoint `t = pi/6`. A secondary diagnostic is that the two-sided values of `l(pi/6)` agree and are numerically close to `0`.
 
 ## Run The Tests
 
@@ -57,7 +59,7 @@ pytest -q
 
 ## Repository Layout
 
-- `problem/`: geometric `q` equations, weighted maps, initial data, and singular-end Taylor seed
-- `solver/`: generic truncated-series utilities and piecewise Taylor marcher
-- `tests/`: problem-layer, singular-seed, and midpoint-march tests
+- `problem/`: geometric `q` equations, left/right weighted charts, endpoint data, and singular-end Taylor seeds
+- `solver/`: generic truncated-series utilities and the two-sided weighted marcher
+- `tests/`: geometry, endpoint-seed, matching, and generic Taylor-engine tests
 - `run_exploration.py`: the single direct-run orchestration script
