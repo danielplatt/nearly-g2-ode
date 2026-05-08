@@ -61,6 +61,13 @@ def _known_alpha(a: mp.mpf, c: mp.mpf, lam: mp.mpf) -> mp.mpf:
     return sign * numer / (2 * (3 * a - c))
 
 
+def _left_y6_ratio(a: mp.mpf, c: mp.mpf, lam: mp.mpf) -> mp.mpf:
+    """Return the source relation y6'(0) / y2'(0) for the left chart."""
+    root = mp.sqrt(3 * a - c)
+    scaled_root = lam ** mp.mpf("1.5") * mp.sqrt(-a * c)
+    return (root + 3 * scaled_root) / (root - scaled_root)
+
+
 def _default_params() -> ProblemParameters:
     """Build the stored Berger validation parameter point."""
     with mp.workdps(80):
@@ -113,28 +120,37 @@ def _matches_berger_branch(params: ProblemParameters) -> bool:
     )
 
 
+def _require_left_formula_branch(a: mp.mpf, c: mp.mpf, lam: mp.mpf) -> None:
+    """Require the currently implemented ac < 0, mu = -1 endpoint branch."""
+    if lam <= 0 or a * c >= 0 or 3 * a - c <= 0:
+        raise NotImplementedError("Only lambda > 0, ac < 0, and 3a-c > 0 are implemented.")
+
+
+def _formula_left_zero_jet(a: mp.mpf, c: mp.mpf, lam: mp.mpf) -> State[mp.mpf]:
+    """Return the source formula zero jet for one left endpoint."""
+    _require_left_formula_branch(a, c, lam)
+    mu = mp.mpf("-1")
+    root = mp.sqrt(-lam * a * c * (3 * a - c))
+    base = (3 * a + c) / (4 * (3 * a - c))
+    b2 = mu * lam * mp.sqrt(-a * c) + mp.sqrt((3 * a - c) / lam)
+    b6 = -3 * lam * mu * mp.sqrt(-a * c) - mp.sqrt((3 * a - c) / lam)
+    b1 = -lam**2 * a * (base + 1) / 2 + mu * root / (2 * c)
+    correction = mp.sqrt(-lam * a * c / (3 * a - c))
+    b4 = lam**2 * c * (base - 1) / 2 + mu * root / (2 * a) - mu * correction
+    b5 = 3 * lam**2 * a * (base + 1) / 2 - mu * root / (2 * c) + mu * correction
+    b8 = -3 * lam**2 * c * (base - 1) / 2 - mu * root / (2 * a)
+    return State(b1, b2, b2, b4, b5, b6, b6, b8)
+
+
 def left_zero_jet(params: ProblemParameters) -> State[mp.mpf]:
-    """Return the stored Berger left zero jet; alpha is accepted but unused here."""
-    if not _matches_berger_branch(params):
-        raise NotImplementedError("V2 only stores the Berger left zero jet for the default endpoint constants.")
-    with mp.workdps(80):
-        sqrt5 = mp.sqrt(5)
-        sqrt15 = mp.sqrt(15)
-        return State(
-            9 * sqrt5 / 100,
-            sqrt15 / 25,
-            sqrt15 / 25,
-            sqrt5 / 100,
-            23 * sqrt5 / 100,
-            2 * sqrt15 / 25,
-            2 * sqrt15 / 25,
-            -9 * sqrt5 / 100,
-        )
+    """Return the source formula left zero jet; alpha is accepted but unused."""
+    return _formula_left_zero_jet(params.left.a, params.left.c, params.lam)
 
 
 def left_first_jet(params: ProblemParameters) -> State[mp.mpf]:
-    """Return the forced Berger left first jet determined by alpha."""
-    return params.left.alpha * LEFT_RHO
+    """Return the source-determined left first jet from alpha."""
+    eta = _left_y6_ratio(params.left.a, params.left.c, params.lam) * params.left.alpha
+    return State(mp.zero, params.left.alpha, -params.left.alpha, mp.zero, mp.zero, eta, -eta, mp.zero)
 
 
 def right_zero_jet(params: ProblemParameters) -> State[mp.mpf]:
