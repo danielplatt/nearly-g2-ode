@@ -49,6 +49,21 @@ The script performs a baseline and a refined two-sided Berger validation and pri
 
 For the Berger validation, the primary success criterion is that the left and right raw `q` states match at the midpoint `t = pi/6`. A secondary diagnostic is that the two-sided values of `l(pi/6)` agree and are numerically close to `0`.
 
+
+## Berger Left/Right Check
+
+To compare the independently marched Berger solutions at `t = 0.1` and `t = pi/3 - 0.1`, run:
+
+```zsh
+python -m experiments.berger_opposite_end_check
+```
+
+Or without activating the virtual environment:
+
+```zsh
+.venv/bin/python -m experiments.berger_opposite_end_check
+```
+
 ## Run The Tests
 
 With the virtual environment activated:
