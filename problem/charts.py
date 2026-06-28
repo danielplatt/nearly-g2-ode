@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any, Callable, Iterable
 
 from mpmath import mp
@@ -67,7 +67,10 @@ class WeightedChart:
 
     def local_q_rhs(self, tau: Any, q: State[Any], params: ProblemParameters) -> State[Any]:
         """Return dq/dtau in this chart."""
-        return self.local_sign * q_rhs(self.physical_t(tau, params), q, params)
+        rhs_params = params
+        if self.local_sign < 0 and params.right_p_signs is not None:
+            rhs_params = replace(params, p_signs=params.right_p_signs, right_p_signs=None)
+        return self.local_sign * q_rhs(self.physical_t(tau, params), q, rhs_params)
 
     def physical_qdot(self, local_qdot: State[Any]) -> State[Any]:
         """Convert dq/dtau into dq/dt."""
@@ -151,6 +154,13 @@ def _right_offsets(params: ProblemParameters) -> State[Any]:
     )
 
 
+def _s7_fixed_right_offsets(params: ProblemParameters) -> State[Any]:
+    """Return fixed right-end q offsets for S7 targets."""
+    if params.fixed_right is None:
+        raise ValueError("S7 fixed right chart requires fixed_right endpoint data.")
+    return params.fixed_right.offset
+
+
 LEFT_CHART = WeightedChart(
     name="left",
     weights=(2, 1, 1, 2, 2, 1, 1, 2),
@@ -167,3 +177,32 @@ RIGHT_CHART = WeightedChart(
     offset_builder=_right_offsets,
     time_builder=lambda tau, params: params.interval_end - tau,
 )
+
+
+S7_P2_RIGHT_CHART = WeightedChart(
+    name="s7_p2_right",
+    weights=(2, 1, 2, 1, 1, 2, 1, 2),
+    local_sign=-1,
+    offset_builder=_s7_fixed_right_offsets,
+    time_builder=lambda tau, params: params.interval_end - tau,
+)
+
+
+S7_P3_RIGHT_CHART = WeightedChart(
+    name="s7_p3_right",
+    weights=(2, 2, 1, 1, 1, 1, 2, 2),
+    local_sign=-1,
+    offset_builder=_s7_fixed_right_offsets,
+    time_builder=lambda tau, params: params.interval_end - tau,
+)
+
+
+def right_chart_for_params(params: ProblemParameters) -> WeightedChart:
+    """Return the right endpoint chart selected by one parameter package."""
+    if params.right_chart == "berger":
+        return RIGHT_CHART
+    if params.right_chart == "s7_p2":
+        return S7_P2_RIGHT_CHART
+    if params.right_chart == "s7_p3":
+        return S7_P3_RIGHT_CHART
+    raise ValueError(f"Unknown right chart {params.right_chart!r}.")

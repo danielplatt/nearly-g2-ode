@@ -8,7 +8,7 @@ from typing import Any
 
 from mpmath import mp
 
-from problem.charts import LEFT_CHART, RIGHT_CHART, WeightedChart
+from problem.charts import LEFT_CHART, WeightedChart, right_chart_for_params
 from problem.initial_data import DEFAULT_CONFIG, DEFAULT_PARAMS, ProblemParameters, SolverConfig
 from problem.q_system import branch_quantities, mean_curvature
 from problem.taylor_seed import build_weighted_series, initial_weighted_series, weighted_series_residual
@@ -82,7 +82,10 @@ class TwoSidedResult:
 
 def _residual_max(chart: WeightedChart, coefficients: State[list[mp.mpf]], centre: mp.mpf, params: ProblemParameters) -> mp.mpf:
     """Measure the largest weighted coefficient residual on one patch."""
-    residual = weighted_series_residual(chart, coefficients, centre, params)
+    try:
+        residual = weighted_series_residual(chart, coefficients, centre, params)
+    except (ValueError, ZeroDivisionError):
+        return mp.inf
     return max(abs(value) for component in residual for value in component[:-1])
 
 
@@ -130,15 +133,9 @@ def _branch_sample(chart: WeightedChart, tau: mp.mpf, q: State[mp.mpf], params: 
 
 
 def _check_branch(sample: BranchSample) -> None:
-    """Require that the current sample stays on the intended real branch."""
+    """Require that the current sample keeps the q-system square roots real."""
     if sample.product <= 0:
         raise ValueError(f"Branch failure at t={sample.physical_t}: -(q2+q7)(q3+q6)(q4+q5) must stay positive.")
-    if sample.sum27 <= 0:
-        raise ValueError(f"Branch failure at t={sample.physical_t}: q2 + q7 must stay positive.")
-    if sample.sum36 <= 0:
-        raise ValueError(f"Branch failure at t={sample.physical_t}: q3 + q6 must stay positive.")
-    if sample.gap >= 0:
-        raise ValueError(f"Branch failure at t={sample.physical_t}: q4 + q5 must stay negative.")
 
 
 def _record_samples(
@@ -230,6 +227,15 @@ def agreement_digits(left: mp.mpf, right: mp.mpf) -> int:
     return max(0, int(floor(-log10(float(diff)))))
 
 
+def solve_left_side(
+    params: ProblemParameters = DEFAULT_PARAMS,
+    config: SolverConfig = DEFAULT_CONFIG,
+) -> SideResult:
+    """March the left weighted chart to config.match_t."""
+    mp.dps = config.working_dps
+    return _march_side(LEFT_CHART, config.match_t, params, config)
+
+
 def solve_two_sided(
     params: ProblemParameters = DEFAULT_PARAMS,
     config: SolverConfig = DEFAULT_CONFIG,
@@ -237,7 +243,8 @@ def solve_two_sided(
     """March the left and right weighted systems and compare raw q in the middle."""
     mp.dps = config.working_dps
     left = _march_side(LEFT_CHART, config.match_t, params, config)
-    right = _march_side(RIGHT_CHART, params.interval_end - config.match_t, params, config)
+    right_chart = right_chart_for_params(params)
+    right = _march_side(right_chart, params.interval_end - config.match_t, params, config)
     mismatch_q = left.match_q - right.match_q
     mismatch_norm = max(abs(value) for value in mismatch_q)
     left_l = mean_curvature(left.match_q, left.match_qdot)

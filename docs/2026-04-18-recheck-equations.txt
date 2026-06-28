@@ -1,0 +1,196 @@
+mu=-1
+
+#### Original system:
+
+\begin{subequations}\label{eqns:gen_tfg2}
+\begin{equation}
+p_1=-q_4',\ \ p_2=q_3', \ \ p_3=q_2'
+\end{equation}
+\begin{equation}
+q_1'=0, \ \ q_8'=0,\ \ q_5=-q_4,\ \ q_6=-q_3,\  \ q_7=-q_2.
+\end{equation}
+\end{subequations}
+
+\begin{align}\label{eqn:alpha_beta}
+    \alpha_i&\coloneqq q_iq_{9-i}, i=1\dots 4,\\
+    \beta_1&\coloneqq q_1q_4q_6q_7,\\
+    \beta_2&\coloneqq q_2q_3q_5q_8.
+\end{align}
+
+\begin{subequations}\label{eqns:gen_ng2}
+\begin{equation}
+q_4+q_5= -\lambda p_2p_3,
+\end{equation}
+\begin{equation}
+     q_3+q_6= -\lambda p_1p_3,
+\end{equation}
+\begin{equation}
+    q_2+q_7=- \lambda p_1p_2,
+\end{equation}
+The ODEs for $q_i$ are given by 
+\begin{equation}
+    q_1'=\frac{\lambda}{2p_1p_2p_3q_8} (\alpha_1(2\alpha_1-\sum_{i=1}^4\alpha_i)+2\beta_2)
+\end{equation}
+\begin{equation}
+    q_8'=\frac{-\lambda}{2p_1p_2p_3q_1} (\alpha_1(2\alpha_1-\sum_{i=1}^4\alpha_i)+2\beta_1)
+\end{equation}
+\begin{equation}
+    q_2'=p_3-\frac{\lambda}{2p_1p_2p_3q_7} (\alpha_2(2\alpha_2-\sum_{i=1}^4\alpha_i)+2\beta_1)
+\end{equation}
+\begin{equation}
+    q_7'=-p_3+\frac{\lambda}{2p_1p_2p_3q_2} (\alpha_2(2\alpha_2-\sum_{i=1}^4\alpha_i)+2\beta_2)
+\end{equation}
+\begin{equation}
+    q_3'=p_2-\frac{\lambda}{2p_1p_2p_3q_6} (\alpha_3(2\alpha_3-\sum_{i=1}^4\alpha_i)+2\beta_1)
+\end{equation}
+\begin{equation}
+    q_6'=-p_2+\frac{\lambda}{2p_1p_2p_3q_3} (\alpha_3(2\alpha_3-\sum_{i=1}^4\alpha_i)+2\beta_2)
+\end{equation}
+\begin{equation}
+    q_4'=-p_1+\frac{\lambda}{2p_1p_2p_3q_5} (\alpha_4(2\alpha_4-\sum_{i=1}^4\alpha_i)+2\beta_2)
+\end{equation}
+\begin{equation}
+    q_5'=p_1-\frac{\lambda}{2p_1p_2p_3q_4} (\alpha_4(2\alpha_4-\sum_{i=1}^4\alpha_i)+2\beta_1).
+\end{equation}
+\end{subequations}
+
+Smooth extension conditions:
+
+\begin{enumerate}[i.]
+    \item $p_1$ is odd
+    \item $p_2+p_3$ is even, $p_2-p_3$ is odd,
+    \item $q_1,q_4, q_5,q_8$ are even,
+    \item $q_2-q_3$ is even, $q_2+q_3$ is odd,
+    \item $q_6-q_7$ is even, $q_6+q_7$ is odd.
+ \end{enumerate}
+
+1) Please check: does this imply the following?
+
+ \begin{align*}
+    q_1(t)&=a+t^2y_1(t),\\
+    q_2(t)&=b+ty_2(t),\\
+    q_3(t)&=-b+ty_3(t),\\
+    q_4(t)&=c+t^2y_4(t),\\
+    q_5(t)&=-3a+t^2y_5(t),\\
+    q_6(t)&=-3b+ty_6(t),\\
+    q_7(t)&=3b+ty_7(t),\\
+    q_8(t)&=-3c+t^2y_8(t).
+\end{align*}
+We also have \begin{align}
+\begin{split} \label{eq:pp_t=0}
+    p_1&=-\sqrt{\frac{-(q_2+q_7)(q_3+q_6)}{\lambda(q_4+q_5)}},\\
+    p_2&=\sqrt{\frac{-(q_2+q_7)(q_4+q_5)}{\lambda(q_3+q_6)}},\\
+    p_3&=\sqrt{\frac{-(q_3+q_6)(q_4+q_5)}{\lambda(q_2+q_7)}}. 
+\end{split}
+\end{align}
+Thus $p_1$ being odd around $t=0$ implies $p_1(0)=0\implies b=0$. 
+Thus we get \begin{align}\label{eqns:q_in_y_t0}
+\begin{split}
+     q_1(t)&=a+t^2y_1(t),\\
+    q_2(t)&=ty_2(t),\\
+    q_3(t)&=ty_3(t),\\
+    q_4(t)&=c+t^2y_4(t),\\
+    q_5(t)&=-3a+t^2y_5(t),\\
+    q_6(t)&=ty_6(t),\\
+    q_7(t)&=ty_7(t),\\
+    q_8(t)&=-3c+t^2y_8(t).
+\end{split}
+    \end{align}
+
+
+#### y-system
+
+2) Please check: does this give the following system for the y?
+
+Let \begin{align*}
+    Q&=-(y_2+y_7)(y_3+y_6)((c-3a)+t^2(y_4+y_5)
+\end{align*}
+
+\begin{subequations} \label{eqns:yprime}
+    \begin{align}
+    \begin{split}
+         y_1'(t)=&\frac{1}{t}\left(-2y_1- \frac{a\lambda^{5/2}}{2\sqrt{Q}}(a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6-6y_2y_3)\right)\\
+        &-\frac{\lambda^{5/2}}{2\sqrt{Q}}t(a(y_1y_8-y_4y_5)+y_1(a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_2y_3y_5\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ +t^2(y_1^2y_8-y_1y_4y_5))  
+    \end{split}
+    \end{align}
+       \begin{align}
+       \begin{split}
+            y_2'(t)=&\frac{1}{t}\left(-y_2+\sqrt{\frac{-(y_3+y_6)(c-3a+t^2(y_4+y_5)}{\lambda(y_2+y_7)}}+\frac{\lambda^{5/2} ac }{\sqrt{Q}}(3y_2+y_6)\right)\\
+        &+\frac{\lambda^{5/2}}{2\sqrt{Q}}t((y_2^2y_7-y_2y_3y_6-a(y_2y_8-3y_2y_4-2y_4y_6)-c(y_2y_5-3y_1y_2-2y_1y_6))\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ -t^2(y_1y_2y_8+y_2y_4y_5-2y_1y_4y_6))
+       \end{split}
+       \end{align}
+       \begin{align}
+       \begin{split}
+            y_3'(t)=&\frac{1}{t}\left(-y_3+\sqrt{\frac{-(y_2+y_7)(c-3a+t^2(y_4+y_5)}{\lambda(y_3+y_6)}}-\frac{\lambda^{5/2} ac }{\sqrt{Q}}(3y_3+y_7)\right)\\
+        &+\frac{\lambda^{5/2}}{2\sqrt{Q}}t((y_3^2y_6-y_2y_3y_7-a(y_3y_8-3y_3y_4-2y_4y_7)-c(y_3y_5-3y_1y_3-2y_1y_7))\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ -t^2(y_1y_3y_8+y_3y_4y_5-2y_1y_4y_7))
+       \end{split}
+       \end{align}
+       \begin{align}
+       \begin{split}
+        y_4'(t)=&\frac{1}{t}\left(-2y_4+\sqrt{\frac{-(y_2+y_7)(y_3+y_6)}{\lambda(c-3a+t^2(y_4+y_5))}}+\frac{c\lambda^{5/2}}{2\sqrt{Q}}(a(3y_4+y_8)-c(3y_1+y_5)+y_2y_7+y_3y_6+6y_2y_3)\right)\\
+        &-\frac{\lambda^{5/2}}{2\sqrt{Q}}t(c(y_4y_5-y_1y_8)+y_4(-a(3y_4+y_8)+c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_2y_3y_8\\
+         & \hspace{1.25cm}-t^2(y_1y_4y_8-y_4^2y_5))
+       \end{split}
+       \end{align}
+       \begin{align}
+           \begin{split}
+        y_5'(t)=&\frac{1}{t}\left(-2y_5-\sqrt{\frac{-(y_2+y_7)(y_3+y_6)}{\lambda(c-3a+t^2(y_4+y_5))}}+\frac{a\lambda^{5/2}}{2\sqrt{Q}}(3a(3y_4+y_8)-3c(3y_1+y_5)+3y_2y_7+3y_3y_6+2y_6y_7)\right)\\
+        &+\frac{\lambda^{5/2}}{2\sqrt{Q}}t(-3a(y_4y_5-y_1y_8)+y_5(-a(3y_4+y_8)+c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_1y_6y_7\\
+         & \hspace{1.25cm}-t^2(y_1y_5y_8-y_4y_5^2))   
+           \end{split}
+       \end{align}
+       \begin{align}
+           \begin{split}
+        y_6'(t)=&\frac{1}{t}\left(-y_6-\sqrt{\frac{-(y_2+y_7)(c-3a+t^2(y_4+y_5)}{\lambda(y_3+y_6)}}-\frac{3\lambda^{5/2} ac }{\sqrt{Q}}(y_6+3y_2)\right)\\
+        &-\frac{\lambda^{5/2}}{2\sqrt{Q}}t((y_3y_6^2-y_2y_6y_7-a(y_6y_8-3y_4y_6+6y_2y_8)-c(y_5y_6-3y_1y_6+6y_2y_5))\\
+         & \ \ \ \ \ \ \ \ \ \ \ \ \ -t^2(y_1y_6y_8+y_4y_5y_6-2y_2y_5y_8))
+           \end{split}
+       \end{align}
+       \begin{align}
+           \begin{split}
+          y_7'(t)=&\frac{1}{t}\left(-y_7-\sqrt{\frac{-(y_3+y_6)(c-3a+t^2(y_4+y_5)}{\lambda(y_2+y_7)}}+\frac{3\lambda^{5/2} ac }{\sqrt{Q}}(3y_3+y_7)\right)\\
+        &-\frac{\lambda^{5/2}}{2\sqrt{Q}}t((y_2y_7^2-y_3y_6y_7-a(y_7y_8-3y_4y_7+6y_3y_8)-c(y_5y_7-3y_1y_7+6y_3y_5))\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ -t^2(y_1y_7y_8+y_4y_5y_7-2y_3y_5y_8))
+         \end{split}
+       \end{align}
+       \begin{align}
+           \begin{split}
+        y_8'(t)=&\frac{1}{t}\left(-2y_8+\frac{c\lambda^{5/2}} {2\sqrt{Q}}(-3a(3y_4+y_8)+3c(3y_1+y_5)+3(y_2y_7+y_3y_6)+2y_6y_7)\right)\\
+        &+\frac{\lambda^{5/2}}{2\sqrt{Q}}t(-3c(y_1y_8-y_4y_5)+y_8(a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_4y_6y_7\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ +t^2(y_1y_8^2-y_4y_5y_8)) 
+        \end{split}
+         \end{align}
+\end{subequations}
+
+Now we solve the condition that the "M_{-1}-part", i.e. the factor of the (1/t) part of the y-ODE, is zero at t=0.
+Writing y_i'(0)=b_i, the solution should have degrees of freedom a, c, \mu_1, \mu_2, where \mu_1, \mu_2 \in \{1,-1\} and a>0 and c<0;
+
+\begin{align}
+\begin{split}\label{eqn:initialcond_0}
+    b_1&=-\frac{\lambda^2a}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}+1\right)-\frac{\mu_2}{2c}\sqrt{-\lambda ac(3a-c)},\\
+    b_2=b_3&=\lambda\mu_2\sqrt{-ac}+\sqrt{\frac{3a-c}{\lambda}},\\
+    b_4&=\frac{\lambda^2c}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}-1\right)-\frac{\mu_2}{2a}\sqrt{-\lambda ac(3a-c)}+\mu_1\sqrt{\frac{-\lambda ac}{3a-c}},\\
+    b_5&=\frac{3\lambda^2a}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}+1\right)-\frac{\mu_2}{2c}\sqrt{-\lambda ac(3a-c)}-\mu_1\sqrt{\frac{-\lambda ac}{3a-c}},\\
+     b_6=b_7&=-3\lambda\mu_2\sqrt{-ac}-\sqrt{\frac{3a-c}{\lambda}},\\
+      b_8&=-\frac{3\lambda^2c}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}-1\right)-\frac{\mu_2}{2a}\sqrt{-\lambda ac(3a-c)}.
+      \end{split}
+\end{align}
+
+3) Please check: does this solution satisfy the condition that the "M_{-1}-part" is zero at t=0? If it's not true in general, is it true for the choices
+lambda=6/\sqrt{5}
+a=\sqrt{5}/20
+c=-3 \sqrt{5}/100
+\mu_1=\mu_2=-1
+
+4) Please check: the solution to this ODE system is not unique. If we further assume that 
+\begin{align*}
+    (y_2'(0)-y_6'(0))^2=\left(\frac{2\lambda^2 a c}{3a-c}\right)^2,
+\end{align*} which from \eqref{eqn:y_2y_6prime} implies
+ \begin{align*}
+    y_2'(0)&=\rm{sgn}(\lambda^{3/2}\sqrt{- a c}-\sqrt{3a-c}) \ \frac{\lambda^{2}ac+\sqrt{-\lambda ac(3a-c)})}{2(3a-c)} \\
+     y_6'(0)&=\rm{sgn}(\lambda^{3/2}\sqrt{- a c}-\sqrt{3a-c}) \ \frac{-3\lambda^{2}ac+\sqrt{-\lambda ac(3a-c)})}{2(3a-c)}
+\end{align*}
+then the solution is unique.

@@ -60,9 +60,10 @@ def branch_quantities(_t: Any, q: State[Any], _params: ProblemParameters) -> Bra
 def p_values(t: Any, q: State[Any], params: ProblemParameters) -> PValues:
     """Return the p-values determined by q and the chosen square-root branch."""
     branch = branch_quantities(t, q, params)
-    p1 = -_sqrt(-(branch.sum27 * branch.sum36) / (params.lam * branch.gap))
-    p2 = _sqrt(-(branch.sum27 * branch.gap) / (params.lam * branch.sum36))
-    p3 = _sqrt(-(branch.sum36 * branch.gap) / (params.lam * branch.sum27))
+    p1_sign, p2_sign, p3_sign = params.p_signs
+    p1 = p1_sign * _sqrt(-(branch.sum27 * branch.sum36) / (params.lam * branch.gap))
+    p2 = p2_sign * _sqrt(-(branch.sum27 * branch.gap) / (params.lam * branch.sum36))
+    p3 = p3_sign * _sqrt(-(branch.sum36 * branch.gap) / (params.lam * branch.sum27))
     return PValues(p1=p1, p2=p2, p3=p3)
 
 

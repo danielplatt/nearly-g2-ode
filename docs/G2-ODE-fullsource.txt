@@ -1,0 +1,1680 @@
+\documentclass[11pt,a4paper,reqno]{article}
+\usepackage{float}
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\titleformat{\section}{\center\normalfont\fontsize{13.5}{10}\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalfont\fontsize{12}{17}\bfseries}{\thesubsection}{0.5em}{}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\usepackage[margin=2cm,includehead]{geometry}
+
+\usepackage{fancyhdr}
+
+
+% \fancyhf{}
+% \fancyhead[C]{%
+% \ifodd\value{page}
+%   \small\scshape\authors
+% \else
+%   \small\scshape\shorttitle
+% \fi
+% }
+% \lhead{ \fancyplain{}{} }
+% \rhead{ \fancyplain{}{\today} }
+% \rfoot{ \fancyplain{}{\thepage} }
+% \pagestyle{fancy}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\newcommand*{\vertchar}[2][0pt]{%
+  \tikz[
+    inner sep=0pt,
+    shorten >=-.15ex,
+    shorten <=-.15ex,
+    line cap=round,
+    baseline=(c.base),
+  ]\draw
+    (0,0) node (c) {#2}
+    ($(c.south)+(#1,0)$) -- ($(c.north)+(#1,0)$);%
+}
+
+\usepackage{comment}
+\graphicspath{}
+\usepackage[linktocpage=true,colorlinks,citecolor=blue,linkcolor=blue,urlcolor=blue, pagebackref]{hyperref}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{amscd}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{url}
+\usepackage{amsmath,mathtools}
+\usepackage{cleveref}
+\usepackage{hyperref}
+\usepackage[alphabetic,backrefs]{amsrefs}
+\usepackage{lipsum} % just to generate filler text for the example
+\usepackage{mathtools}
+\usepackage{tikzpagenodes}
+\usepackage{faktor}
+\usetikzlibrary{tikzmark}
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\usepackage{slashed}
+\usepackage{enumerate}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{corr}[thm]{Corollary}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{ques}[thm]{Question}
+\newtheorem{claim}[thm]{Claim}
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem*{ack}{Acknowledgments}
+\numberwithin{equation}{section}
+\setcounter{section}{0}
+\setcounter{tocdepth}{2}
+% MATH -----------------------------------------------------------
+\def\R{\mathbb R}
+\def\SU{\rm{SU}}
+\def\S{\slashed{\mathcal{S}}}
+\def\O{\mathbb O}
+\def\Z{\mathbb Z}
+\def\so{\mathfrak{so}}
+%\def\S{\mathbb S}
+%\def\fn{\mathfrak{n})
+\def\C{\mathbb C}
+\def\P{\mathcal P}
+\def\ns{\kern-5pt}
+\def\ba{\begin{array}}
+\def\ea{\end{array}}
+\def\be{\begin{equation}}
+\def\bel#1{\be\label{#1}}
+\def\ee{\end{equation}}
+\def\col#1{\left(\kern-4pt\ba{l}#1\ea\kern-4pt\right)}
+\def\d{\mathrm d}
+\def\td{\tilde}
+\def\y{\\[3pt]}
+\def\yy{\\[7pt]}
+\def\yyy{\\[15pt]}
+\def\ra{\rightarrow}
+\def\pt{\partial}
+\def\del{\nabla}
+\def\G2{\mathrm{G}_2}
+\def\g2{\varphi}
+\def\delbar{\bar\del}
+\def\n{\mathfrak n}
+\def\red{\color{red}}
+\def\Cl{\mathrm{Cl}}
+\def \m{\mathfrak{m}}
+\def\h{\mathfrak{h}} 
+\def\fg{\mathfrak{g}}                
+\def\ol{\overline}
+\def\su{\mathfrak{su}}
+%\def\su{SU(2)^2}
+\def\SO{\rm{SO}}
+\def\id{\textup{id}}
+\def\cas{\mathrm{Cas}}
+\def\liesu{\mathfrak{su}(2)\oplus \mathfrak{su}(2)}
+\def\lieg2{\mathfrak{g}_2}
+\newcommand{\KN}{\mathbin{\bigcirc\mspace{-15mu}\wedge\mspace{3mu}}}
+\DeclareMathOperator\GL{GL}
+
+\DeclareMathOperator\Diff{Diff}
+\DeclareMathOperator\Div{div}
+\DeclareMathOperator\curl{curl}
+\DeclareMathOperator\vol{vol}
+\DeclareMathOperator\Vol{Vol}
+\DeclareMathOperator\tr{tr}
+\newcommand\Ric{\mathrm{Ric}}
+\DeclareFontFamily{U}{MnSymbolC}{}
+\DeclareSymbolFont{MnSyC}{U}{MnSymbolC}{m}{n}
+\DeclareFontShape{U}{MnSymbolC}{m}{n}{
+    <-6>  MnSymbolC5
+   <6-7>  MnSymbolC6
+   <7-8>  MnSymbolC7
+   <8-9>  MnSymbolC8
+   <9-10> MnSymbolC9
+  <10-12> MnSymbolC10
+  <12->   MnSymbolC12}{}
+\DeclareMathSymbol{\intprod}{\mathbin}{MnSyC}{'270}
+%\newcommand{\Spin{\ensuremath{\not \! \! \mathcal S}}}
+%\newcommand{\hook}{\mathbin{\raisebox{\depth}{\scalebox{1}[-1]{$\lnot$}}}}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+
+\begin{document}
+
+
+
+\section{$\G2$-structures on the open orbit}
+The $\G2$-structure $(\g2,\psi)$ on $(0,\pi/3)\times M$ is given by
+\begin{align}
+  \label{eq:phifromsu3}  \g2&=\Omega_++dt\wedge \omega,\\
+ \label{eq:psifromsu3}   \psi=*\g2&= \frac{1}{2}\omega^2-dt\wedge \Omega_-.
+\end{align}
+From above using $d(\omega^2)=0$ we get that 
+\begin{align*}
+    d\g2&=d\Omega_++dt\wedge(\dot{\Omega}_+ +  d\omega),\\
+    d\psi&= dt\wedge ( \dot\omega\wedge\omega-d\Omega_-).
+\end{align*}
+
+
+
+
+\noindent
+\textbf{Conditions for co-closed $\G2$-structure}
+For $d\psi=0$ we have
+\begin{align*}
+    q_2-q_7=2\dot f f ,\quad q_3-q_8=2\dot f f ,\quad q_5-q_4=2\dot f f. 
+\end{align*}
+{\red{No conditions on other functions.}}
+
+There are infinitely many solutions. For any $f>0$ we can choose
+\begin{align*}
+    q_2&=q_3=q_5=-q_4=-q_7=-q_8=\dot f f.
+\end{align*} Then the condition $\Omega_+\wedge\Omega_-=k\omega^3$ gives
+\begin{align*}
+    (p_1q_6-p_6q_1)+\dot f f (p_2+p_3+p_4+p_5+p_7+p_8)=6kf^3.
+\end{align*}If we set $p_1q_6-p_6q_1=0$ then $p_2=p_3=p_4=p_5=p_7=p_8=\frac{kf^2}{\dot f}$ is a solution.
+
+\medskip
+
+\noindent
+\textbf{Conditions for nearly parallel $\G2$-structure}
+
+Now we want to find solutions for functions $f,p_i,q_i$ such that \[d\g2=\lambda\psi\] for some non-zero real $\lambda$. The conditions on the functions are given by
+\begin{align*}
+&\dot p_1=\lambda q_1, \quad \dot p_6=\lambda q_6 , \quad \dot p_i=f(t)+ \lambda q_i, \quad i=2,3,4,5,7,8, \\
+    &p_2 - p_7 = \lambda f(t)^2, \quad p_3 - p_8 = \lambda f(t)^2, \quad p_5 - p_4 = \lambda f(t)^2.
+    \end{align*}
+    
+One of the possible solutions for any $\lambda\neq 0$ (with $2\Omega_+\wedge\Omega_-+\omega^3=0$) is given by
+\begin{align*}
+f(t)&=\sqrt{\frac{2}{\lambda}}t, \quad p_i=t^2,  i=1,2,3,5,6, \quad p_i=-t^2,  i=4,7,8,\\
+q_i&=\frac{2}{\lambda}t, i=1,2, \quad q_i=\frac{1}{\lambda}\left(2-\sqrt{\frac{2}{\lambda}}\right)t,  i=2,3,5, \quad  q_i=-\frac{1}{\lambda}\left(2+\sqrt{\frac{2}{\lambda}}\right)t, i=4,7,8.
+    \end{align*}
+{\red{Since $t\in (0,\pi/3)$, $f>0$.}}    
+
+    For the above solution 
+    \begin{align*}
+        \g2=&\sqrt{\frac{2}{\lambda}}t\ dt\wedge  (e^{12}+e^{34}+e^{56}) + t^2(e^{135}+e^{136}+e^{145}+e^{235}+e^{246}-e^{146}-e^{236}-e^{245}),\\
+        \psi=& \frac{2t^2}{\lambda}(e^{1234}+e^{1256}+e^{3456})+\frac{2t}{\lambda}dt\wedge(e^{135}+e^{246}) \\ &+\frac{1}{\lambda}\left(2-\sqrt{\frac{2}{\lambda}}\right)t \ dt\wedge (e^{136}+e^{145}+e^{235}) + \frac{1}{\lambda}\left(2+\sqrt{\frac{2}{\lambda}}\right)t \ dt\wedge (e^{146}+e^{236}+e^{245}).
+    \end{align*}
+  
+  \subsection{General solution}
+  
+  Any $\Z_2^2$-invariant 3-form on the principal open set is given by 
+  
+  \begin{equation}\label{eq:gen-phi}
+  \begin{aligned}
+         \g2=&(p_1e^{12}+p_2e^{34}+p_3e^{56})\wedge dt \\ &+ q_1e^{135}+q_2e^{136}+q_3e^{145}+q_4e^{146}+q_5e^{235}+q_6e^{236}+q_7e^{245}+q_8e^{246}
+         \end{aligned}
+     \end{equation} 
+where the coefficients $p_i,q_i$ are fucntions of $t\in (0,\pi/3)$.
+Using the $3$-form above one can compute the symmetric bi-linear tensor 
+\[(B_{\g2})_{ij}\vol=-\frac{1}{6}(e_i\lrcorner\g2)\wedge(e_j\lrcorner\g2)\wedge\g2.\]
+The $3$-form $\phi$ defines a $\G2$-structure if and only if $B_\g2$ is positive definite. In case it is positive definite we get the metric $g_\g2$ induced from $\g2$ by 
+\[g_\g2=\frac{B_\g2}{\det{B_\g2}^\frac{1}{9}}.\]
+
+For notational convenience let 
+\begin{align}\label{eqn:alpha_beta}
+    \alpha_i&\coloneqq q_iq_{9-i}, i=1\dots 4,\\
+    \beta_1&\coloneqq q_1q_4q_6q_7,\\
+    \beta_2&\coloneqq q_2q_3q_5q_8.
+\end{align}
+
+Then the symmetric bi-linear form 
+$B_\g2={\rm{diag}}(B_1,B_2,B_3,-p_1p_2p_3)$ where 
+\begin{align*}
+B_1&=\left(\begin{array}{c c}
+    p_1(q_1q_4-q_2q_3) &\cfrac{p_1(\alpha_1+\alpha_4-\alpha_2-\alpha_3)}{2}\\
+    \cfrac{p_1(\alpha_1+\alpha_4-\alpha_2-\alpha_3)}{2}& p_1(q_5q_8-q_6q_7)
+\end{array}\right),\\ B_2&=\left(\begin{array}{c c}
+    p_2(q_1q_6-q_2q_5) &-\cfrac{p_2(\alpha_2+\alpha_4-\alpha_1-\alpha_3)}{2}\\
+     -\cfrac{p_2(\alpha_2+\alpha_4-\alpha_1-\alpha_3)}{2}&  p_2(q_3q_8-q_4q_7)
+\end{array}\right), \\ B_3&=\left(\begin{array}{c c}
+    p_3(q_1q_7-q_3q_5) &-\cfrac{p_3(\alpha_3+\alpha_4-\alpha_1-\alpha_2)}{2}\\
+     -\cfrac{p_3(\alpha_3+\alpha_4-\alpha_1-\alpha_2)}{2}&  p_3(q_2q_8-q_4q_6)
+\end{array}\right).
+    \end{align*}
+  if we denote by 
+  \[\alpha:=\sum_{i,j=1,i<j}^4 (\alpha_i-\alpha_j)^2 - 2\sum_{i=1}^4\alpha_i^2+4(\beta_1+\beta_2)\]
+  then the determinant of $B_\g2$ is given by 
+    \[\det(B_\g2)=-\left(\frac{p_1p_2p_3\alpha}{4}\right)^3.\]
+    The normalisation condition on the nearly half-flat $\SU(3)$-structure on $\SO(4)/\Z_2^2$ implies
+    that \begin{align}\label{eqn:normalization}
+        \alpha&=-4(p_1p_2p_3)^2
+    \end{align}
+     so we get that 
+    $\det(B_\g2)=(p_1p_2p_3)^9$ and thus 
+    \begin{align*}
+        \det(g_\g2)&= \det(B_\g2)^{1/9}=p_1p_2p_3.
+    \end{align*}
+Assuming that $g_\g2$ defines a Riemannian metric one can compute the Hodge star operator $*_\g2$. The $4$-form $\psi=*_\g2\g2$ is then given by 
+\begin{equation}
+\begin{aligned}
+    \label{eq:gen-psi}\psi=&p_1p_2 e^{1234}+p_1p_3e^{1256}+p_2p_3e^{3456}\\
+    &-\frac{\alpha_1(2\alpha_1-\sum_{i=1}^4\alpha_i)+2\beta_2}{2p_1p_2p_3q_8}e^{1357}+\frac{\alpha_1(2\alpha_1-\sum_{i=1}^4\alpha_i)+2\beta_1}{2p_1p_2p_3 q_1}e^{2467} \\
+    &-\frac{\alpha_2(2\alpha_2-\sum_{i=1}^4\alpha_i)+2\beta_2}{2p_1p_2p_3 q_2}e^{2457}+\frac{\alpha_2(2\alpha_2-\sum_{i=1}^4\alpha_i)+2\beta_1}{2p_1p_2p_3 q_7}e^{1367}\\
+    &-\frac{\alpha_3(2\alpha_3-\sum_{i=1}^4\alpha_i)+2\beta_2}{2p_1p_2p_3 q_3}e^{2367}+\frac{\alpha_3(2\alpha_3-\sum_{i=1}^4\alpha_i)+2\beta_1}{2p_1p_2p_3 q_6}e^{1457}\\
+    &-\frac{\alpha_4(2\alpha_4-\sum_{i=1}^4\alpha_i)+2\beta_2}{2p_1p_2p_3q_5}e^{1467}+\frac{\alpha_4(2\alpha_4-\sum_{i=1}^4\alpha_i)+2\beta_1}{2p_1p_2p_3 q_4}e^{2357}.
+\end{aligned}
+\end{equation}
+The derivatives are given by
+\begin{align*}
+    d\g2=&(q_7-q_2)e^{1234}+(q_6-q_3)e^{1256}+(q_4-q_5)e^{3456}-q_1'e^{1357}-q_8'e^{2467}-(p_3+q_2')e^{1367}\\
+    &-(p_3+q_7')e^{2457}-(p_2+q_3')e^{1457}-(p_2+q_6')e^{2367}-(p_1+q_5')e^{2357}-(p_1+q_4')e^{1467},
+\end{align*} and
+\begin{align*}
+    d\psi=&\left\{\left(\frac{\alpha p_1p_2p_3 }{4}\right)^{1/3}\left(-\frac{p_3'}{p_3^2}+\frac{2(q_2-q_7)\left(2\alpha_2-\sum_{i=1}^4\alpha_i\right)}{\alpha}+\frac{2(\beta_1-\beta_2)}{\alpha_2}\right)+\frac{(\alpha p_1p_2p_3)'}{3p_3(2\alpha p_1p_2p_3)^{2/3}}\right\}e^{12347}\\
+    &+\left\{\left(\frac{\alpha p_1p_2p_3 }{4}\right)^{1/3}\left(-\frac{p_2'}{p_2^2}+\frac{2(q_3-q_6)\left(2\alpha_3-\sum_{i=1}^4\alpha_i\right)}{\alpha}+\frac{2(\beta_1-\beta_2)}{\alpha_3}\right)+\frac{(\alpha p_1p_2p_3)'}{3p_2(2\alpha p_1p_2p_3)^{2/3}}\right\}e^{12567}\\
+    &+\left\{\left(\frac{\alpha p_1p_2p_3 }{4}\right)^{1/3}\left(-\frac{p_1'}{p_1^2}+\frac{2(q_5-q_4)\left(2\alpha_4-\sum_{i=1}^4\alpha_i\right)}{\alpha}+\frac{2(\beta_1-\beta_2)}{\alpha_4}\right)+\frac{(\alpha p_1p_2p_3)'}{3p_1(2\alpha p_1p_2p_3)^{2/3}}\right\}e^{34567}.
+\end{align*}
+\subsubsection{System of ODEs for torsion free $\G2$ structure}
+The $\G2$ structure $(\g2,\psi)$ is torsion free if it satisfies $d\g2=0$ and $d\psi=0$. Assuming $d\g2=0$ we get
+\begin{subequations}\label{eqns:gen_tfg2}
+\begin{equation}
+p_1=-q_4',\ \ p_2=q_3', \ \ p_3=q_2'
+\end{equation}
+\begin{equation}
+q_1'=0, \ \ q_8'=0,\ \ q_5=-q_4,\ \ q_6=-q_3,\  \ q_7=-q_2.
+\end{equation}
+\end{subequations}
+
+\subsubsection{System of ODEs for nearly parallel $\G2$ structure}
+If the $\G2$ structure $(\g2,\psi)$ satisfies $d\g2=\lambda\psi$ for some non-zero scalar $\lambda$ then we have 
+\begin{subequations}\label{eqns:gen_ng2}
+\begin{equation}
+q_4+q_5= -\lambda p_2p_3,
+\end{equation}
+\begin{equation}
+     q_3+q_6= -\lambda p_1p_3,
+\end{equation}
+\begin{equation}
+    q_2+q_7=- \lambda p_1p_2,
+\end{equation}
+The ODEs for $q_i$ are given by 
+\begin{equation}
+    q_1'=\frac{\lambda}{2p_1p_2p_3q_8} (\alpha_1(2\alpha_1-\sum_{i=1}^4\alpha_i)+2\beta_2)
+\end{equation}
+\begin{equation}
+    q_8'=\frac{-\lambda}{2p_1p_2p_3q_1} (\alpha_1(2\alpha_1-\sum_{i=1}^4\alpha_i)+2\beta_1)
+\end{equation}
+\begin{equation}
+    q_2'=p_3-\frac{\lambda}{2p_1p_2p_3q_7} (\alpha_2(2\alpha_2-\sum_{i=1}^4\alpha_i)+2\beta_1)
+\end{equation}
+\begin{equation}
+    q_7'=-p_3+\frac{\lambda}{2p_1p_2p_3q_2} (\alpha_2(2\alpha_2-\sum_{i=1}^4\alpha_i)+2\beta_2)
+\end{equation}
+\begin{equation}
+    q_3'=p_2-\frac{\lambda}{2p_1p_2p_3q_6} (\alpha_3(2\alpha_3-\sum_{i=1}^4\alpha_i)+2\beta_1)
+\end{equation}
+\begin{equation}
+    q_6'=-p_2+\frac{\lambda}{2p_1p_2p_3q_3} (\alpha_3(2\alpha_3-\sum_{i=1}^4\alpha_i)+2\beta_2)
+\end{equation}
+\begin{equation}
+    q_4'=-p_1+\frac{\lambda}{2p_1p_2p_3q_5} (\alpha_4(2\alpha_4-\sum_{i=1}^4\alpha_i)+2\beta_2)
+\end{equation}
+\begin{equation}
+    q_5'=p_1-\frac{\lambda}{2p_1p_2p_3q_4} (\alpha_4(2\alpha_4-\sum_{i=1}^4\alpha_i)+2\beta_1).
+\end{equation}
+\end{subequations}
+
+where $\alpha_i,\beta_i$ are defined in \eqref{eqn:alpha_beta}.
+
+ 
+%  \subsection{Most general case}
+%  Now we have 
+%  \[\omega=f_1e^{12}+f_2e^{34}+f_3e^{56},\]
+%  and the $\G2$ 3-form is given by
+%  \[\g2:=dt\wedge \omega + p_1e^{135}+p_2e^{246}+q_1e^{136}+q_2e^{145}+q_3e^{146}+q_4^{235}+q_6e^{236}+q_5e^{245} \]
+ 
+% We can also compute 
+% \begin{align*}
+%   d\g2=& -((q_1+q_5)e^{1234}+(q_2+q_6)e^{1256}+(q_3+q_4)e^{3456})\\
+%   &+dt\wedge(\dot{p_1}e^{135}+\dot{p_2}e^{246})\\
+%   &+dt\wedge((\dot{q_1}-f_3)e^{136}+(\dot{q_2}-f_2)e^{145}+(\dot{q_3}+f_1)e^{146})\\
+%   &+dt\wedge((\dot{q_4}-f_1)e^{235}+(\dot{q_6}+f_2)e^{236}+(\dot{q_5}+f_3)e^{245}).
+% \end{align*} For \textbf{closed $\G2$ structures} ($d\g2=0$) the equations are 
+% \begin{align*}
+%     q_1&=-q_5, \ \ q_2=-q_6, \ \ q_4=-q_3\\
+% \dot{p_1}&=\dot{p_2}=0, \ \ \dot{q_1}=f_3, \ \ \dot{q_2}=f_2,\ \ \dot{q_4}=f_1.
+% \end{align*}
+
+% Thus on $M\times {t}$ any closed $\G2$ 3-forms is of the form
+% \begin{align*}
+%     \g2=&dt\wedge(\dot{q_4}e^{12}+\dot{q_2}e^{34}+\dot{q_1}e^{56})\\
+%     &+\nu_1e^{135}+\nu_2e^{246}\\
+%     &+q_1(e^{136}-e^{245})+q_2(e^{145}-e^{236})-q_4(e^{146}-e^{235})
+% \end{align*} for some constant real numbers $\nu_1,\nu_2$ and smooth functions $q_1,q_2,q_4$.
+
+% \medskip
+
+% \noindent
+% \textbf{Conditions for torsion-free:}
+% Substituting the conditions for closed $\G2$-structure from above and assuming $q_2=q_4=q_1$ we get that if $d\g2=0$ the $4$-forms $\psi=*\phi$ is given by
+% \begin{align*}
+%     \psi&=\frac{\alpha}{f_1^4}(e^{1234}+e^{1256}+e^{3456})+\frac{2}{\alpha}\chi\wedge dt,
+% \end{align*}
+% where the scalar $\alpha$ and the 3-form $\chi$ are given by
+% \begin{align*}
+%     \alpha=&-3q_1^4-4q_1^3(p_1-p_2)+6q_1^2p_1p_2+p_1^2p_2^2,\\
+%     \chi&= (2q_1^3+3q_1^2p_1+p_1^2p_2)e^{135}+(2q_1^3-3q_1^2p_2-p_2^2p_1)e^{246}\\
+%     &-q_1\left((q_1^2+2p_1q_1-p_1p_2)(e^{136}+e^{145}+e^{235})+(q_1^2-2p_2q_1-p_1p_2)(e^{146}+e^{236}+e^{245})\right).
+% \end{align*}
+
+
+% We compute 
+% \begin{align*}
+%     d\psi&=\left(\left(\frac{\alpha}{f_1^4}\right)'+\frac{4q_1}{\alpha}(q_1^2+q_1(p_1-p_2)-p_1p_2)\right)(e^{1234}+e^{1256}+e^{3456})\wedge dt.
+% \end{align*}
+% From here we can easily see that $d\psi=0$ if and only if
+% \begin{align*}
+%     4\alpha^2f_1'-\alpha'\alpha f_1&=4q_1f_1^5(q_1^2+q_1(p_1-p_2)-p_1p_2).
+% \end{align*}
+% Since $p_1'=p_2'=0$,
+% \begin{align*}
+%     \alpha'=-12q_1'q_1(q_1^2+q_1(p_1-p_2)-p_1p_2).
+% \end{align*} If we denote by $\beta:=(q_1^2+q_1(p_1-p_2)-p_1p_2)$ and use $f_1=q_1'$ the above conditions can be re-written as
+% \begin{align*}
+%     \alpha^2f_1'&=q_1f_1^2\beta(f_1^3-3\alpha).
+% \end{align*}
+
+
+
+%  The $4$-form $\psi=*\g2$ induced is given by
+%  \begin{align*}
+%     \psi=&\left( \frac{4\mu}{(f_1f_2f_3)^2}\right)^{1/3} \left(f_1f_2e^{1234}+f_1f_3e^{1256}+f_2f_3e^{3456}\right)\\
+%     &-2\left(\frac{f_1f_2f_3}{4\mu^2}\right)^{1/3} dt\wedge \Big( \left(p_1(p_1p_2-q_1q_5-q_3q_4-q_2q_6)+2q_1q_2q_4 \right)e^{135}\\
+%     &-\left(p_2(p_1p_2-q_1q_5-q_3q_4-q_2q_6)+2q_3q_5q_6 \right)e^{246}\\
+%     &-\left(q_1(q_1q_5-q_2q_6-q_3q_4-p_1p_2)+2p_1q_3q_6\right)e^{136}\\
+%     &-\left(q_2(-q_1q_5+q_2q_6-q_3q_4-p_1p_2)+2p_1q_3q_5\right)e^{145}\\
+%     &+\left(q_3(-q_1q_5-q_2q_6+q_3q_4-p_1p_2)-2p_2q_1q_2\right)e^{146}\\
+%     &-\left(q_4(-q_1q_5-q_2q_6+q_3q_4-p_1p_2)+2p_1q_5q_6\right)e^{235}\\
+%     &+\left(q_6(-q_1q_5+q_2q_6-q_3q_4-p_1p_2)+2p_2q_1q_4\right)e^{236}\\
+%     &+\left(q_5(q_1q_5-q_2q_6-q_3q_4-p_1p_2)+2p_2q_2q_4\right)e^{245}\Big),
+%  \end{align*} where $\mu$ is a very complicated expression in $f_i,p_i and q_1's$ given by
+%  \begin{align*}
+%      \mu:=&p_1^2p_2^2+q_1^2q_5^2+q_2^2q_6^2+q_3^2q_4^2-2p_1p_2(q_1q_5+q_2q_6+q_3q_4)-2(q_1q_5q_2q_6+q_1q_5q_3q_3+q_2q_6q_3q_4)\\
+%      &+4(p_1q_3q_5q_6+p_2q_1q_2q_4)
+%  \end{align*}
+ 
+
+
+% \medskip
+
+% \noindent
+% \textbf{Conditions for nearly $\G2$:}
+
+
+% For nearly $\G2$ the equations are slightly complicated but the symmetry in equations suggest the following assumptions
+% \begin{align*}
+%     q_1=q_2=q_4=A, \ \ q_3=q_5=q_6=B.
+% \end{align*} The above assumptions also imply $f_1=f_2=f_3=f$. Then the equations for $d\g2=\lambda\psi$ are
+% \begin{align*}
+%     \dot{p_1}&=\lambda(p_1^2p_2-3ABp_1+2A^3),  \ \ \dot{p_2}=-\lambda(p_2^2p_1-3ABp_2+2B^3), \\ 
+%     \dot{A}-f&= \lambda(p_1p_2A-2p_1B^2+A^2B), \ \ \dot{B}-f= -\lambda(p_1p_2B-2p_2A^2+B^2A).
+% \end{align*}
+
+% \subsection{General case in a different way:}
+
+% Here we re-write the basis for $\Z_2^2$-invariant 3-forms as invariant subspaces under the action of the singular isotropy group $S(O(2)O(1))\cong S^1\times\Z_2$ at $t=0$. For smooth functions $T_i,i=1\dots 8$ and $Q_i,i=1\dots 3$ we define
+% \begin{align*}
+%     \g2=&T_1(e^{127}-e^{347})+T_2e^{567}+T_3e^{135}+T_4e^{136}+T_5e^{245}+T_6e^{246}+T_7(e^{145}-e^{235})+T_8(e^{146}-e^{236})\\&+Q_1(e^{127}+e^{347})+Q_2(e^{145}+e^{235})+Q_3(e^{146}+e^{236}).
+% \end{align*}
+
+% The metric for the above $\G2$-structure is given by 
+% \begin{align*}
+%     \beta g_\phi=&\left( Q_{{1}}   +
+% T_{{1}}    \right)( \left( Q_{{3}} +T_{{8}}    \right) T_{{3}}   -
+% T_{{4}}    \left( Q_{{2}}   +T_{{7}}
+%     \right) (e^1)^2+ \left(T_{{8}}   Q_{{2}}- Q_{{3}}   T_{
+% {7}}   +\frac{T_{{3}}   T_{{6}}   -T_{{4}}   T_{{5}}  }{2}  \right)e^1e^2\\&+\left(  \left( -Q_{{3}}   +T_{{8}}    \right) T_{{5}}
+%   + \left( Q_{{2}}   -T_{{7}} \left( t
+%  \right)  \right) T_{{6}}    \right) (e^2)^2 )\\
+%  & +\left( Q_{{1}}   -T_{{1}}\right)( \left( T_{{3}}    \left( Q_{{3}}   -T_{{8}}\right)- \left( Q_{{2}}   -T_{{7}}    \right) T_{{4}}\right)(e^3)^2+\left( Q_{{3}}T_{{7}}
+%   -T_{{8}}Q_{{2}}   +\frac{T_{{3}}T_{{6}}-T_{{4}}T_{{5}}}{2} \right)e^3e^4\\&+ \left( -T_{{5}}\left( Q_{{3}}   +T_{{8}} \right) +T_{{6} \left( Q_{{2}}   +T_{{7}}   \right) }    \right)(e^4)^2)\\
+%     &+T_{{2}}  (  \left( T_{{3}}
+%   T_{{5}}   - \left( Q_{{2}}   \right) ^{2}+ \left( T_{{7}}    \right) ^{2}
+%  \right)(e^5)^2+  \left(-(Q_2Q_3-T_7T_8)+\frac{ T_{{3}} \left( t
+%  \right) T_{{6}}   +T_{{4}}   T_{{5}}}{2} \right)e^5e^6\\&+\left( T_{{4}}
+%   T_{{6}}   - \left( Q_{{3}}  \right) ^{2}+ \left( T_{{8}}    \right) ^{2}
+%  \right)(e^6)^2)\\
+%  &+T_2(T_1^2-Q_1^2)(e^7)^2,
+%     \end{align*}
+%     where 
+%     \begin{align*}
+%         \beta&=\left(\alpha(Q_1^2-T_1^2)T_2\right)^{1/3},\\
+%         \alpha&=\left(\frac{T_3T_6-T_4T_5}{2}\right)^2+(T_8Q_2-T_7Q_3)^2+(T_7T_8-Q_2Q_3)(T_3T_6+T_4T_5)+T_3T_5(Q_3^2-T_8^2)+T_4T_6(Q_2^2-T_7^2)
+%     \end{align*}
+    
+%     The $4$-form $*_\g2=\psi$ is given by
+%     \begin{align*}
+%         \psi=&\left((Q_1^2-T_1^2)e^{1234}+T_2(Q_1+T_1)e^{1256}+T_2(Q_1-T_1)e^{3456}\right)\\ &+\frac 12\left(\frac{T_2(Q_1^2-T_1^2)}{\alpha}\right)^3\{(2T_4(Q_2^2-T_7^2)+2T_3(-Q_2Q_3+T_7T_8+\frac{1}{2}(T_3T_6-T_4T_5)))e^{1357}\\
+%          &+(-2T_3(Q_3^2-T_8^2)+2T_4(Q_2Q_3-T_7T_8+\frac{1}{2}(T_3T_6-T_4T_5)))e^{1367}\\
+%          &+(2T_6(Q_2^2-T_7^2)+2T_5(-Q_2Q_3+T_7T_8+\frac{1}{2}(T_3T_6-T_4T_5)))e^{1357}
+%          \}
+%         \end{align*}
+    
+
+\subsection{The homogeneous nearly parallel $\G2$ structure on the squashed $S^7$}
+
+In \cite{3-Sasakian_paper} the orthonormal basis for the invariant nearly parallel $\G2$-structure on $S^7$ is given by $\{F_i,i=1\dots 6,dt\}$ where 
+\[
+\left(\ns\ba{c} F_{2k-1}\y F_{2k}\ea\ns\right) =
+\left(\ba{cc} -\frac{1}{\sqrt{5}} & -\frac{1}{\sqrt{5}}(2c_k+1)\yy 0 & -2s_k\ea\right)
+\left(\ns\ba{c} e_{2k-1}\y e_{2k}\ea\ns\right)\]
+where $c_k=\cos(t+\phi_k), s_k=\sin(t+\phi_k)$ and $\phi_k=(2k-2)\pi/3$ for $k=1,2,3$. The $\SU(3)$-structure $(\omega,\Omega)$ on the hypersurface is given by
+\begin{align}
+\begin{split}\label{NHF-ortho}
+     \omega&= F_1\wedge F_2+F_3\wedge F_4+F_5\wedge F_6,\\
+    \Omega&= (F_1+iF_2)\wedge(F_3+iF_4)\wedge (F_5+iF_6).
+\end{split}
+   \end{align}
+
+With respect to the above basis
+\begin{align*}
+    \omega& = -\frac{2}{\sqrt{5}}(\sin(t)e^{12}+\sin(t+2\pi/3) e^{34}+\sin(t+4\pi/3)e^{56}),\\
+    {\rm{Re}} \Omega &= \frac{1}{5\sqrt{5}} \huge(-e^{135}-(32 \cos(3t)-13)e^{246}\\ &-\sum_{i=1}^3\left((1+2c_i)e^{2i}e^{2j-1}e^{2k-1}-(2c_i-12\cos(4t+\phi_j+\phi_k) -5)e^{2i-1}e^{2j}e^{2k}\right)\huge).
+\end{align*}
+The nearly parallel $\G2$-structure is then given by
+\begin{align*}
+    \g2&=dt\wedge\omega+{\rm{Re}}\Omega.
+\end{align*}
+\subsection{The homogeneous nearly parallel $\G2$ structure on Berger} 
+We use \cite{Ball-Madnick} for this section. The complex irreducible $\mathrm{SO}(5)$-representations are characterized by highest weights $(m_1,m_2)\in\mathbb{Z}_{\geq 0}$. The complex irreducible representations of $\mathrm{SO}(3)$ are given by $S^k\C^2$ which is a $\binom{2+k-1}{k} =k+1$ dimensional space. We have the adjoint splitting
+ \begin{align*}
+     \mathfrak{so}(5)=\mathfrak{so}(3)\oplus\m.
+ \end{align*}
+  The $3$-dimensional adjoint representation $\mathfrak{so}(3)_\C$ and the $7$-dimensional representation $\m_\C$ are irreducible $\mathrm{SO}(3)$-representations; therefore, \begin{align*}
+\m_\C &\cong S^6\C^2,\\
+\mathfrak{so}(3)_\C &\cong S^2\C^2.
+\end{align*}
+
+If we denote by $E_{ij}$ the skew-symmetric matrix with $1$ at $(i,j)$, $-1$ at $(j,i)$ and $0$ elsewhere and define \begin{align*}
+  \gamma_1&:=-\frac{2\sqrt{5}}{3}E_{12}, \ \ \ \ \ \gamma_2:=\frac{2\sqrt{5}}{3}E_{13} \ \ \ \ \
+  \gamma_3:= \frac{2}{3}(E_{23}-2E_{45}),\\
+ \gamma_4&:=\frac{\sqrt{10}}{3}(E_{24}-E_{35}), \ \ \ \ \ \gamma_5:=\frac{2}{3}(\sqrt 2 E_{14}-\frac{\sqrt 3}{\sqrt 2}(E_{35}+E_{24})), \\  \gamma_6&:=\frac{\sqrt{10}}{3}(E_{25}+E_{34})\ \ \ \ \ \gamma_7:=-\frac{2}{3}(\sqrt{2}E_{15}-\frac{\sqrt 3}{\sqrt 2}(E_{34}-E_{25}))
+ \end{align*} then $\{\gamma_i,i=1\dots 7\}$ defines a basis of $\m^*$ which is orthonormal with respect to the metric $-\frac{3}{40}B$. With respect to this basis the nearly $G_2$ structure $\g2$ is given by \begin{align*}
+    \g2&=\gamma_{123}+\gamma_{145}+\gamma_{167}+\gamma_{256}+\gamma_{346}+\gamma_{247}-\gamma_{357}.
+\end{align*}
+The basis for $\mathfrak{so}(3)$ is given by $\{\mu_1,\mu_2,\mu_3\}$ where
+\begin{align*}
+    \mu_1 &:= \frac{1}{\sqrt5}(2E_{13} + E_{45}),\\
+    \mu_2&=\frac{1}{\sqrt{5}}(E_{14}+E_{35}+\sqrt{3}E_{24}),\\
+    \mu_3&=\frac{1}{\sqrt{5}}(-E_{15}+E_{34}+\sqrt{3}E_{25}).
+\end{align*}
+Since $\rm{SO}(3)$ preserves the $E_{12}$ direction in $\R^5$, $\gamma_1$ defines a vector in $\mathfrak{so}(5)$ that is orthogonal to both $\rm{SO}(3)$ and $\rm{SO(4)}$ and thus the curve $u:=e^{t\gamma_1}\colon\R\to\rm{SO}(5)$ 
+\begin{align*}
+    u&\colon t\mapsto \begin{bmatrix}\cos{t}& \sin{t}&0&0&0\\ -\sin{t}&\cos{t}&0&0&0\\
+    0&0&1&0&0\\0&0&0&1&0\\0&0&0&0&1\end{bmatrix}
+\end{align*} projects under the map $\pi:\rm{SO}(5)\to B$ to a geodesic orthogonal to the $\rm{SO}(4)$ orbits. Thus we get a map $\rho\colon \left[0,\cfrac{\pi}{3}\right]\times \rm{SO}(4)\to \rm{SO}(5)$
+\begin{align*}
+    (t,A)&\mapsto Au(t).
+\end{align*} such that $\rm{Im}(\rho)=B$.
+
+The Maurer Cartan form of $\rm{SO}(4)\subset \rm{SO}(5)$ is given by 
+\begin{align*}
+   A:=\frac{1}{2} \begin{bmatrix}
+    0&0&0&0&0\\0&0&e_1-e_2&e_3+e_4&e_5+e_6\\0&-e_1+e_2&0&e_5-e_6&-e_3+e_4\\0&-e_3-e_4&-e_5+e_6&0&e_1+e_2\\0&-e_5-e_6&e_3-e_4&-e_1-e_2&0
+    \end{bmatrix}.
+\end{align*} The pullback of $A$ on $\left[0,\cfrac{\pi}{3}\right]\times \rm{SO}(4)$ is given by $u^{-1}Au-dt\,\gamma_1$
+\begin{align*}
+    &\begin{bmatrix}
+    0&\frac{2\sqrt{5}}{3}e_7&-\sin{t}(e_1-e_2)&-\sin{t}(e_3+e_4)&-\sin{t}(e_5+e_6)\\ -\frac{2\sqrt{5}}{3}e_7&0&\cos{t}(e_1-e_2)&\cos{t}(e_3+e_4)&\cos{t}(e_5+e_6)\\ \sin{t}(e_1-e_2)&-\cos{t}(e_1-e_2)&0&e_5-e_6&-e_3+e_4\\\sin{t}(e_3+e_4)&\sin{t}(e_5+e_6)&-\cos{t}(e_5+e_6)&0&e_1+e_2\\0&-\cos{t}(e_5+e_6)&e_3-e_4&-(e_1+e_2)&0
+    \end{bmatrix}.
+\end{align*} The pull back of the 1-forms $\gamma_i$ is given by
+\begin{align*}
+    \gamma_1&=\frac{2\sqrt{5}}{3}e^7,\\
+    \gamma_2&=\frac{\sqrt{5}}{3}(-\sin(t)e^1+\sin(t)e^2),\\
+    \gamma_3&=\left(-\frac{2}{3}+\frac{\cos(t)}{3}\right)e^1-\left(\frac{2}{3}+\frac{\cos(t)}{3}\right)e^2,\\
+    \gamma_4&=\frac{\sqrt{10}}{6}((\cos(t)+1)e^3+(\cos(t)-1)e^4),\\
+    \gamma_5&=\frac{1}{2\sqrt{3}}((\sqrt{3}\cos(t)-\sqrt{3}+2\sin(t))e^3+(\sqrt{3}\cos(t)+\sqrt{3}+2\sin(t))e^4),\\
+    \gamma_6&=\frac{\sqrt{10}}{6}((\cos(t)+1)e^5+(\cos(t)-1)e^6),\\
+    \gamma_7&=\frac{1}{2\sqrt{3}}(-(\sqrt{3}\cos(t)-\sqrt{3}-2\sin(t))e^5+(\sqrt{3}\cos(t)+\sqrt{3}-2\sin(t))e^6).   
+\end{align*}
+The nearly parallel $\G2$ structure is then given by
+\begin{align}
+\begin{split}\label{eq:hom_ng2}
+\g2=&\gamma_{123}+\gamma_{145}+\gamma_{167}+\gamma_{256}+\gamma_{346}+\gamma_{247}-\gamma_{357}\\
+&=(\sin(t)e^{12}-\sin(t-2\pi/3)e^{34}-\sin(t+2\pi/3)e^{56})\wedge e^7\\
+&+\frac{1}{20}(8\cos(t-2\pi/3)\cos(t)\cos(t+2\pi/3)(e^{135}+e^{246})-7(e^{135}-e^{246}))\\
+&+\frac{1}{5}\sin(t)\sin(t-2\pi/3)(-2\cos(t+2\pi/3)(e^{136}-e^{245})-3(e^{136}+e^{245})\\
+&+\frac{1}{5}\sin(t)\sin(t+2\pi/3)(-2\cos(t-2\pi/3)(e^{145}-e^{236})-3(e^{145}+e^{236})\\
+&+\frac{1}{5}\sin(t-2\pi/3)\sin(t+2\pi/3)(-2\cos(t)(e^{146}-e^{235})+3(e^{146}+e^{235}).
+\end{split}
+\end{align}
+
+The metric on the vector fields induces by $\g2$ is given by ${\rm{diag}}(g_1,g_2,g_3,1)$ (I have normalized the metric so that $\|dt\|^2=1$) where 
+
+  \begingroup
+\begin{align*}
+    g_1&= \frac{1}{5}\left[
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{tabular}{cc}
+     \sin(t-2\pi/3)\sin(t+2\pi/3)-\cos(t)+2   & -\sin(t-2\pi/3)\sin(t+2\pi/3) \\
+        -\sin(t-2\pi/3)\sin(t+2\pi/3) & \sin(t-2\pi/3)\sin(t+2\pi/3)+\cos(t)+2
+    \end{tabular}\right]
+       \end{align*}
+\endgroup
+\medskip
+
+    \begin{align*}
+        g_2&= \frac{1}{5}\left[
+    \begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{tabular}{cc}
+      \sin(t)\sin(t+2\pi/3)-\cos(t-2\pi/3)+2   & \sin(t)\sin(t+2\pi/3) \\
+       \sin(t)\sin(t+2\pi/3) &      \sin(t)\sin(t+2\pi/3)+\cos(t-2\pi/3)+2
+    \end{tabular}
+    \endgroup\right]
+    \end{align*}
+
+    \medskip
+
+    \begin{align*}
+        g_2&= \frac{1}{5}\left[
+    \begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{tabular}{cc}
+       \sin(t)\sin(t-2\pi/3)-\cos(t+2\pi/3)+2   & \sin(t)\sin(t-2\pi/3) \\
+       \sin(t)\sin(t-2\pi/3) &      \sin(t)\sin(t-2\pi/3)+\cos(t+2\pi/3)+2 
+    \end{tabular}\endgroup\right]
+    \end{align*}
+
+    
+ 
+% The metric induced by $\g2$ is given by 
+% \begin{align*}
+% g_\g2&=\frac{2}{5}((5-(1-\sin s)(\sqrt{3}\cos s+\sin s+2))((e^1)^2+(e^2)^2)+\cos s(\sqrt{3}\sin s-\cos s)e^1e^2)\\
+% &+\frac{2}{5}((5+(1-\sin s)(\sqrt{3}\cos s-\sin s-2))((e^3)^2+(e^4)^2)+\cos s(\sqrt{3}\sin s+\cos s)e^3e^4)\\
+% &+\frac{1}{5}((5-4\sin s(1+\sin s))((e^5)^2+(e^6)^2)+(4\cos^2s-3)e^5e^6)+(e^7)^2.
+%     \end{align*}
+%     This can be re-written as 
+    
+%     \begin{align*}
+%         \g2=&\frac{4}{\sqrt{5}}ds\wedge(-\cos(s-\frac{\pi}{3})e^{12}+\cos(s+\frac{\pi}{3})e^{34}+\cos s e^{56})\\
+%         &+\frac{2\sqrt{5}}{25}(8\sin s \sin(s+\frac{\pi}{3})\sin(s-\frac{\pi}{3})(e^{135}-e^{246})-7(e^{135}+e^{246}))\\
+%         &-\frac{8\sqrt{5}}{25}\cos(s-\frac{\pi}{3})\cos(s+\frac{\pi}{3})(3(e^{136}+e^{245})+2\sin s(e^{136}-e^{245}))\\
+%         &-\frac{8\sqrt{5}}{25}\cos(s-\frac{\pi}{3})\cos(s)(3(e^{145}+e^{236})+2\sin(s+\frac{\pi}{3})(e^{145}-e^{236}))\\
+%         &+\frac{8\sqrt{5}}{25}\cos(s)\cos(s+\frac{\pi}{3})(3(e^{146}+e^{235})+2\sin(s-\frac{\pi}{3})(e^{146}-e^{235})).
+%     \end{align*}
+%     \begin{align*}
+%     g_\g2:=&\frac{4}{5}\{(2-\cos s\cos({s+\frac{\pi}{3}})+\sin({s-\frac{\pi}{3}}))((e^1)^2+(e^2)^2)-\cos s\cos({s+\frac{\pi}{3}})e^1e^2+\\
+%     &(-\cos s\cos({s-\frac{\pi}{3}})+\sin({s+\frac{\pi}{3}})+2)((e^3)^2+(e^4)^2)+\cos s\cos({s-\frac{\pi}{3}})e^3e^4+\\
+%     &(2+\cos({s-\frac{\pi}{3}})\cos({s+\frac{\pi}{3}})-\sin s)((e^5)^2+(e^6)^2)+(\cos({s+\frac{\pi}{3}})\cos({s-\frac{\pi}{3}}))e^5e^6+(e^7)^2 \} .
+%     \end{align*}
+For some constant C, the square root of the determinant of the metric matrix is
+\begin{align*}
+    \sqrt{\det g_\g2}&=C\sin(t) (4\cos^2(t)-1)=4C\sin(t-2\pi/3)\sin(t)\sin(t+2\pi/3)
+\end{align*}
+\begin{rem}
+The determinant is zero at $t=0,\pi/3$ which are the sinfular orbits.
+\end{rem}
+% The $4$-form $d\g2$ is given by
+% \begin{align*}
+%   \frac{25}{12\sqrt{5}} d\g2=&(4\cos^2s-3)e^{1234}+2\cos s(\sqrt{3}\sin s+\cos s)e^{1256}+2\cos s(\sqrt{3}\sin s-\cos s)e^{3456}\\&-\cos sds\wedge((4\cos^2s-3)(e^{135}-e^{246})+(4\cos^s-4\sin s-2)e^{136}-(4\cos^s+4\sin s-2)e^{245}\\
+%   &+\frac{ds}{2}\wedge((8\cos^3s-4\sqrt{3}\cos^2s-7\cos s +2\sqrt{3})(e^{145}+e^{146})+\sin s(4\cos s+\sqrt{3})(e^{145}-e^{146}))\\
+%     &-\frac{ds}{2}\wedge((8\cos^3s+4\sqrt{3}\cos^2s-7\cos s -2\sqrt{3})(e^{235}+e^{236})+\sin s(4\cos s-\sqrt{3})(e^{235}-e^{236}))
+% \end{align*}
+I checked that for some $\lambda=-6/\sqrt{5}$
+\begin{align*}
+    \g2\wedge d\g2=\lambda\sqrt{\det g_{\g2}}e^1\wedge\dots \wedge e^7,
+\end{align*} thus confirming that $d\g2=\lambda*\g2$.
+
+\medskip
+\noindent
+
+\iffalse
+\subsection{General solution with $\Z_3$ symmetry}
+
+Let \begin{align*}
+    \begin{bmatrix}
+        F^{2i-1} \\ F^{2i}
+    \end{bmatrix} &= \begin{bmatrix}
+        A(t+\phi_i) & B(t+\phi_i)\\ C(t+\phi_i) & D(t+\phi_i)
+    \end{bmatrix}\begin{bmatrix}
+        U_i \\ V_i
+    \end{bmatrix}
+\end{align*} for some functions $A,B,C,D\in \R$. if we let 
+\begin{align*}
+    \omega&= \sum_{i=1}^3 F^{2i-1}\wedge F^{2i} ,\\
+    \Omega&= (F^1+iF^2)\wedge(F^3+iF^4)\wedge(F^5+iF^6),
+\end{align*} then 
+\begin{align*}
+    \g2&= dt\wedge\omega+{\rm{Re}}\Omega ,\\
+    \psi&=\frac{\omega^2}{2}-dt\wedge {\rm{Im}}\Omega.
+\end{align*} If we denote $A_i\coloneqq A(t+\phi_i), B_i\coloneqq B(t+\phi_i)$ and so on and the matrix $M_i\coloneqq \begin{bmatrix}
+        A(t+\phi_i) & B(t+\phi_i)\\ C(t+\phi_i) & D(t+\phi_i)
+    \end{bmatrix}$ we have
+    \begin{align*}
+        \g2=& \sum_{i=1}^3 (\det M_i)U_iV_i\wedge dt +(A_1A_2A_3-(A_1C_2C_3+C_1A_2C_3+C_1C_2A_3)) \ U_1U_2U_3 \\ &+(B_1B_2B_3-(B_1D_2D_3+D_1B_2D_3+D_1D_2B_3)) \ V_1V_2V_3\\
+        &+ ((A_1A_2-C_1C_2)B_3-(A_1C_2+A_2C_1)D_3) \ U_1U_2V_3 +((A_1A_3-C_1C_3)B_2-(A_1C_3+A_3C_1)D_2) \ U_1V_2U_3 \\
+        &+((A_2A_3-C_2C_3)B_1-(A_2C_3+A_3C_2)D_1) \ V_1U_2U_3 + ((B_1B_2-D_1D_2)A_3-(B_1D_2+B_2D_1)C_3) \ V_1V_2U_3 \\
+        &+ ((B_1B_3-D_1D_3)A_2-(B_1D_3+B_3D_1)C_2) \ V_1U_2V_3 +((B_2B_3-D_2D_3)A_1-(B_2D_3+B_3D_2)C_1) \ U_1V_2V_3,
+    \end{align*}
+    \begin{align*}
+        \psi=& \sum_{i,j=1, i<j}^3 \det (M_iM_j)U_iV_iU_jV_j +dt\wedge ((C_1C_2C_3-(C_1A_2A_3+A_1C_2A_3+A_1A_2C_3)) \ U_1U_2U_3 \\ &+(D_1D_2D_3-(D_1B_2B_3+B_1D_2B_3+B_1B_2D_3)) \ V_1V_2V_3\\
+        &+ ((C_1C_2-A_1A_2)D_3-(C_1A_2+C_2A_1)B_3) \ U_1U_2V_3 +((C_1C_3-A_1A_3)D_2-(C_1A_3+C_3A_1)B_2) \ U_1V_2U_3 \\
+        &+((C_2C_3-A_2A_3)D_1-(C_2A_3+C_3A_2)B_1) \ V_1U_2U_3 + ((D_1D_2-B_1B_2)C_3-(D_1B_2+D_2B_1)A_3) \ V_1V_2U_3 \\
+        &+ ((D_1D_3-B_1B_3)C_2-(D_1B_3+D_3B_1)A_2) \ V_1U_2V_3 +((D_2D_3-B_2B_3)C_1-(D_2B_3+D_3B_2)A_1) \ U_1V_2V_3
+    \end{align*}
+    \begin{align*}
+        d\g2=&dt\wedge \Bigl(-\frac{1}{2}(\det M_1+\det M_2+\det M_3)(V_1V_2V_3-V_1U_2U_3-U_1V_2U_3-U_1U_2V_3) \\
+        &+(A_1A_2A_3-(A_1C_2C_3+C_1A_2C_3+C_1C_2A_3))' \ U_1U_2U_3 \\ &+(B_1B_2B_3-(B_1D_2D_3+D_1B_2D_3+D_1D_2B_3))' \ V_1V_2V_3\\
+        &+ ((A_1A_2-C_1C_2)B_3-(A_1C_2+A_2C_1)D_3)' \ U_1U_2V_3 +((A_1A_3-C_1C_3)B_2-(A_1C_3+A_3C_1)D_2)' \ U_1V_2U_3 \\
+        &+((A_2A_3-C_2C_3)B_1-(A_2C_3+A_3C_2)D_1)' \ V_1U_2U_3 + ((B_1B_2-D_1D_2)A_3-(B_1D_2+B_2D_1)C_3)' \ V_1V_2U_3 \\
+        &+ ((B_1B_3-D_1D_3)A_2-(B_1D_3+B_3D_1)C_2)' \ V_1U_2V_3 +((B_2B_3-D_2D_3)A_1-(B_2D_3+B_3D_2)C_1)' \ U_1V_2V_3\Bigr)\\
+        &-\frac{1}{2}\Bigl(((A_1A_2A_3-(A_1C_2C_3+C_1A_2C_3+C_1C_2A_3))+((B_1B_2-D_1D_2)A_3-(B_1D_2+B_2D_1)C_3) \\
+        &-((B_1B_3-D_1D_3)A_2-(B_1D_3+B_3D_1)C_2)-((B_2B_3-D_2D_3)A_1-(B_2D_3+B_3D_2)C_1)) U_1V_1U_2V_2 \\
+        &+((A_1A_2A_3-(A_1C_2C_3+C_1A_2C_3+C_1C_2A_3))-((B_1B_2-D_1D_2)A_3-(B_1D_2+B_2D_1)C_3) \\
+        &+((B_1B_3-D_1D_3)A_2-(B_1D_3+B_3D_1)C_2)-((B_2B_3-D_2D_3)A_1-(B_2D_3+B_3D_2)C_1)) U_1V_1U_3V_3 \\
+        &+((A_1A_2A_3-(A_1C_2C_3+C_1A_2C_3+C_1C_2A_3))-((B_1B_2-D_1D_2)A_3-(B_1D_2+B_2D_1)C_3) \\
+        &-((B_1B_3-D_1D_3)A_2-(B_1D_3+B_3D_1)C_2)+((B_2B_3-D_2D_3)A_1-(B_2D_3+B_3D_2)C_1)) U_2V_2U_3V_3 \Bigr).
+    \end{align*}
+
+    For the homogeneous solution we had $C=0$ so now we try $B=0$. When $B=0$ the equations become
+    \begin{align*}
+        \omega=& \sum_{i=1}^3A_iD_i \ U_iV_i,\\
+        {\rm{Re}}\Omega=& (A_1A_2A_3-(A_1C_2C_3+C_1A_2C_3+C_1C_2A_3)) \ U_1U_2U_3 \\
+        &-(A_1C_2+A_2C_1)D_3 \ U_1U_2V_3 - (A_1C_3+A_3C_1)D_2 \ U_1V_2U_3 - (A_2C_3+A_3C_2)D_1 \ V_1U_2U_3 \\
+        &-(D_1D_2A_3) \ V_1V_2U_3 -(D_1D_3A_2) \ V_1U_2V_3 -(D_2D_3A_1) \ U_1V_2V_3, \\
+        {\rm{Im}}\Omega=&(-C_1C_2C_3+(C_1A_2A_3+A_1C_2A_3+A_1A_2C_3)) \ U_1U_2U_3 -(D_1D_2D_3) \ V_1V_2V_3\\
+        &+(A_1A_2-C_1C_2)D_3 \ U_1U_2V_3 +(A_1A_3-C_1C_3)D_2 \ U_1V_2U_3+(A_2A_3-C_2C_3)D_1 \ V_1U_2U_3\\
+        &-(D_1D_2C_3) \ V_1V_2U_3-(D_1D_3C_2) \ V_1U_2V_3 - (D_2D_3C_1) \ U_1V_2V_3
+    \end{align*}
+
+   When $B=0$ if the $\G2$-structure $\g2$ is nearly parallel then the $\SU(3)$-structure $(\omega,\Omega)$ must satisfy the following relations
+    \begin{align}
+    \begin{split}
+        \label{SU3FORNG2}d\omega(t)&={\rm{Re}}\Omega'(t)+\lambda {\rm{Im}}\Omega(t),\\
+        d{\rm{Re}}\Omega(t)&=\frac{\lambda}{2}\omega^2(t)\\
+        d{\rm{Im}}\Omega(t)&=-\frac{(\omega^2)'(t)}{2}.
+    \end{split}
+    \end{align} which imposes the following differential equations on $A_i,C_i,D_i$ 
+    \begin{align*}
+        A_1D_1+A_2D_2+A_3D_3&=2\lambda D_1D_2D_3\\
+        &= 2(A_1C_2+A_2C_1)'+2\lambda (A_1A_2-C_1C_2)\\
+        &= 2(A_1C_3+A_3C_1)'+2\lambda (A_1A_3-C_1C_3)\\
+        &= 2(A_2C_3+A_3C_2)'+2\lambda (A_2A_3-C_2C_3)\\
+        (A_1A_2A_3-(A_1C_2C_3+C_1A_2C_3+C_1C_2A_3))'&=\lambda(C_1C_2C_3-(C_1A_2A_3+A_1C_2A_3+A_1A_2C_3))\\
+        (D_iD_jA_k)'&=-\lambda (D_iD_jC_k), \ \ \ (i,j,k)=(1,2,3)\\
+       -A_1A_2A_3+(A_1C_2C_3+C_1A_2C_3+C_1C_2A_3)&= -2\lambda A_1A_2D_1D_2 -D_1D_2A_3+D_1D_3A_2+D_2D_3A_1\\
+         &=-2\lambda A_1A_3D_1D_3+D_1D_2A_3-D_1D_3A_2+D_2D_3A_1\\
+         &=-2\lambda A_2A_3D_2D_3+D_1D_2A_3+D_1D_3A_2-D_2D_3A_1\\
+         C_1C_2C_3-(C_1A_2A_3+A_1C_2A_3+A_1A_2C_3))&=2(A_1D_1A_2D_2)'-D_1D_2C_3+D_1D_3C_2+D_2D_3C_1 \\
+         &=2(A_1D_1A_3D_3)'+D_1D_2C_3-D_1D_3C_2+D_2D_3C_1 \\
+         &=2(A_2D_2A_3D_3)'+D_1D_2C_3+D_1D_3C_2-D_2D_3C_1 
+    \end{align*}
+    
+\subsection{Special solution}
+
+Let the $\G2$ structure $\g2$ on the open orbit be of the form 
+\begin{align*}
+    \g2 &= p(e^{127}+e^{347}+e^{567})+ A e^{135}+Be^{246}+C(e^{146}+e^{236}+e^{245})+D(e^{136}+e^{145}+e^{235}).
+\end{align*}
+
+Then substituting $p_1=p_2=p_3=p, q_1=A, q_8=B, q_2=q_3=q_5=D, q_4=q_6=q_7=C$ in \eqref{eqns:gen_ng2} we get the following sytem of ODEs 
+
+\begin{align*}
+    A'&=\frac{\lambda^{5/3}p}{2(C+D)^2}(A^2B+2D^3-3ACD),\\
+    B'&=-\frac{\lambda^{5/3}p}{2(C+D)^2}(AB^2+2C^3-3BCD),\\
+    C'&=p+\frac{\lambda^{5/3}p}{2(C+D)^2}(-ABC-C^2D+2BD^2),\\
+     D'&=-p-\frac{\lambda^{5/3}p}{2(C+D)^2}(-ABD-CD^2+2AC^2),
+\end{align*} subjected to the condition 
+\begin{align}\label{sp_condn}
+    \alpha=(AB)^2-3(CD)^2-6ABCD+4AC^3+4BD^3=-\frac{4(C+D)^3}{\lambda}.
+\end{align}
+
+\subsubsection{symmetry suggested by the nearly K\"ahler equations}
+
+If we choose $A=B$ then the above equations become 
+\begin{align*}
+    A'&=\frac{\lambda^{5/3}p}{2(C+D)^2}(D^3-C^3),\\
+     C'&=p+\frac{\lambda^{5/3}p}{2(C+D)^2}(-A^2C-C^2D+2AD^2),\\
+     D'&=-p-\frac{\lambda^{5/3}p}{2(C+D)^2}(-A^2D-CD^2+2AC^2).
+\end{align*}
+
+but we also have
+\begin{align*}
+    A^2CD-A(C^3+D^3)+(CD)^2-\frac{4(C+D)^3}{3\lambda}=0.
+\end{align*}
+We get the last equation by equating $A'$, $B'$ and substituting $A=B$ in \eqref{sp_condn}.
+\fi
+
+% There is a pattern which suggests what you were saying about the singular orbits that it looks like 2 hyper-K\"ahler forms behave similarly and there is one special form. For example at $s=0$ the metric looks like 
+% \begin{align*}
+%   \left[ \begin{array}{ccccccc} -2\sqrt{3}/5+6/5&-2/5&0&0&0&0&0
+% \\ \noalign{\medskip}-2/5&2\sqrt{3}/5+6/5&0&0&0&0&0
+% \\ \noalign{\medskip}0&0&2\sqrt{3}/5+6/5&2/5&0&0&0
+% \\ \noalign{\medskip}0&0&2/5&-2\sqrt{3}/5+6/5&0&0&0
+% \\ \noalign{\medskip}0&0&0&0&9/5&1/5&0\\ \noalign{\medskip}0&0&0&0&1/5
+% &9/5&0\\ \noalign{\medskip}0&0&0&0&0&0&1\end{array} \right],  
+% \end{align*}
+% and at $s=\pi/3$ the metric is given by
+% \begin{align*}
+%     \left[ \begin {array}{ccccccc} 9/5&1/5&0&0&0&0&0\\ \noalign{\medskip}
+% 1/5&9/5&0&0&0&0&0\\ \noalign{\medskip}0&0&2\sqrt{3}/5+6/5&2/5&0&0&0
+% \\ \noalign{\medskip}0&0&2/5&-2\sqrt{3}/5+6/5&0&0&0
+% \\ \noalign{\medskip}0&0&0&0&-2\sqrt{3}/5+6/5&-2/5&0
+% \\ \noalign{\medskip}0&0&0&0&-2/5&2\sqrt{3}/5+6/5&0
+% \\ \noalign{\medskip}0&0&0&0&0&0&1\end {array} \right] 
+% \end{align*}
+    
+% {\red{Notice the switch between $\{e^1,e^2\}$ and $\{e^5,e^6\}$ while $\{e^3,e^4\}$ remains unchanged}}
+
+% At $t=\pi/6$ the metric becomes 
+% \begin{align*}
+%     \left[ \begin {array}{ccccccc} 6/5&0&0&0&0&0&0\\ \noalign{\medskip}0&
+% 2&0&0&0&0&0\\ \noalign{\medskip}0&0&9/5&3/5&0&0&0\\ \noalign{\medskip}0
+% &0&3/5&1/5&0&0&0\\ \noalign{\medskip}0&0&0&0&6/5&0&0
+% \\ \noalign{\medskip}0&0&0&0&0&2&0\\ \noalign{\medskip}0&0&0&0&0&0&1
+% \end {array} \right] 
+% \end{align*}
+% \subsection{Orthogonal basis at the singular orbits}
+
+% At any $s\in[0,\pi/3]$, the orthonormal basis $\{m_i,i=1..7\}$ is given by
+
+% \begin{align*}
+%     m_1&:=\gamma_1=\frac{1}{\sqrt{5}}(\sin s(e_5+e_6)-2(e_5-e_6)),\\
+%     m_2&=\frac{1}{\sqrt{5}}\{\frac{1}{\sqrt{2}}((\sqrt{3}\sin s+2\cos s)(e_1+e_2)-\sqrt{3}(e_1-e_2))\\ &+\frac{\cos s((\cos s\cos(s-\frac{\pi}{6})-\frac{\sqrt{3}}{2})(e_5+e_6)+2\sin(s-\frac{\pi}{6})(e_5-e_6)}{2-\cos(s+\frac{\pi}{6})+\cos s \sin(s-\frac{\pi}{6})}\},\\
+%     m_3&:=\gamma_3=\cos s(e_5+e_6),\\
+%     m_4&=\frac{1}{\sqrt{10}}(-\sqrt{3}(e_3+e_4)+(\sqrt{3}\sin s-2\cos s)(e_3-e_4))-\frac{\cos^2s\sin(s+\frac{\pi}{6})(e_5+e_6)}{2+\cos(s-\frac{\pi}{6})-\cos s \sin(s+\frac{\pi}{6})},\\
+%     m_5&:=\gamma_5=\frac{1}{\sqrt{2}}((e_3+e_4)+\sin s(e_3-e_4)),\\
+%     m_6&=-\frac{1}{\sqrt{2}}\{\sin s(e_1+e_2)+(e_1-e_2)-\frac{\sin(s-\frac{\pi}{6})\sin(s+\frac{\pi}{6})((e_3+e_4)+\sin s(e_3-e_4))}{2-\sin(s-\frac{\pi}{6})\sin(s+\frac{\pi}{6})-\sin s} \}\\
+%     \m_7&:=\gamma_7=-ds.
+% \end{align*}
+
+% At the singular orbit $s=0$ the orthogonal basis is given by
+% \begin{align*}
+%     m_1&=-\frac{2}{\sqrt{5}}(e_5-e_6),\\
+%     m_2&=\frac{1}{\sqrt{10}}(\sqrt{3}(e_1+e_2)-2(e_1-e_2))+\frac{2\sqrt{5}(e_5-e_6)}{5\sqrt{3}-15},\\
+%     m_3&=e_5+e_6,\\
+%     m_4&=-\frac{1}{\sqrt{10}}(\sqrt{3}(e_3+e_4)+2(e_3-e_4))+\frac{(e_5+e_6)}{\sqrt{3}+3},\\
+%     m_5&=\frac{1}{\sqrt{2}}(e_3+e_4),\\
+%     m_6&=-\frac{1}{\sqrt{2}}((e_1-e_2)+\frac{1}{9}(e_3+e_4)),\\
+%     m_7&=-ds.
+% \end{align*}
+% At the singular orbit $s=\pi/3$ the orthogonal basis is given by
+% \begin{align*}
+%     m_1&=\frac{\sqrt{3}}{2\sqrt{5}}(e_5+e_6)-\frac{2}{\sqrt{5}}(e_5-e_6),\\
+%     m_2&=\frac{1}{2\sqrt{10}}(5(e_1+e_2)-2\sqrt{3}(e_1-e_2))+\frac{\sqrt{5}}{90}(\sqrt{3}(e_5+e_6)+4(e_5-e_6)),\\
+%     m_3&=\frac{1}{2}(e_5+e_6),\\
+%     m_4&=-\frac{1}{\sqrt{10}}(\sqrt{3}(e_3+e_4)-\frac{1}{2}(e_3-e_4))-\frac{(e_5+e_6)}{2\sqrt{3}+6},\\
+%     m_5&=\frac{1}{\sqrt{2}}(e_3+e_4)+\frac{\sqrt{3}}{2\sqrt{2}}(e_3-e_4),\\
+%     m_6&=-\frac{1}{\sqrt{2}}((e_1-e_2))-\frac{\sqrt{3}}{2\sqrt{2}}(e_3+e_4)),\\
+%     m_7&=-ds.
+% \end{align*}
+
+
+\section{Smooth extension over the singular orbits}
+We now wish to see which of the $H$-invariant $3$-forms on the open orbit $\SO{(4)}/\Z_2^2\times (0,\pi/3)$ extend to the singular orbit $Q=G/K$. Let $q=\id K\in Q$ and $V=T_qB/T_qQ$ be the normal space at $q$. The group $K$ acts by cohomogeneity-1 on $V$, that is, it acts transitively on the $S^1\subset V$. A neighbourhood of $q$ in $B$ can be identified with the total space of the normal vector bundle over $Q$ denoted by $E:=\SO(4)\times_{K}V$. Once we fix a $K$-invariant inner product on $V$, for any non-zero $v\in V$ the orbit $G\cdot v$ is a principal orbit and can be denoted by a sphere bundle $G\times_{K} S^1_{\|v\|}=G/H$ over $Q$ where $\Z_2^2=H:=Stab(v)\subset K\subset G$.   Let $h\in\Gamma(\Lambda^3(TE))$ be a $K$-invariant $3$-form on the manifold $E$. Since $E=G.V$ the section $h$ can be completely determined by its restriction on $V$, thus we can see $h$ as a $K$-invariant element in $\Gamma(\Lambda^3(TE|_V))$. The choice of an $\rm{Ad}K$-invariant reductive complement $\n$ of $\mathfrak k$ in $\fg$ induces the canonical connection on the principal bundle $G\to G/K=Q$ which in turn induces a connection on the bundle $\pi\colon E\to Q$. Thus we can decompose $TE$ into the horizontal and vertical components isomorphic to $\pi^*E$ and $\pi^*TQ$ respectively. The bundle $TE|_V$ is trivial and given by $V\times (V\oplus\n)$ hence we can think of $h$ as an $K$-equivariant smooth map from $V\to \Lambda^3(V\oplus\n)$. Using the isomorphism $V\cong\R^+\times S^1$ we can describe map $h$ in polar coordinates $(t,v)\in\R^+\times S^1$ as a 1-parameter family of smooth $K$-equivariant maps $h_t\colon S^1\to \Lambda^3(V\oplus\n)$. If we fix a $u_0\in S^1$ and denote by $W$ the space of smooth equivariant maps from $S^1$ to $\Lambda^3(V\oplus\n)$ we can define the evaluation map $\epsilon$ by
+    \begin{align*}
+        \epsilon\colon W&\to \Lambda^3(V\oplus\n)^{\Z_2^2}\\
+        w &\mapsto w(u_0).
+    \end{align*} Note that since $K$ acts transitively on $S^1$ the choice of $u_0$ is irrelevant and $\epsilon$ defines a linear isomorphism. Let $W_p\subset W$ be the space of homogeneous polynomials of degree $p$ in $W$. For any non-zero $v\in V$ multiplication by the $K$-invariant polynomial  $v\to \|v\|$ does not change the restriction of $h$ to $S^1$ and hence we can increase the degree of any $h\in W_p$ by $2$. Since the space of polynomials is dense in the space of smooth functions and the finite dimensionality of $W$ ($\dim W=\dim \Lambda^3(V\oplus\n)^{\Z_2^2}$) then we can find a basis of $\Lambda^3(V\oplus\n)^{\Z_2^2}$ such that every element in the basis corresponds to an element in $W_p$ for some $p\geq 0$. Consider the smooth curve $t\mapsto h_t$ from $\R^+\to \Lambda^3(V\oplus\n)^{\Z_2^2}\cong W$ which has a Taylor expansion at zero $h_t\sim \sum_p h_pt^p$. Eschenburg--Wang \cite[Lemma 1.1]{Eschenburg-Wang} show that the map 
+    \begin{align*}
+        h\colon V\setminus \{0\}\to \Lambda^3(V\oplus\n)
+    \end{align*} extends to $0$ if and only if $h_p\in \epsilon( W_p)$ for all $p\geq 0$.
+ 
+\subsection{Singular orbit at $t=0$}
+The singular isotropy group at $t=0$ is the stabilizer of the orbit $x_.\SO(3)=\id.\SO(3)$. As a subgroup of $\rm{SO}(3)$ it is given by 
+\begin{align*}
+   \left[ \begin{array}{ccc}
+    \cos\theta & - \sin\theta&0\\
+   a \sin\theta& a\cos\theta&0\\
+   0&0&a
+    \end{array}\right]
+\end{align*} for $\theta\in [0,\pi]$ and $a\in\Z_2$. Thus $K_+\cong\rm{S(O(2)O(1))}\cong S^1\times\mathbb Z_2$. On $\R^4=\langle E_1\rangle^\perp=\rm{Span}\{E_2,E_3,E_4,E_5\}$ the action of $K_+$ as a subgroup of $G=\rm{SO}(4)=\rm{SO}(5)_{E_1}$ looks like
+\begin{align*}
+   \left[\begin{array}{cccc}
+         \cos 2\theta&-\sin 2\theta&0&0\\
+         a\sin 2\theta&a\cos2\theta&0&0\\
+         0&0&\cos\theta&-\sin\theta\\
+         0&0&a\sin\theta&a\cos\theta
+    \end{array}\right].
+\end{align*} 
+
+
+% For the singular orbit the group $\SO(4)$ preserves the $E_2$ direction hence acts non-trivially on $\R^4=\rm{Span}\{E_1,E_3,E_4,E_5\}$. We denote by 
+% Using the same basis $\{e_i,i=1,\dots, 6\}$ from \eqref{basis6} for $\Lambda^2(\R^4)\cong\mathfrak{so}(4)$, the action of $K$ on $\mathfrak{so}(4)$ is given by
+% \begin{align*}
+%     e_1&\mapsto a\cos\theta e_1-a\sin\theta e_3,\\
+%     e_2&\mapsto a\cos\theta e_2+a\sin\theta e_4\\
+%     e_3&\mapsto b\cos\theta e_3+b\sin\theta e_1\\
+%     e_4&\mapsto b\cos\theta e_4-b\sin\theta e_2\\
+%     e_5&\mapsto ab\ e_5\\
+%     e_6&\mapsto ab\ e_6.
+% \end{align*}
+
+The singular orbit at $t=0$ is the homogeneous space $Q:=\SO(4)/K_+\cong \frac{\rm{SO}(3)\times\rm{SO}(3)}{\rm{SO}(2)\times\Z_2}=S^2\times\mathbb RP^3$. Here $V=T_qB/T_qQ\cong \R^2$ is the normal space. The space $T_qQ\cong \mathfrak{n}$ is the orthogonal reductive complement of $\mathfrak{k_+}:=\rm{Lie}(K_+)$ in $\mathfrak{so}(4)\cong\mathfrak{su}(2)\oplus\mathfrak{su}(2)$.
+Let $E_{ij}$ denote the anti-symmetric $5\times 5$ matrix with $1$ at the $(i,j)$ entry and $0$ elsewhere. Then $\mathfrak{k_+}$ as a sub-algebra of $\mathfrak{so}(4)_{E_1}$ is given by $\rm{Span}\{2E_{23}+E_{45}\}$ and 
+$\n={\rm{Span}}\{u_1,u_2,u_3,u_4,u_5\}$ where 
+\begin{align*}
+    u_1&:= E_{23}-2E_{45}, \quad u_2:= E_{24}-E_{35},\quad u_3:=E_{24}+E_{35},
+    u_4:=E_{25}+E_{34},\quad u_5:=E_{25}-E_{34}.
+\end{align*}
+From above it is clear that $V$ is spanned by $E_{12},E_{13}$ which we denote by $v_1,v_2$ respectively. The action of the singular group $K$ on the 7-dimensional space $V\oplus\n=\rm{Span}\{v_1,v_2,u_1,u_2,u_3,u_4,u_5\}$ is given by
+\begin{align*}
+   v_1&\mapsto \cos2\theta v_1-a\sin2\theta v_2, \\
+   v_2&\mapsto  \sin2\theta v_1+a\cos2\theta v_2,\\
+   u_1&\mapsto a u_1,\\
+   u_2&\mapsto \cos 3\theta u_2-a\sin 3\theta u_4,\\
+    u_3&\mapsto \cos \theta u_3-a\sin \theta u_5,\\
+     u_4&\mapsto \sin 3\theta u_2+a\cos 3\theta u_4,\\
+      u_5&\mapsto  \sin \theta u_3+a\cos \theta u_5.
+\end{align*}
+The space $\Lambda^{3}(V\oplus \n)^{H}$ of $H$-invariant $3$-forms on $V\oplus \n$ is an $11$-dimensional space spanned by
+
+\[v^{12}u^1, v^1u^{23},v^1u^{45},v^2u^{24},v^2u^{25},v^2u^{34},v^2u^{35},u^{124},u^{125},u^{134},u^{135}.\]
+
+From the above discussion we know that every $\Z_2^2$-invariant $3$-form on $V\oplus\n$ can be described by a $K$-equivariant polynomial from $S^1$ to $\Lambda^3(V\oplus \n)$. The $S^1$ in $V$ is the circle formed by $v^1,v^2$ on which $(e^{i\theta},1)\in K_+$ acts as $e^{2i\theta}$. For any $h\in W$ and $(e^{i\theta},a)\in S^1\times\Z_2$ the $K_+$-equivariance implies that 
+\begin{align*}
+    h(e^{i\theta})&=e^{i\theta}\cdot h(1).
+\end{align*} Using this relation we can compute the polynomial $h$ corresponding to any $\alpha \in \Lambda^3(V\oplus \n)^{\Z_2^2}$ by assuming $h(1)=\alpha$.
+
+
+\begin{itemize}
+    \item $K_+$ acts trivially on $v^{12}u^1, v^1(u^{23}-u^{45})+v^2(u^{25}-u^{34}),u^{124},u^{135}$ hence they correspond to constant polynomials. 
+    \item $(e^{i\theta},1)\in K_+$ acts by $e^{2i\theta}$ on 
+    $v^2u^{24},v^2u^{35},u^{125}-u^{134},v^1(u^{23}+u^{45})+v^2(u^{25}+u^{34})$
+     and by $e^{6i\theta}$ on $v^1(u^{23}+u^{45})-v^2(u^{25}+u^{34})$ hence these forms correspond to degree-1 polynomials. 
+    
+    \item $(e^{i\theta},1)\in K_+$ acts by $e^{4i\theta}$ on $u^{125}+u^{134},v^1(u^{23}-u^{45})-v^2(u^{25}-u^{34})$ hence these forms correspond to degree-2 polynomials. 
+\end{itemize}
+
+Before being able to find the conditions for the solutions to extend over the singular orbit using Eschenburg--Wang we need to change the $\G2$-structure \begin{align*}
+    \g2=& p_1e^{127}+p_2e^{347}+p_3e^{567}+q_1e^{135}+q_2e^{136}+q_3e^{145}+q_4e^{146}+q_5e^{235}+q_6e^{236}+q_7e^{245}+q_8e^{246}
+\end{align*} in the terms of $v_i,u_i$. 
+
+The change of coordinates from $dt,e^1,\dots e^6$ to $v_1,v_2,u_1,\dots, u_5$ is given as follows:
+\begin{align}\label{basis_t0}
+    v^1&=dt, \quad v^2=\frac{t}{2}(e^1+e^2),\\ u^1&=\frac{-e^1+3e^2}{2},\quad
+  u^2=e^3, \quad u^3=e^4,\quad 
+   u^4=e^5, \quad u^5=e^6.
+\end{align}
+In these new coordinates the $\G2$-structure $\g2$ is given by
+\begin{align*}
+    \g2=& \frac{p_1}{t}v^{12}u^1+p_2v^1u^{23}+p_3v^1u^{45}+\frac{3q_1+q_5}{2t}v^2u^{24}+\frac{3q_2+q_6}{2t}v^2u^{25}+\frac{3q_3+q_7}{2t}v^2u^{34}+\frac{3q_4+q_8}{2t}v^2u^{35}\\
+    &+\frac{q_5-q_1}{2}u^{124}+\frac{q_6-q_2}{2}u^{125}+\frac{q_7-q_3}{2}u^{134}+\frac{q_8-q_4}{2}u^{135}.
+\end{align*}
+
+From above we know that for the above $\G2$-structure to extend smoothly over the singular orbit the coefficients of $v^{12}u^1,v^1(u^{25}+u^{34})-v^2(u^{23}+u^{45}),u^{124},u^{135},u^{123}-u^{145},v^1(u^{25}+u^{34})+v^2(u^{23}+u^{45})$ must be \textit{even} and coefficients of $v^2u^{24},v^2u^{35},u^{123}+u^{145},v^1(u^{25}-u^{34})+v^2(u^{23}-u^{45}),v^1(u^{25}-u^{34})-v^2(u^{23}-u^{45})$ must be \textit{odd}. Thus we get the following condition on $p_i,q_i$s':
+\begin{enumerate}[i.]
+    \item $p_1$ is odd
+    \item $p_2+p_3$ is even, $p_2-p_3$ is odd,
+    \item $q_1,q_4, q_5,q_8$ are even,
+    \item $q_2-q_3$ is even, $q_2+q_3$ is odd,
+    \item $q_6-q_7$ is even, $q_6+q_7$ is odd.
+ \end{enumerate}
+% From above we can assume 
+% \begin{align*}
+%     q_i(t)=ty_i(t)
+% \end{align*} for some functions $y_i(t),i=1\dots 8$ on $[0,\pi/3)$ such that 
+% \begin{align*}
+%     y_1(0)+y_8(0)&=0, \ \ \  y_2(0)+y_7(0)=0,\ \ \  y_3(0)+y_6(0)=0,\ \ \  y_4(0)+y_5(0)=0,\\
+% (y_1+y_2+y_3+y_4)(0)&=0.
+% \end{align*}
+% From \eqref{eqns:gen_ng2} we have that 
+% \begin{align*}
+%     p_1&=-\frac{\lambda}{t(y_4+y_5)}, \ \ \  p_2=-\frac{\lambda}{t(y_3+y_6)}, \ \ \  p_3=-\frac{\lambda}{t(y_2+y_7)},
+% \end{align*}
+% and 
+% \begin{equation}\label{eq:sytemofODE_1}
+% \begin{aligned}
+%     y_1'&=-\frac{1}{t}\left(y_1+\frac{\lambda^4(y_1(y_1y_8-y_2y_7-y_3y_6-y_4y_5)+2y_2y_3y_5)}{4(y_2+y_7)(y_4+y_5)(y_3+y_6)} \right),\\
+%     y_8'&=-\frac{1}{t}\left(y_8-\frac{\lambda^4(y_8(y_1y_8-y_2y_7-y_3y_6-y_4y_5)+2y_4y_6y_7)}{4(y_2+y_7)(y_4+y_5)(y_3+y_6)} \right),\\
+%     y_2'&=-\frac{1}{t}\left(y_2+\frac{\lambda^4(y_2(-y_1y_8+y_2y_7-y_3y_6-y_4y_5)+2y_1y_4y_6)}{4(y_2+y_7)(y_4+y_5)(y_3+y_6)} \right)+\frac{\lambda}{t^2(y_2+y_7)},\\
+%      y_7'&=-\frac{1}{t}\left(y_7-\frac{\lambda^4(y_7(-y_1y_8+y_2y_7-y_3y_6-y_4y_5)+2y_3y_5y_8)}{4(y_2+y_7)(y_4+y_5)(y_3+y_6)} \right)-\frac{\lambda}{t^2(y_2+y_7)},\\
+%       y_3'&=-\frac{1}{t}\left(y_3+\frac{\lambda^4(y_3(-y_1y_8-y_2y_7+y_3y_6-y_4y_5)+2y_1y_4y_7)}{4(y_2+y_7)(y_4+y_5)(y_3+y_6)} \right)+\frac{\lambda}{t^2(y_3+y_6)},\\
+%        y_6'&=-\frac{1}{t}\left(y_6-\frac{\lambda^4(y_6(-y_1y_8-y_2y_7+y_3y_6-y_4y_5)+2y_3y_5y_8)}{4(y_2+y_7)(y_4+y_5)(y_3+y_6)} \right)-\frac{\lambda}{t^2(y_3+y_6)},\\
+%        y_4'&= -\frac{1}{t}\left(y_4-\frac{\lambda^4(y_4(-y_1y_8-y_2y_7-y_3y_6+y_4y_5)+2y_2y_3y_8)}{4(y_2+y_7)(y_4+y_5)(y_3+y_6)} \right)-\frac{\lambda}{t^2(y_4+y_5)},\\
+%        y_5'&=-\frac{1}{t}\left(y_5+\frac{\lambda^4(y_5(-y_1y_8-y_2y_7-y_3y_6+y_4y_5)+2y_1y_6y_7)}{4(y_2+y_7)(y_4+y_5)(y_3+y_6)} \right)+\frac{\lambda}{t^2(y_4+y_5)}.
+% \end{aligned}
+% \end{equation}
+
+ \cite[Theorem 4.7]{Haskins-Lorenzo}) use the general ODE result to show the existence of a family of solutions.
+
+\begin{thm}\label{thm:IVPsoln}
+    Consider the initial value problem for $y\in\R^k$ satisfying
+    \begin{equation}\label{eq:IVP}
+\begin{aligned}
+    \dot{y}(t)&=\frac{1}{t}M_{-1}(y)+M(t,y), \\ y(0)&=y_0,
+\end{aligned}
+    \end{equation}
+    where $M_{-1}\colon \R^k\to\R^k$ is a smooth function in the neighbourhood of $y_0$ and $M:\R\times\R^k\to\R^k$ is a smooth function in the neighbourhood of $(0,y_0)$. Then there exists a unique solution of \eqref{eq:IVP} if 
+    \begin{enumerate}
+        \item[i)] $M_{-1}(y_0)=0$,
+        \item[ii)] $n\textup{Id}-{\rm d}_{y_0}M_{-1}$ is invertible for all $n\in\mathbb N$.
+    \end{enumerate}
+     Furthermore the solution depends continuously on $y_0$.  
+\end{thm}
+
+Thus in order to find a solution for the system of ODEs one need to find an initial point $y_0\in\R^k$ for which $M_{-1}(y_0)=0$.
+
+Imposing the above parity relations and the well-definedness of $\g2$ at $t=0$ we can express the coefficients $q_i,i=1\dots 8$ as the following Taylor series expansions around $t=0$ for some real constants $a,b,c$ and smooth functions $y_i(t),i=1\dots 8$,
+\begin{align*}
+    q_1(t)&=a+t^2y_1(t),\\
+    q_2(t)&=b+ty_2(t),\\
+    q_3(t)&=-b+ty_3(t),\\
+    q_4(t)&=c+t^2y_4(t),\\
+    q_5(t)&=-3a+t^2y_5(t),\\
+    q_6(t)&=-3b+ty_6(t),\\
+    q_7(t)&=3b+ty_7(t),\\
+    q_8(t)&=-3c+t^2y_8(t).
+\end{align*}
+We also have \begin{align}
+\begin{split} \label{eq:pp_t=0}
+    p_1&=-\sqrt{\frac{-(q_2+q_7)(q_3+q_6)}{\lambda(q_4+q_5)}},\\
+    p_2&=\sqrt{\frac{-(q_2+q_7)(q_4+q_5)}{\lambda(q_3+q_6)}},\\
+    p_3&=\sqrt{\frac{-(q_3+q_6)(q_4+q_5)}{\lambda(q_2+q_7)}}. 
+\end{split}
+\end{align}
+Thus $p_1$ being odd around $t=0$ implies $p_1(0)=0\implies b=0$. 
+Thus we get \begin{align}\label{eqns:q_in_y_t0}
+\begin{split}
+     q_1(t)&=a+t^2y_1(t),\\
+    q_2(t)&=ty_2(t),\\
+    q_3(t)&=ty_3(t),\\
+    q_4(t)&=c+t^2y_4(t),\\
+    q_5(t)&=-3a+t^2y_5(t),\\
+    q_6(t)&=ty_6(t),\\
+    q_7(t)&=ty_7(t),\\
+    q_8(t)&=-3c+t^2y_8(t).
+\end{split}
+    \end{align}
+Let \begin{align*}
+    Q&=-(y_2+y_7)(y_3+y_6)((c-3a)+t^2(y_4+y_5)
+\end{align*}
+    then we can write the differential equations for the $\G2$-structure to be nearly parallel \eqref{eqns:gen_ng2} as follows
+    \begin{subequations} \label{eqns:yprime}
+    \begin{align}
+    \begin{split}
+         y_1'(t)=&\frac{1}{t}\left(-2y_1- \frac{a\lambda^{5/2}}{2\sqrt{Q}}(a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6-6y_2y_3)\right)\\
+        &-\frac{\lambda^{5/2}}{2\sqrt{Q}}t(a(y_1y_8-y_4y_5)+y_1(a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_2y_3y_5\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ +t^2(y_1^2y_8-y_1y_4y_5))  
+    \end{split}
+    \end{align}
+       \begin{align}
+       \begin{split}
+            y_2'(t)=&\frac{1}{t}\left(-y_2+\sqrt{\frac{-(y_3+y_6)(c-3a+t^2(y_4+y_5)}{\lambda(y_2+y_7)}}+\frac{\lambda^{5/2} ac }{\sqrt{Q}}(3y_2+y_6)\right)\\
+        &+\frac{\lambda^{5/2}}{2\sqrt{Q}}t((y_2^2y_7-y_2y_3y_6-a(y_2y_8-3y_2y_4-2y_4y_6)-c(y_2y_5-3y_1y_2-2y_1y_6))\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ -t^2(y_1y_2y_8+y_2y_4y_5-2y_1y_4y_6))
+       \end{split}
+       \end{align}
+       \begin{align}
+       \begin{split}
+            y_3'(t)=&\frac{1}{t}\left(-y_3+\sqrt{\frac{-(y_2+y_7)(c-3a+t^2(y_4+y_5)}{\lambda(y_3+y_6)}}-\frac{\lambda^{5/2} ac }{\sqrt{Q}}(3y_3+y_7)\right)\\
+        &+\frac{\lambda^{5/2}}{2\sqrt{Q}}t((y_3^2y_6-y_2y_3y_7-a(y_3y_8-3y_3y_4-2y_4y_7)-c(y_3y_5-3y_1y_3-2y_1y_7))\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ -t^2(y_1y_3y_8+y_3y_4y_5-2y_1y_4y_7))
+       \end{split}
+       \end{align}
+       \begin{align}
+       \begin{split}
+        y_4'(t)=&\frac{1}{t}\left(-2y_4+\sqrt{\frac{-(y_2+y_7)(y_3+y_6)}{\lambda(c-3a+t^2(y_4+y_5))}}+\frac{c\lambda^{5/2}}{2\sqrt{Q}}(a(3y_4+y_8)-c(3y_1+y_5)+y_2y_7+y_3y_6+6y_2y_3)\right)\\
+        &-\frac{\lambda^{5/2}}{2\sqrt{Q}}t(c(y_4y_5-y_1y_8)+y_4(-a(3y_4+y_8)+c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_2y_3y_8\\
+         & \hspace{1.25cm}-t^2(y_1y_4y_8-y_4^2y_5))
+       \end{split}
+       \end{align}
+       \begin{align}
+           \begin{split}
+        y_5'(t)=&\frac{1}{t}\left(-2y_5-\sqrt{\frac{-(y_2+y_7)(y_3+y_6)}{\lambda(c-3a+t^2(y_4+y_5))}}+\frac{a\lambda^{5/2}}{2\sqrt{Q}}(3a(3y_4+y_8)-3c(3y_1+y_5)+3y_2y_7+3y_3y_6+2y_6y_7)\right)\\
+        &+\frac{\lambda^{5/2}}{2\sqrt{Q}}t(-3a(y_4y_5-y_1y_8)+y_5(-a(3y_4+y_8)+c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_1y_6y_7\\
+         & \hspace{1.25cm}-t^2(y_1y_5y_8-y_4y_5^2))   
+           \end{split}
+       \end{align}
+       \begin{align}
+           \begin{split}
+        y_6'(t)=&\frac{1}{t}\left(-y_6-\sqrt{\frac{-(y_2+y_7)(c-3a+t^2(y_4+y_5)}{\lambda(y_3+y_6)}}-\frac{3\lambda^{5/2} ac }{\sqrt{Q}}(y_6+3y_2)\right)\\
+        &-\frac{\lambda^{5/2}}{2\sqrt{Q}}t((y_3y_6^2-y_2y_6y_7-a(y_6y_8-3y_4y_6+6y_2y_8)-c(y_5y_6-3y_1y_6+6y_2y_5))\\
+         & \ \ \ \ \ \ \ \ \ \ \ \ \ -t^2(y_1y_6y_8+y_4y_5y_6-2y_2y_5y_8))
+           \end{split}
+       \end{align}
+       \begin{align}
+           \begin{split}
+          y_7'(t)=&\frac{1}{t}\left(-y_7-\sqrt{\frac{-(y_3+y_6)(c-3a+t^2(y_4+y_5)}{\lambda(y_2+y_7)}}+\frac{3\lambda^{5/2} ac }{\sqrt{Q}}(3y_3+y_7)\right)\\
+        &-\frac{\lambda^{5/2}}{2\sqrt{Q}}t((y_2y_7^2-y_3y_6y_7-a(y_7y_8-3y_4y_7+6y_3y_8)-c(y_5y_7-3y_1y_7+6y_3y_5))\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ -t^2(y_1y_7y_8+y_4y_5y_7-2y_3y_5y_8))
+         \end{split}
+       \end{align}
+       \begin{align}
+           \begin{split}
+        y_8'(t)=&\frac{1}{t}\left(-2y_8+\frac{c\lambda^{5/2}} {2\sqrt{Q}}(-3a(3y_4+y_8)+3c(3y_1+y_5)+3(y_2y_7+y_3y_6)+2y_6y_7)\right)\\
+        &+\frac{\lambda^{5/2}}{2\sqrt{Q}}t(-3c(y_1y_8-y_4y_5)+y_8(a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_4y_6y_7\\
+        & \ \ \ \ \ \ \ \ \ \ \ \ \ +t^2(y_1y_8^2-y_4y_5y_8)) 
+        \end{split}
+         \end{align}
+    
+\end{subequations}
+
+Let $y_0=\{b_1,b_2,\dots,b_8\}$ be the initial condition $y_0$ for which $M_{-1}(y_0)=0$ in \ref{thm:IVPsoln}. For $a>0,c<0$ and $\mu_1,\mu_2\in\{\pm 1\}$ we get that
+\begin{align}
+\begin{split}\label{eqn:initialcond_0}
+    b_1&=-\frac{\lambda^2a}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}+1\right)-\frac{\mu_2}{2c}\sqrt{-\lambda ac(3a-c)},\\
+    b_2=b_3&=\lambda\mu_2\sqrt{-ac}+\sqrt{\frac{3a-c}{\lambda}},\\
+    b_4&=\frac{\lambda^2c}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}-1\right)-\frac{\mu_2}{2a}\sqrt{-\lambda ac(3a-c)}+\mu_1\sqrt{\frac{-\lambda ac}{3a-c}},\\
+    b_5&=\frac{3\lambda^2a}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}+1\right)-\frac{\mu_2}{2c}\sqrt{-\lambda ac(3a-c)}-\mu_1\sqrt{\frac{-\lambda ac}{3a-c}},\\
+     b_6=b_7&=-3\lambda\mu_2\sqrt{-ac}-\sqrt{\frac{3a-c}{\lambda}},\\
+      b_8&=-\frac{3\lambda^2c}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}-1\right)-\frac{\mu_2}{2a}\sqrt{-\lambda ac(3a-c)}.
+      \end{split}
+\end{align}
+
+
+
+
+For $ac>0, 3a-c>0$ and $\mu_1,\mu_2\in\{\pm 1\}$ we have
+\begin{align*}
+    b_1&=-\frac{\lambda^2a}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}-1\right)+\frac{\mu_2}{2c}\sqrt{\lambda ac(3a-c)},\\
+    b_2=b_3&=\lambda\mu_2\sqrt{ac}+\sqrt{\frac{3a-c}{\lambda}},\\
+    b_4&=\frac{\lambda^2c}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}+1\right)+\frac{\mu_2}{2a}\sqrt{\lambda ac(3a-c)}+\mu_1\sqrt{\frac{\lambda ac}{3a-c}},\\
+    b_5&=\frac{3\lambda^2a}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}-1\right)-\frac{\mu_2}{2c}\sqrt{\lambda ac(3a-c)}-\mu_1\sqrt{\frac{\lambda ac}{3a-c}},\\
+     b_6=b_7&=-3\lambda\mu_2\sqrt{ac}-\sqrt{\frac{3a-c}{\lambda}},\\
+      b_8&=-\frac{3\lambda^2c}{2}\left(\frac{\mu_1\mu_2(3a+c)}{4(3a-c)}+1\right)-\frac{\mu_2}{2a}\sqrt{\lambda ac(3a-c)}.
+\end{align*}
+
+Now we need to check if the solution with the above initial conditions is unique. For this we need to compute the $\det(n {\rm{Id}}-d_{y_0}M_{-1})$ in both the cases ($ac>0$ and $ac<0$).
+
+We compute that if $\mu_2=1$ 
+\begin{align*}
+    \det( n \rm{Id}-d_{y_0}M_{-1})&=n(n-1)(n-2)^4(n^2-2n+5),
+\end{align*} 
+hence $n \rm{Id}-d_{y_0}M_{-1}$ is not invertible for all $n\in\mathbb{N}$. 
+
+When $\mu_2=-1$ we get 
+\begin{align*}
+    \det( n \rm{Id}-d_{y_0}M_{-1})&=(n-1)(n+1)(n-2)^5(n-3),
+\end{align*} 
+which vanishes for $n=1,2,3$. Thus, we do not get a unique solution in \ref{thm:IVPsoln} in either case. However in \ref{section:taylor_t=0} we will show that the solution is unique upto a third parameter given by $y_2'(0)$ (or equivalently $y_k'(0)$ for any $k=2,3,6,7$). 
+
+
+\begin{rem}
+    In order to make $\sqrt{Q}$ real we need $Q=-(y_2+y_7)(y_3+y_6)(c-3a+t^2(y_4+y_5)>0$ now at $t=0$, $y_2(0)=y_3(0), y_7(0)=y_6(0)$ thus $Q(0)=-(y_2(0)+y_6(0))^2(c-3a)>0$ which implies $3a-c>0$. This is what we have assumed in the writing the above solutions.
+\end{rem}
+% Computations reveal that such a $y_0$ exists only when $\lambda^2=1$. For both $\lambda=\pm 1$ the initial point $y_0$ such that $M_{-1}(y_0)=0$ is uniquely determined in terms of parameters $\alpha_i, i=1,\dots,4$ and is given by
+% \begin{align*}
+% y_0&=\left(-\frac{(\sqrt{2}-1)\alpha_1\alpha_2^2 }{\alpha_3\alpha_4},-\frac{\alpha_1\alpha_2}{\alpha_4},-\frac{\alpha_1\alpha_2}{\alpha_3},\alpha_1,\alpha_2, \alpha_3,\alpha_4,-\frac{(\sqrt{2}+1)\alpha_3\alpha_4}{\alpha_2}\right).
+% \end{align*}
+
+
+
+% \begin{rem}
+% The only possible value for which we get such a $y_0$ is when $\lambda^4=1$ so for real $\lambda$ we have $\lambda=\pm 1$ which corresponds to a choice of orientation so we can fix $\lambda=1$.
+% \end{rem}
+%  \begin{rem}
+%      In the given system of ODEs \eqref{eq:sytemofODE_1} the smoothness of $M_{-1}$ around $y_0$ ensures the smoothness of $M$ around $(0,y_0)$. 
+%  \end{rem}   
+
+\subsection{Singular orbit at $t=\pi/3$}
+
+The isotropy group $K$ of the singular orbit at $t=\pi/3$ stabilizes $\frac{E_1+\sqrt{3}E_2}{2}=\frac{{\rm{diag}} (2,-1,-1)}{\sqrt{6}}$. The embedding of $K_-$ in $\rm{SO}(3)$ is given by 
+\begin{align*}
+   \left[ \begin{array}{ccc}
+   a&0&0\\
+    0&a\cos\theta & - a\sin\theta\\
+   0& \sin\theta& \cos\theta
+   \end{array}\right]
+\end{align*} for $\theta\in [0,\pi]$ and $a\in\Z_2$. Thus $K\cong\rm{S(O(2)O(1))}\cong S^1\times\mathbb Z_2$. On $\R^4=\langle \frac{E_1+\sqrt{3}E_2}{2}\rangle^\perp=\rm{Span}\{\frac{\sqrt{3}E_1-E_2}{2},E_3,E_4,E_5\}$ the action of $K_-$ fixes $\frac{E_1+\sqrt{3}E_2}{2}$, rotates the planes spanned by $E_3, E_4$ and $\frac{\sqrt{3}E_1=E_2}{2}, E_5$ by $\theta$ and $2\theta$ respectively.
+
+The conjugation of $K_-$ with $\gamma(\pi/3)=e^{\frac{\pi}{3}E_{12}}$ gives a rotation that fixes $E_1$, rotates by $\theta$ the plane spanned by $E_3,E_4$ and rotates by $-2\theta$ the plane spanned by $E_2,E_5$ and thus under this conjugation
+ \begin{align*}
+  K_-&= \left[\begin{array}{cccc}
+         \cos 2\theta&0&0&\sin 2\theta\\
+         0&\cos\theta&-\sin\theta&0\\
+         0&a\sin\theta&a\cos\theta&0\\
+         - a\sin 2\theta&0&0&a\cos2\theta
+    \end{array}\right].
+\end{align*} 
+The singular orbit at $t=\pi/3$ is isomorphic to the one at $t=0$ which we denote by $Q$ as well. The normal space is similarly denoted by $V$ and the space $T_qQ\cong \mathfrak{n}$ is the the orthogonal reductive complement of $\mathfrak{k_-}:=\rm{Lie}(K_-)$ in $\mathfrak{so}(4)\cong\mathfrak{su}(2)\oplus\mathfrak{su}(2)$. Then $\mathfrak{k_-}$ as a sub-algebra of $\mathfrak{so}(4)_{E_1}$ is given by $\rm{Span}\{-2E_{25}+E_{34}\}$ and 
+$\n={\rm{Span}}\{u_1,u_2,u_3,u_4,u_5\}$ where 
+\begin{align*}
+    u_1&:=E_{25}+2E_{34}, \quad u_2:=E_{23}+E_{45} ,\quad\\
+    u_3&:=E_{23}-E_{45} ,\quad u_4:=E_{24}-E_{35} ,\quad
+    u_5:=E_{24}+E_{35} .
+\end{align*}
+The $S^1$ in $K_-$ rotates $E_{12}$ and $E_{15}$ which we denote by $v_1,v_2$ respectively. Thus $V={\rm{Span}}(v_1,v_2)$. The action of the singular group $K_-$ on the 7-dimensional space $V\oplus\n=\rm{Span}\{v_1,v_2,u_1,u_2,u_3,u_4,u_5\}$ is given by
+\begin{align*}
+   v_1&\mapsto \cos2\theta v_1-a\sin2\theta v_2, \\
+   v_2&\mapsto  \sin2\theta v_1+a\cos2\theta v_2,\\
+   u_1&\mapsto a u_1,\\
+   u_2&\mapsto \cos \theta u_2-a\sin\theta u_4,\\
+    u_3&\mapsto \cos 3\theta u_3+a\sin3\theta u_5,\\
+     u_4&\mapsto -\sin \theta u_2+a\cos \theta u_4,\\
+      u_5&\mapsto -\sin 3\theta u_3+a\cos 3\theta u_5.
+\end{align*}
+The space $\Lambda^{3}(V\oplus \n)^{H}$ of $H$-invariant $3$-forms on $V\oplus \n$ is an $11$-dimensional space spanned by
+
+\[v^{12}u^1, v^1u^{23},v^1u^{45},v^2u^{24},v^2u^{25},v^2u^{34},v^2u^{35},u^{124},u^{134},u^{125},u^{135}.\]
+
+Similar to the above discussion we can compute the polynomial $h$ corresponding to any $\alpha \in \Lambda^3(V\oplus \n)^{\Z_2^2}$ by assuming $h(1)=\alpha$.
+
+\begin{itemize}
+    \item $K_-$ acts trivially on $v^{12}u^1, v^1(u^{23}-u^{45})-v^2(u^{25}-u^{34}),u^{124},u^{135}$ hence they correspond to constant polynomials. 
+    \item $(e^{i\theta},1)\in K_-$ acts by $e^{2i\theta}$ on 
+    $v^2u^{24},v^2u^{35},u^{125}-u^{134},v^1(u^{23}+u^{45})-v^2(u^{25}+u^{34})$
+     and by $e^{6i\theta}$ on $v^1(u^{23}+u^{45})+v^2(u^{25}+u^{34})$ hence these forms correspond to degree-1 polynomials. 
+    
+    \item $(e^{i\theta},1)\in K_-$ acts by $e^{4i\theta}$ on $u^{125}+u^{134},v^1(u^{23}-u^{45})+v^2(u^{25}-u^{34})$ hence these forms correspond to degree-2 polynomials. 
+\end{itemize}
+After the reparameterization $t=t-\pi/3$, the change of coordinates from $dt,e^1,\dots e^6$ to $v_1,v_2,u_1,\dots, u_5$ is given as follows:
+\begin{align*}
+    v^1&=dt, \quad v^2=\frac{t}{2}(e^5+e^6),\\
+    u^1&=\frac{3e^5-e^6}{2}, \quad
+  u^2=e^1, \quad u^3=e^2, \quad
+   u^4=e^3, \quad u^5=e^4.
+\end{align*}
+In these new coordinates the $\G2$-structure $\g2$ is given by
+\begin{align*}
+    \g2=& \frac{p_3}{t}v^{12}u^1+p_1v^1u^{23}+p_2v^1u^{45}+\frac{-3q_2+q_1}{2t}v^2u^{24}+\frac{-3q_4+q_3}{2t}v^2u^{25}+\frac{-3q_6+q_5}{2t}v^2u^{34}+\frac{-3q_8+q_7}{2t}v^2u^{35}\\
+    &+\frac{q_1+q_2}{2}u^{124}+\frac{q_3+q_4}{2}u^{125}+\frac{q_5+q_6}{2}u^{134}+\frac{q_7+q_8}{2}u^{135}.
+\end{align*}
+The above $\G2$-structure to extend smoothly over the singular orbit the coefficients of $v^{12}u^1,v^1(u^{23}-u^{45})-v^2(u^{25}-u^{34}),u^{124},u^{135},u^{125}+u^{134},v^1(u^{23}-u^{45})+v^2(u^{25}-u^{34})$ must be \textit{even} and coefficients of $v^2u^{24},v^2u^{35},u^{125}-u^{134},v^1(u^{23}+u^{45})-v^2(u^{25}+u^{34}),v^1(u^{23}+u^{45})+v^2(u^{25}+u^{34})$ must be \textit{odd}. Thus we get the following condition on $p_i,q_i$s':
+\begin{enumerate}[i.]
+    \item $p_3$ is odd
+    \item $p_1-p_2$ is even, $p_1+p_2$ is odd,
+    \item $q_1,q_2, q_7,q_8$ are even,
+    \item $q_3+q_5$ is even, $q_3-q_5$ is odd,
+    \item $q_4+q_6$ is even, $q_4-q_6$ is odd.
+ \end{enumerate}
+ 
+ Imposing the above parity relations and the well-definedness of $\g2$ at $t=0$ we can express the coefficients $q_i,i=1\dots 8$ as the following Taylor series expansions around $t=0$ for some real constants $a,b,c$ and smooth functions $y_i(t),i=1\dots 8$,
+\begin{align*}
+    q_1(t)&=3a+t^2y_1(t),\\
+    q_2(t)&=a+t^2y_2(t),\\
+    q_3(t)&=3b+ty_3(t),\\
+    q_4(t)&=b+ty_4(t),\\
+    q_5(t)&=3b+ty_5(t),\\
+    q_6(t)&=b+ty_6(t),\\
+    q_7(t)&=3c+t^2y_7(t),\\
+    q_8(t)&=c+t^2y_8(t).
+\end{align*}
+
+Again using similar calculation for the singular orbit $G/K_+$  we get \begin{align}\label{eqns:q_in_y_tPi3}
+\begin{split}
+     q_1(t)&=3f+t^2y_1(t),\\
+    q_2(t)&=f+t^2y_2(t),\\
+    q_3(t)&=ty_3(t),\\
+    q_4(t)&=ty_4(t),\\
+    q_5(t)&=ty_5(t),\\
+    q_6(t)&=ty_6(t),\\
+    q_7(t)&=-3d+t^2y_7(t),\\
+    q_8(t)&=-d+t^2y_8(t).
+\end{split}
+    \end{align}
+    with $y_3(0)=-y_5(0), y_4(0)=-y_6(0)$.
+
+
+
+% Let \begin{align*}
+%     S&=-((d-3f)+t^2(y_2+y_7))(y_3+y_6)(y_4+y_5)
+% \end{align*}
+%     then we can write the differential equations for the $\G2$-structure to be nearly parallel \eqref{eqns:gen_ng2} as follows
+%     \begin{align*}
+%         y_1'(t)=& \frac{\lambda^{5/2}}{2t^2\sqrt{S}}(9a^2(y_1-9y_8+3y_2-3y_7)-6ay_3y_5-9ay_3y_6-9ay_4y_5)-\frac{2y_1}{t} \\
+%         &  -\frac{\lambda^{5/2}}{2\sqrt{S}}((ay_1(y_1-18y_8+3y_2-3y_7)-y_1(y_3y_6+y_4y_5)+9ay_2y_7+2y_2y_3y_5)+t^2y_1(y_1y_8-y_2y_7)) \\
+%         y_2'(t)=& \frac{\lambda^{5/2}}{2t^2\sqrt{S}}(3a^2(-y_1+9y_8-3y_2+3y_7)+18ay_4y_6+3ay_3y_6+3ay_4y_5)-\frac{1}{t}\left(2y_2+\sqrt{\frac{-(y_4+y_5)(y_3+y_6)}{\lambda (y_2+y_7)}}\right) \\
+%         & +\frac{\lambda^{5/2}}{2\sqrt{S}}((ay_2(y_1-9y_8+3y_2-6y_7)+y_2(y_3y_6+y_4y_5)+3ay_1y_8+2y_1y_4y_6)+t^2y_2(y_1y_8-y_2y_7)) \\
+%         y_3'(t)=&-\frac{\lambda^{5/2}}{2t^2\sqrt{S}}(18a^2(y_3+3y_4))-\frac{y_3}{t} +\frac{\lambda^{5/2}}{2\sqrt{S}}t^2(y_3(y_1y_8+y_2y_7)-2y_1y_4y_7) \\
+%         &  -\sqrt{\frac{-(y_4+y_5)(y_2+y_7)}{\lambda (y_3+y_6)}}+\frac{\lambda^{5/2}}{2\sqrt{S}}(ay_3(y_1-9y_8-3y_2+3y_7)-y_3(y_3y_6-y_4y_5)+6ay_4(y_1+3y_7))\\
+%         y_4'(t)=&\frac{\lambda^{5/2}}{2t^2\sqrt{S}}(6a^2(y_3+3y_4))-\frac{y_4}{t}  -\frac{\lambda^{5/2}}{2\sqrt{S}}t^2(y_4(y_1y_8+y_2y_7)-2y_2y_3y_8)\\
+%         &  +\sqrt{\frac{-(y_3+y_6)(y_2+y_7)}{\lambda (y_4+y_5)}}+\frac{\lambda^{5/2}}{2\sqrt{S}}(-ay_4(y_1-9y_8-3y_2+3y_7)-y_4(y_3y_6-y_4y_5)+2ay_3(y_2+3y_8))\\    
+%         y_5'(t)=&-\frac{\lambda^{5/2}}{2t^2\sqrt{S}}(18a^2(y_5+3y_6))-\frac{y_5}{t}  +\frac{\lambda^{5/2}}{2\sqrt{S}}t^2(y_5(y_1y_8+y_2y_7)-2y_1y_6y_7)\\
+%         &  -\sqrt{\frac{-(y_3+y_6)(y_2+y_7)}{\lambda (y_4+y_5)}}+\frac{\lambda^{5/2}}{2\sqrt{S}}(ay_5(y_1-9y_8-3y_2+3y_7)+y_5(y_3y_6-y_4y_5)+6ay_6(y_1+3y_7))\\
+%         y_6'(t)=&\frac{\lambda^{5/2}}{2t^2\sqrt{S}}(6a^2(y_5+3y_6))-\frac{y_6}{t}  -\frac{\lambda^{5/2}}{2\sqrt{S}}t^2(y_6(y_1y_8+y_2y_7)-2y_2y_5y_8)\\
+%         &  +\sqrt{\frac{-(y_3+y_6)(y_2+y_7)}{\lambda (y_4+y_5)}}+\frac{\lambda^{5/2}}{2\sqrt{S}}(-ay_6(y_1-9y_8-3y_2+3y_7)-y_6(y_3y_6-y_4y_5)+2ay_5(y_2+3y_8))\\
+%           y_7'(t)=& \frac{\lambda^{5/2}}{2t^2\sqrt{S}}(3a^2(-y_1+9y_8-3y_2+3y_7)-2ay_3y_5-3ay_3y_6-3ay_4y_5)-\frac{1}{t}\left(2y_7-\sqrt{\frac{-(y_4+y_5)(y_3+y_6)}{\lambda (y_2+y_7)}}\right) \\
+%         & +\frac{\lambda^{5/2}}{2\sqrt{S}}((ay_7(y_1-9y_8+3+6y_2-3y_7)+y_7(y_3y_6+y_4y_5)-3ay_1y_8-2y_3y_5y_8)+t^2y_7(y_1y_8-y_2y_7))\\
+%         y_8'=& \frac{\lambda^{5/2}}{2t^2\sqrt{S}}(9a^2(y_1-9y_8+3y_2-3y_7)+6ay_4y_6+ay_3y_6+ay_4y_5)-\frac{2y_8}{t} \\
+%         &  -\frac{\lambda^{5/2}}{2\sqrt{S}}((ay_1(2y_1-9y_8+3y_2-3y_7)-y_8(y_3y_6+y_4y_5)-ay_2y_7+2y_4y_6y_7)+t^2y_8(y_1y_8-y_2y_7))       
+% \end{align*}
+
+    We can write the differential equations for the nearly parallel $\G2$-structure as before and solving for $M_{-1}(y_0)=0$ gives the following solutions. 
+    
+    For $df>0, f-3d>0$ and $\mu_1,\mu_2\in\{\pm 1\}$ we get that
+    
+\begin{align*}
+    b_1&=-\frac{3\lambda^2f}{2}\left(\frac{\mu_1\mu_2(3d+f)}{4(3d-f)}-1\right)-\frac{\mu_2}{2d}\sqrt{-\lambda df(3d-f)},\\
+    b_2&=\frac{\lambda^2f}{2}\left(\frac{\mu_1\mu_2(3d+f)}{4(3d-f)}+1\right)-\frac{\mu_2}{2d}\sqrt{-\lambda df(3d-f)}+\mu_1\sqrt{\frac{-\lambda df}{3d-f}},\\
+    b_3=-b_5&=-3\lambda\mu_2\sqrt{df}+\sqrt{\frac{f-3d}{\lambda}},\\
+    b_4=-b_6&=-\lambda\mu_2\sqrt{df}+\sqrt{\frac{f-3d}{\lambda}},\\
+    b_7&=-\frac{3\lambda^2d}{2}\left(\frac{\mu_1\mu_2(3d+f)}{4(3d-f)}+1\right)+\frac{\mu_2}{2f}\sqrt{-\lambda df(3d-f)}-\mu_1\sqrt{\frac{-\lambda df}{3d-f}},\\
+      b_8&=\frac{\lambda^2f}{2}\left(\frac{\mu_1\mu_2(3d+f)}{4(3d-f)}-1\right)+\frac{\mu_2}{2f}\sqrt{-\lambda df(3d-f)}.
+\end{align*}
+
+
+ For $d<0,f>0$ and $\mu_1,\mu_2\in\{\pm 1\}$ we get that
+    
+\begin{align}
+\begin{split}\label{eqn:initialcond_pi3}
+    h_1&=-\frac{3\lambda^2f}{2}\left(\frac{\mu_1\mu_2(3d+f)}{4(3d-f)}-1\right)+\frac{\mu_2}{2d}\sqrt{\lambda df(3d-f)},\\
+    h_2&=-\frac{\lambda^2f}{2}\left(\frac{\mu_1\mu_2(3d+f)}{4(3d-f)}+1\right)+\frac{\mu_2}{2d}\sqrt{\lambda df(3d-f)}+\mu_1\sqrt{\frac{\lambda df}{3d-f}},\\
+    h_3=-h_5&=-3\lambda\mu_2\sqrt{-df}+\sqrt{\frac{f-3d}{\lambda}},\\
+    h_4=-h_6&=-\lambda\mu_2\sqrt{-df}+\sqrt{\frac{f-3d}{\lambda}},\\
+    h_7&=-\frac{3\lambda^2d}{2}\left(\frac{\mu_1\mu_2(3d+f)}{4(3d-f)}-1\right)-\frac{\mu_2}{2f}\sqrt{\lambda df(3d-f)}-\mu_1\sqrt{\frac{\lambda df}{3d-f}},\\
+      h_8&=-\frac{\lambda^2f}{2}\left(\frac{\mu_1\mu_2(3d+f)}{4(3d-f)}-1\right)-\frac{\mu_2}{2f}\sqrt{\lambda df(3d-f)}.
+      \end{split}
+\end{align}
+
+For the above solution if $\mu_2=-1$ 
+\begin{align*}
+    \det( n \rm{Id}-d_{y_0}M_{-1})&=-n(n-1)(n-2)^4(n^2-2n+5),
+\end{align*} 
+and for $\mu_2=1$ we get 
+\begin{align*}
+    \det( n \rm{Id}-d_{y_0}M_{-1})&=(n-1)(n+1)(n-2)^5(n-3),
+\end{align*} 
+hence we do not get a unique solution for the IVP.
+
+\begin{rem}
+    In order to make $\sqrt{(q_4+q_5)(q_2+q_7)(q_3+q_6)}$ real we need $-(y_4+y_5)(y_3+y_6)(f-3d+t^2(y_2+y_7)>0$ now at $t=0$, $y_3(0)=-y_5(0), y_4(0)=-y_6(0)$ thus $(y_3(0)+y_6(0))^2(f-3d)>0$ which implies $f-3d>0$. This is what we have assumed in the writing the above solutions.
+\end{rem}
+
+For the homogeneous solution we have for $\lambda=6/\sqrt{5}$ the parameters $\{a,c,d,f\}$ are given by $\{\frac{\sqrt{5}}{20},-\frac{3\sqrt{5}}{100},-\frac{\sqrt{5}}{20},\frac{3\sqrt{5}}{100}\}$. The choice $\lambda=6/\sqrt{5}$ is fixed when we assume $\|dt\|^2=1$ with respect to the $\G2$-metric. {\red{we also get $\mu_1,\mu_2=1$ in this solution}}.
+
+For the homogeneous nearly parallel $\G2$-structure on $S^7$, one of the singular ends has the same weight as the Berger so we can compute the parameters $a,c$. We get that $(a,c)=(\frac{\sqrt{5}}{25},\frac{-3\sqrt{5}}{5})$.
+
+% \begin{rem}
+%     Although both $\mu_1=\pm 1$ are admissible in expressions for $y_0$ or equivalently $b_i's$ there might be a way to fix the value of $\mu_1$. In \textsection 8 Proposition 8.8 \cite{Haskins-Lorenzo} they use the taylor series expansion of $q_i's$ upto higher order terms (which can be done by plugging in $b_i's$ in the equation for $y_i'(t)$ and compute $y_i'(0)$ then again differentiate $y_i'(t)$ and use these values of $y_i'(0)$ and $b_i$ to compute $y''_i(0)$ and repeat the process. But at present I am not sure it is required.  
+% \end{rem}
+\section{Taylor series expansion around the singular orbit at $t=0$}\label{section:taylor_t=0}
+
+
+
+In the equations \eqref{eqns:yprime} we denote the coefficients of $1/t$ in $y_i'$ by $M_{-1,i}$ and we want to solve for $y_i(0)=b_i$ so all $M_{-1,i}'s$ vanish at $t=0$. In trying to compute the $b_i's$ by hand we come across 6 equations in total for $b_1,b_2,b_4,b_5,b_6$, and $b_8$ since $b_3=b_2$ and $b_7=b_6$. For notational convenience we set 
+\begin{align*}
+    \frac{\lambda^{5/2}ac}{\sqrt{Q}(0)} = \frac{\mu_1\lambda^{5/2}ac}{\sqrt{3a-c}}\frac{1}{(b_2+b_6)} = \frac{\mu_1K}{b_2+b_6},
+\end{align*}  where $\mu_1\in\Z_2$ and $\sqrt{(b_2+b_6)^2}=\mu_1(b_2+b_6)$.
+First, we solve for $b_2,b_6$. We have
+\begin{align*}
+   M_{-1,2}(0)&= b_2-\sqrt{\frac{3a-c}{\lambda}} + \frac{\mu_1K}{b_2+b_6}(3b_2+b_6),\\
+    M_{-1,6}(0)&= b_6+\sqrt{\frac{3a-c}{\lambda}}-\frac{3\mu_1K}{b_2+b_6}(3b_2+b_6).
+\end{align*}
+
+Setting  $3M_{-1,2}(0)+M_{-1,6}(0)=0$ we get
+\begin{align*}
+   3b_2+ b_6=2\sqrt{\frac{3a-c}{\lambda}}.
+\end{align*}
+Substituting the above in $M_{-1,2}(0), M_{-1,6}(0)$ and setting $M_{-1,2}(0)+M_{-1,6}(0)=0$ we get
+\[b_2+b_6-\frac{4\mu_1K}{b_2+b_6}\sqrt{\frac{3a-c}{\lambda}}=b_2+b_6-\frac{4\mu_1\lambda^2 a c}{b_2+b_6}=0
+\]
+
+Assuming $ac<0$, we get for $\mu_1=-1$, as $\lambda>0$. The above equation implies $b_2+b_6=-2\mu \lambda \sqrt{-ac}$ for $\mu\in\Z_2$. 
+\begin{align*}
+    b_2&=b_3=\mu \lambda \sqrt{-ac}+\sqrt{\frac{3a-c}{\lambda}},\\
+    b_6&=b_7=-3\lambda\mu\sqrt{-ac}-\sqrt{\frac{3a-c}{\lambda}}
+\end{align*}
+The possible ways for $Q(0)\to 0$ is if $3a-c\to 0$ or $b_2\to -b_6$. In both cases, for the equations to still be well defined we need $ac \to 0$. In the former case this means both $a,c\to 0$. If $b_2\to -b_6$ then for everything to still make sense we still need $ac\to0$. But this time this does not necessarily imply both a and c to vanish and only one of them can vanish. If $a=0$ then $c<0$, if $c=0$ then $a>0$. 
+
+The volume of the 5-dim singular orbit $V_5$ can be computed by using the basis $u_i,i=1..5$ from \eqref{basis_t0}. We compute that \begin{align*}
+    V_5&= \sqrt{-\cfrac{25 \lambda^5 (ac)^3(3b_2+b_6)^4}{(3a-c)(b_2+b_6)^4}}.
+\end{align*} So one of the ways that the volume of the singular orbit can vanish is when $3b_2+b_6=0$. That forces $b_2+b_6=0$ so we get both $b_2,b_6\to 0$. But then $M_{-1,2}$ and $M_{-1.6}$ can both never vanish simultaneously unless 
+\[\lim_{b_2,b_6\to 0} \frac{3b_2+b_6}{b_2-b_6}=0\] and $3a-c=0$. 
+
+The equations for $b_i,i=1,4,5,8$ are given by (assuming $ac<0$ and $\mu_1=-1$)
+\begin{align*}
+    M_{-1,1}(0)&= 2b_1+\frac{K}{2c(b_2+b_6)}(a(3b_4+b_8)-c(3b_1+b_5)-2b_2(3b_2+b_6)), \\
+     M_{-1,8}(0)&= 2b_8-\frac{K}{2a(b_2+b_6)}(-3a(3b_4+b_8)+3c(3b_1+b_5)+2b_6(3b_2+b_6)),\\
+      M_{-1,4}(0)&= 2b_4-\frac{b_2+b_6}{\sqrt{\lambda(3a-c)}}-\frac{K}{2a(b_2+b_6)}(a(3b_4+b_8)-c(3b_1+b_5)+2b_2(3b_2+b_6)),\\
+      M_{-1,5}(0)&= 2b_5+\frac{b_2+b_6}{\sqrt{\lambda(3a-c)}}-\frac{K}{2c(b_2+b_6)}(3a(3b_4+b_8)-3c(3b_1+b_5)+2b_6(3b_2+b_6)).
+     \end{align*}
+
+Setting $3M_{-1,1}+M_{-1,5}=0$ and $3M_{-1,4}+M_{-1,8}=0$ we get
+\begin{align*}
+    2(3b_1+b_5)+\frac{b_2+b_6}{\sqrt{\lambda(3a-c)}}-\frac{K (3b_2+b_6)^2}{c (b_2+b_6)}=0,\\
+    2(3b_4+b_8)-3\frac{b_2+b_6}{\sqrt{\lambda(3a-c)}}-\frac{K (3b_2+b_6)^2}{a (b_2+b_6)}=0.
+\end{align*}
+So we can write $3b_1+b_5, 3b_4+b_8$ in terms of $b_2+b_6$ and $3b_2+b_6$ which we both know in terms of $a,c$. Substituting these values in $M_{-1,i}=0,i=1,4,5,8$ give $b_i,i=1,4,5,8$.
+\begin{align*}
+    b_1&=\frac{\mu\lambda^{3/2}a}{8\sqrt{-ac(3a-c)}}\left(\frac{\mu\lambda ac(3a+c)}{\sqrt{-\lambda a c(3a-c)}}-4\mu\sqrt{-\lambda ac(3a-c)}-4\frac{3a-c}{\lambda} \right)\\
+    &=-\frac{\lambda^2a}{2}\left(\frac{(3a+c)}{4(3a-c)}+1\right)+\frac{\mu}{2c}\sqrt{-\lambda ac(3a-c)},\\
+     b_4&=\frac{\lambda^2c}{2}\left(\frac{(3a+c)}{4(3a-c)}-1\right)+\frac{\mu}{2a}\sqrt{-\lambda ac(3a-c)}-\mu\sqrt{\frac{-\lambda ac}{3a-c}},\\
+    b_5&=\frac{3\lambda^2a}{2}\left(\frac{(3a+c)}{4(3a-c)}+1\right)-\frac{\mu}{2c}\sqrt{-\lambda ac(3a-c)}+\mu\sqrt{\frac{-\lambda ac}{3a-c}},\\
+      b_8&=-\frac{3\lambda^2c}{2}\left(\frac{(3a+c)}{4(3a-c)}-1\right)-\frac{\mu}{2a}\sqrt{-\lambda ac(3a-c)}.
+\end{align*}
+
+The two known solutions that are complete at $t=0$ are Berger and the round $S^7$ for which $\mu=-1, \lambda=6/\sqrt{5}$, and  the parameters $a=\sqrt{5}/20, c=-3\sqrt{5}/100$, and $a=\sqrt{5}/25, c=-3\sqrt{5}/5$ respectively. 
+
+\medskip
+
+\noindent
+\large{\textbf{First order coefficients:}}
+
+\medskip
+\noindent
+We now compute $y_i'(0)$ for $i=1\dots 8$. Again we can use the fact that $y_3'(0)=-y_2'(0)$ and $y_7'(0)=-y_6'(0)$. Moreover, since $y_i$ is even for $i=1,4,5,8$, $y_i'(0)=0$ in these cases.  So overall, we just need to compute $y_2'(0)$ and $y_6'(0)$. 
+
+From \eqref{eqns:yprime} for computing $y_2'(0),y_6'(0)$ it is enough to compute the first order derivative of $M_{-1,2},M_{-1,6}$ respectively. The equations we get are:
+\begin{align*}
+    2y_2'(0)&=-\frac{\lambda^{3/2}}{2}\sqrt{\frac{-ac}{3a-c}}(3y_2'(0)+y_6'(0))-\frac{1}{2\lambda^{3/2}}\sqrt{\frac{3a-c}{-ac}} (y_2'(0)-y_6'(0)),\\
+     2y_6'(0)&=\frac{3\lambda^{3/2}}{2}\sqrt{\frac{-ac}{3a-c}}(3y_2'(0)+y_6'(0))-\frac{1}{2\lambda^{3/2}}\sqrt{\frac{3a-c}{-ac}} (y_2'(0)-y_6'(0)).
+\end{align*}
+Both the above equations are same as can be seen by computing $2(y_2'(0)-y_6'(0))$ and $2(3y_2'(0)+y_6'(0))$. We get the following relation
+\begin{align}\label{eqn:y_2y_6prime}
+    y_6'(0)&=\frac{\sqrt{3a-c}+3\lambda^{3/2}\sqrt{-ac}}{\sqrt{3a-c}-\lambda^{3/2}\sqrt{-ac}} y_2'(0).
+\end{align}
+\begin{rem}
+    This is all the information we get by the first derivative of $y_i$. We do not get explicit values of $y_2'(0)$ or $y_6'(0)$ which was expected as the solutions are not unique in the parameters $(a,c)$.
+\end{rem}
+
+\medskip
+
+\noindent
+\large{\textbf{Second order coefficients:}}
+
+\noindent
+Now we compute $y_i''(0)$ for $i=1,\dots,8$. Again $y_3''(0)=y_2''(0)$ and $y_7''(0)=y_6''(0)$ so we have 6 unknowns. 
+From equation \eqref{eqns:yprime} for all $i=1,\dots,8$, \[y_i''(0)=\frac{M_{-1,i}''(0)}{2}+M_i'(0,y)\]. 
+So we compute these quantities for $i=1,2,4,5,6,8$. For these computations, we would need the following identities:
+\begin{align*}
+Q(0)&=(b_2+b_6)^2(3a-c)=-4\lambda^2 a c (3a-c),\\
+Q'(0)&=0,\\
+    Q''(0)&=2(3a-c)((b_2+b_6)(y_2''(0)+y_6''(0))-(y_2'(0)-y_6'(0))^2)-2(b_2+b_6)^2(b_4+b_5).
+\end{align*}
+
+Let $\gamma_i=y_i''(0)$ then,
+\begin{align*}
+    \gamma_1&= -\frac{b_1Q''(0)}{4Q(0)}-\frac{a\lambda^{5/2}}{8\sqrt{Q(0)}}(a(3\gamma_4+\gamma_8)-c(3\gamma_1+\gamma_5)-(y_2y_7+y_3y_6+6y_2y_3)''(0))\\
+    &-\frac{\lambda^{5/2}}{4\sqrt{Q(0)}}(a(b_1b_8-b_4b_5)+b_1(a(3b_4+b_8)-c(3b_1+b_5))-2b_2(b_1b_6-b_2b_5))\\
+    \gamma_2&=-\frac{\gamma_2}{2}+\frac{\lambda^{5/2}ac}{2\sqrt{Q(0)}}(3\gamma_2+\gamma_6)-\frac{\lambda^{5/2}ac}{4Q(0)^{3/2}}(3b_2+b_6)Q''(0)+\frac{\sqrt{3a-c}}{2\sqrt{\lambda}}\frac{(y_2'(0)-y_6'(0))^2}{(b_2+b_6)^2}\\&-\frac{b_4+b_5}{2\sqrt{\lambda (3a-c)}}+\frac{\lambda^{5/2}}{2\sqrt{Q(0)}}(b_2(c(3b_1-b_5)+a(3b_4-b_8))+2b_6(cb_1+ab_4)\\
+     \gamma_4&=  -\left(b_4+\frac{b_2+b_6}{2\sqrt{\lambda(3a-c)}}\right)\frac{Q''(0)}{4Q(0)}
+    -\left(\frac{p_1(t)}{4t}\right)''(0)\\ &+\frac{c\lambda^{5/2}}{8\sqrt{Q(0)}}(a(3\gamma_4+\gamma_8)-c(3\gamma_1+\gamma_5)+(y_2y_7+y_3y_6+6y_2y_3)''(0))\\
+    &-\frac{\lambda^{5/2}}{4\sqrt{Q(0)}}(-c(b_1b_8-b_4b_5)+b_4(-a(3b_4+b_8)+c(3b_1+b_5))+2b_2(b_2b_8-b_4b_7))\\   
+    \gamma_5&= -\left(b_5-\frac{b_2+b_6}{2\sqrt{\lambda(3a-c)}}\right)\frac{Q''(0)}{4Q(0)}
+    +\left(\frac{p_1(t)}{4t}\right)''(0)\\ &+\frac{3a\lambda^{5/2}}{8\sqrt{Q(0)}}(a(3\gamma_4+\gamma_8)-c(3\gamma_1+\gamma_5)-(y_2y_7+y_3y_6+\frac{2}{3}y_6y_7)''(0))\\
+    &+\frac{\lambda^{5/2}}{4\sqrt{Q(0)}}(3a(b_1b_8-b_4b_5)+b_5(-a(3b_4+b_8)+c(3b_1+b_5))+2b_6(b_1b_6-b_2b_5))\\
+    \gamma_6&=-\frac{\gamma_6}{2}-\frac{3\lambda^{5/2}ac}{2\sqrt{Q(0)}}(3\gamma_2+\gamma_6)+\frac{3\lambda^{5/2}ac}{4Q(0)^{3/2}}(3b_2+b_6)Q''(0)-\frac{\sqrt{3a-c}}{2\sqrt{\lambda}}\frac{(y_2'(0)-y_6'(0))^2}{(b_2+b_6)^2} \\&+\frac{b_4+b_5}{2\sqrt{\lambda (3a-c)}}-\frac{\lambda^{5/2}}{2\sqrt{Q(0)}}(b_6(c(3b_1-b_5)+a(3b_4-b_8))-6b_2(cb_5+ab_8))\\
+    \gamma_8&= -\frac{b_8Q''(0)}{4Q(0)}-\frac{3c\lambda^{5/2}}{8\sqrt{Q(0)}}(a(3\gamma_4+\gamma_8)-c(3\gamma_1+\gamma_5)-(y_2y_7+y_3y_6+\frac{2}{3}y_6y_7)''(0))\\
+    &+\frac{\lambda^{5/2}}{4\sqrt{Q(0)}}(-3c(b_1b_8-b_4b_5)+b_8(a(3b_4+b_8)-c(3b_1+b_5))-2b_6(b_2b_8-b_4b_7))   
+\end{align*}
+
+We first compute $\gamma_2$ and $\gamma_6$ as it only depends on $b_i, y'_2(0), y'_6(0)$. For computing $y_2'(0)$ and $y_6'(0)$ we also need the normalization condition \eqref{eqn:normalization} that states for $\alpha_i=q_iq_{9-i}$,
+\begin{align*}
+  \sum_{i=1}^4 \alpha_i^2 - 2\sum_{i,j=1,i<j}^4\alpha_i\alpha_j +2(q_1q_4q_6q_7+q_2q_3q_5q_8) = -4(p_1p_2p_3)^2.
+\end{align*}
+Substituting  $q_i$ as in \eqref{eqns:q_in_y_t0} and comparing the coefficient of $t^4$ from both sides we get
+\begin{align}\label{eqn:normalizationode}
+    \sqrt{3a-c}(\gamma_2+\gamma_6)-\lambda^{3/2}\sqrt{-ac}(3\gamma_2+\gamma_6)&=\frac{\lambda^3\sqrt{-ac}(3a+c)^2}{8 (3a-c)^{3/2}}
+\end{align}
+From the above equations we get that
+\begin{align*}
+    3\gamma_2+\gamma_6&=  \frac{2\sqrt{3a-c}}{3\sqrt{\lambda} (b_2+b_6)^2} (y_2'(0)-y_6'(0))^2-\frac{b_4+b_5}{3\sqrt{\lambda (3a-c)}} \\
+    &+\frac{\lambda^{5/2}}{3\sqrt{Q(0)}}((3b_2-b_6)(c(3b_1-b_5)+a(3b_4-b_8))+6(b_2(cb_5+ab_8)+b_6(cb_1+ab_4)))\\
+    &=-\frac{\sqrt{3 a -c}\, \left(y_{2}'(0)-y_{6}'(0)\right)^{2}}{6 a c \,\lambda^{{5}/{2}}}+\frac{a -c}{3 \sqrt{-a c}}-\frac{\lambda^{{3}/{2}} \left(27 a^{2}-14 a c +3 c^{2}\right)}{4 \left(3 a -c \right)^{{3}/{2}}}\\
+    \gamma_2+\gamma_6&= -\frac{2\lambda^{5/2}ac}{3\sqrt{Q(0)}}(3\gamma_2+\gamma_6)+\frac{\lambda^{5/2} ac}{3Q(0)^{3/2}}(3b_2+b_6)Q''(0)\\
+    &+\frac{\lambda^{5/2}}{3\sqrt{Q(0)}}((b_2-b_6)(c(3b_1-b_5)+a(3b_4-b_8))+6b_2(cb_5+ab_8)+2b_6(cb_1+ab_4))\\
+    &=-\frac{\gamma_2+\gamma_6}{3}+\frac{\lambda^{3/2}\sqrt{-ac}}{3\sqrt{3a-c}}(3\gamma_2+\gamma_6)+\frac{1}{6\lambda\sqrt{-ac}}(y_2'(0)-y_6'(0))^2\\
+    &+\frac{\lambda^{{3}/{2}} \left(a -c \right)}{3 \sqrt{3 a -c}}-\frac{\lambda^{3} \sqrt{-a c}\, \left(63 a^{2}-54 a c +7 c^{2}\right)}{12 \left(3 a -c \right)^{2}}
+\end{align*}
+
+Combining the equations for $3\gamma_2+\gamma_6$, $\gamma_2+\gamma_6$,  we get
+\begin{align*}
+    \gamma_2+\gamma_6&=\frac{\left(y'_2(0)-y_6'(0)\right)^{2}}{6 \lambda  \sqrt{-ac}}+\frac{\lambda^{{3}/{2}} \left(a -c \right)}{3 \sqrt{3 a -c}}-\frac{\lambda^{3} \sqrt{-ac}\, \left(5 a -c \right) \left(9 a -5 c \right)}{8 \left(3 a -c \right)^{2}}.
+\end{align*}
+
+Equation \eqref{eqn:normalizationode} is already satisfied so we do not get any new information. We can compute that
+
+\begin{align}
+\begin{split}
+\label{eq:gamma_2}
+    \gamma_2=& (\sqrt{-\lambda^3 ac}-\sqrt{3a-c})\left(\frac{(y_2'(0)-y_6'(0))^2}{12\lambda^{5/2}ac}-\frac{a-c}{6\sqrt{-ac(3a-c)}}+\frac{\lambda^{3/2}(5a-c)(9a-5c)}{16(3a-c)^2}\right)\\ &-\frac{\lambda^{3/2}\sqrt{3a-c}}{16}
+        \end{split}
+\end{align}
+\begin{align}
+\begin{split}\label{eq:gamma_6}
+    \gamma_6=&(\sqrt{3a-c}-3\sqrt{-\lambda^3 ac})\left(\frac{(y_2'(0)-y_6'(0))^2}{12\lambda^{5/2}ac}-\frac{a-c}{6\sqrt{-ac(3a-c)}}+\frac{\lambda^{3/2}(5a-c)(9a-5c)}{16(3a-c)^2}\right) \\ &+\frac{\lambda^{3/2}\sqrt{3a-c}}{16}
+\end{split}
+\end{align}
+
+
+\begin{rem}
+If we further assume that 
+\begin{align*}
+    (y_2'(0)-y_6'(0))^2=\left(\frac{2\lambda^2 a c}{3a-c}\right)^2,
+\end{align*} which from \eqref{eqn:y_2y_6prime} implies
+ \begin{align*}
+    y_2'(0)&=\rm{sgn}(\lambda^{3/2}\sqrt{- a c}-\sqrt{3a-c}) \ \frac{\lambda^{2}ac+\sqrt{-\lambda ac(3a-c)})}{2(3a-c)} \\
+     y_6'(0)&=\rm{sgn}(\lambda^{3/2}\sqrt{- a c}-\sqrt{3a-c}) \ \frac{-3\lambda^{2}ac+\sqrt{-\lambda ac(3a-c)})}{2(3a-c)}.
+\end{align*}
+% \begin{align*}
+%     y_2'(0)&=\rm{sgn}(\lambda^{3/2}\sqrt{- a c}-\sqrt{3a-c}) \ \frac{\lambda^{2}ac+\sqrt{-\lambda ac(3a-c)})}{2(3a-c)}.
+% \end{align*}
+    The above assumption is made as it is true for both the $S^7$ and the Berger case. 
+\end{rem}
+% I tried to fix a sign by looking at the two complete solutions at the $t=0$ singular orbit that is the 
+% \begin{itemize}
+%     \item homogeneous Berger solution : $\lambda=\frac{6}{\sqrt{5}}, a = \frac{\sqrt{5}}{20}, c = -\frac{3\sqrt{5}}{100}, y_2'(0)=-\frac{\sqrt{5}}{50}$.
+%     \item the round $S^7$: $\lambda=\frac{6}{\sqrt{5}}, a = \frac{\sqrt{5}}{25}, c = -\frac{3\sqrt{5}}{5}, y_2'(0)=-\frac{\sqrt{5}}{50}$.
+% \end{itemize}
+%  and  we get
+
+% Substituting the above in $\gamma_2,\gamma_6$ we get
+% \begin{align*}
+%     \gamma_2&=\frac{\lambda^{3} \sqrt{-a c}\, \left(135 a^{2}-86 a c +15 c^{2}\right)}{48 \left(3 a -c \right)^{2}}-\frac{\lambda^{{3}/{2}} \left(93 a^{2}-50 a c +13 c^{2}\right)}{24 \left(3 a -c \right)^{{3}/{2}}}+\frac{a -c}{6 \sqrt{-a c}}\\
+%     \gamma_6&=-\frac{\lambda^{3} \sqrt{-a c}\, \left(405 a^{2}-258 a c +45 c^{2}\right)}{48 \left(3 a -c \right)^{2}}+\frac{\lambda^{{3}/{2}} \left(117 a^{2}-82 a c +21 c^{2}\right)}{24 \left(3 a -c \right)^{{3}/{2}}}-\frac{a -c}{6 \sqrt{-a c}}
+% \end{align*}
+
+Moreover if we compute $3\gamma_1+\gamma_5$ and $3\gamma_4+\gamma_8$ it is easy to see that both of these values only depends on $\gamma_2$ and $\gamma_6$ along with lower order terms and thus we can express $\gamma_i$ for $i=1,4,5,8$ in terms of $\gamma_2$, $\gamma_6$ and lower order terms. The actual expressions for $\gamma_i$ for $i=1,4,5,8$ can also be computed but have no evident significance and are thus being omitted. 
+
+\medskip
+\noindent
+\medskip
+
+\noindent
+\large{\textbf{Third order coefficients:}}
+
+\noindent
+
+Similar to the first order derivatives $y_i'''(0)=0$ for $i=1,4,5,8$ and $y_3'''(0)=-y_2'''(0)$ and $y_7'''(0)=-y_6'''(0)$ so we only need to compute $y_2'''(0)$, and $y_6'''(0)$.
+Using \eqref{eqns:q_in_y_t0} we get that 
+\begin{align*}
+ y_2'''(0)=&\frac{1}{3}\left(-y_2'''(0)-p_2'''(0)+\lambda^{5/2}a c \left(\frac{3y_2+y_6}{\sqrt{Q}}\right)'''(0)\right)\\
+        &+\frac{\lambda^{5/2}}{\sqrt{Q(0)}}(y_2(y_2y_7-y_3y_6+a(3y_4-y_8)+c(3y_1-y_5))+2y_6(cy_1+ay_4))'(0)\\
+y_6'''(0)=&\frac{1}{3}\left(-y_6'''(0)-p_2'''(0)-3\lambda^{5/2}a c \left(\frac{3y_2+y_6}{\sqrt{Q}}\right)'''(0)\right)\\
+    &+\frac{\lambda^{5/2}}{\sqrt{Q(0)}}(y_6(y_2y_7-y_3y_6-a(3y_4-y_8)-c(3y_1-y_5))-6y_2(cy_5+ay_8))'(0)
+\end{align*}
+
+From above 
+\begin{align*}
+    3y_2'''(0)+y_6'''(0)&= -p_2'''(0)+\frac{3\lambda^{5/2}}{4\sqrt{Q(0)}}((3y_2+y_6)(y_2y_7-y_3y_6)+(3y_2-y_6)(a(3y_4-y_8)+c(3y_1-y_5))\\
+    &-6y_2(cy_5+ay_8)+6y_6(cy_1+ay_4))'(0)\\
+    y_2'''(0)-y_6'''(0)&= \lambda^{5/2}ac \left(\frac{3y_2+y_6}{\sqrt{Q}}\right)'''(0)+\frac{3\lambda^{5/2}}{4\sqrt{Q(0)}}((y_2-y_6)(y_2y_7-y_3y_6)\\ &+(y_2+y_6)(a(3y_4-y_8)+c(3y_1-y_5))
+    +2y_6(cy_1+ay_4)+6y_2(cy_5+ay_8))'(0).
+\end{align*}
+By computing $p_2'''(0)$, we can rewrite the above equations as 
+\begin{align*}
+3y_2'''(0)+y_6'''(0)&=-\frac{\sqrt{3a-c}}{2\lambda^{3/2}\sqrt{-ac}}(y_2'''(0)-y_6'''(0))+\Lambda_1,\\
+    y_2'''(0)-y_6'''(0)&=-\frac{\lambda^{3/2}\sqrt{-ac}}{2\sqrt{3a-c}}(3y_2'''(0)+y_6'''(0))+\Lambda_2
+\end{align*} where $\Lambda_{1,2}$ are lower order terms depending on $a,c,\lambda$, and $y_2'(0)$. It is clear from above two equations that we can compute $y_2'''(0), y_6'''(0)$ explicitly in terms of $\Lambda_1,\Lambda_2$.
+
+Although \ref{thm:IVPsoln} does not guarantee the uniqueness of the solutions with the given initial we can still show that we get a unique solution if we also fix $y_2'(0)$ (or equivalently $y_6'(0)$) for the above solutions. We can show that all the higher order derivatives of $y_i's$ at $t=0$ can be computed in terms of the lower order derivatives, essentially $y_2'(0)$. We prove the same now.
+
+From \eqref{eqns:yprime} we have that for $n\geq 4, n\in\mathbb{N}$
+\begin{align*}
+   \frac{n+1}{n} y_2^{(n)}(0)=&\frac{p_3^{(n)}(0)}{n}+\frac{\lambda^{5/2} ac}{n} \left(\frac{3y_2+y_6}{\sqrt{Q}}\right)^{(n)}(0)\\
+   &+\frac{\lambda^{5/2} ac}{n} \left(\frac{1}{\sqrt{Q}}(y_2(y_2y_7-y_3y_6+c(3y_1-y_5)+a(3y_4-y_8))+2y_6(ay_1+cy_4))\right)^{(n-2)}(0)\\
+   &-3\lambda^{5/2}\left(\frac{1}{\sqrt{Q}}(y_2(y_1y_8-y_4y_5)-2y_1y_4y_6)\right)^{(n-4)}(0),\\
+    \frac{n+1}{n} y_6^{(n)}(0)=&-\frac{p_2^{(n)}(0)}{n}-\frac{3\lambda^{5/2} ac}{n} \left(\frac{3y_2+y_6}{\sqrt{Q}}\right)^{(n)}(0)\\
+   &+\frac{\lambda^{5/2} ac}{n} \left(\frac{1}{\sqrt{Q}}(y_6(y_2y_7-y_3y_6-c(3y_1-y_5)-a(3y_4-y_8))+6y_2(cy_5+ay_8))\right)^{(n-2)}(0)\\
+   &+3\lambda^{5/2}\left(\frac{1}{\sqrt{Q}}(y_6(y_1y_8-y_4y_5)-2y_2y_5y_8)\right)^{(n-4)}(0).
+\end{align*}
+In the above expression, $Q=-(y_2+y_7)(y_3+y_6)(c-3a+t^2(y_4+y_5))$ so, $Q^{(n)}(0)$ is determined by $y_2^{(i)}(0),y_6^{(i)}(0) $ for $i\leq n$ and $y_5^{(i)}(0),y_5^{(i)}(0) $ for $i\leq n-2$. 
+
+Also, from \eqref{eq:pp_t=0} the $n^{th}$-derivative of $p_3$ at $t=0$ also depends on at most the $n^{th}$-derivative of $y_2,y_6$ and the $(n-2)^{th}$-derivative of $y_4,y_5$.  
+
+Now, using that $p_2+p_3$ is even and $p_2-p_3$ is odd we have that
+\begin{align*}
+    \frac{n+1}{n}( y_2+(-1)^n y_6)^{(n)}(0)=&\frac{4\lambda^{5/2} ac}{n} \left(\frac{3y_2+y_6}{\sqrt{Q}}\right)^{(n)}(0)+\xi_{1,n-2}\\
+    \frac{n+1}{n}( 3y_2+ y_6)^{(n)}(0)=& \frac{4p_3^{(n)}(0)}{n}+\xi_{2,n-2},
+\end{align*} where $\xi_{p,k}$ denotes functions in $y_i, i=1,\dots,8$ which depend on at most $k^{th}$ derivative of $y_i$.
+Thus, for $n\geq 4$, we can compute $y_2^{(n)}(0)$, and $y_6^{(n)}(0)$ inductively using the lower order derivatives of $y_i$ and $i=1,\dots,8$ at $t=0$, essentially in terms of $a,c$ and $y_2'(0)$.
+
+Similarly we can show for $l=1,4,5,8$ $y_l^{(n)}(0)$ can be computed using $y_2^{(n)}(0), y_2^{(n)}(0)$ and other lower derivatives at $t=0$. From \eqref{eqns:yprime} we get
+\begin{equation*}
+    \begin{aligned}
+   \frac{n+2}{n} y_1^{(n)}(0)=& -\frac{a\lambda^{5/2}}{2n}\left(\frac{a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6-6y_2y_3}{\sqrt{Q}}\right)^{(n)}(0)\\
+   &-\frac{\lambda^{5/2}}{2}\left(\frac{a(y_1y_8-y_4y_5)+y_1(a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6)+2y_2y_3y_5}{\sqrt{Q}}\right)^{(n-2)}(0)\\
+   &-3\lambda^{5/2} \left(\frac{y_1(y_1y_8-y_4y_5)}{\sqrt{Q}}\right)^{(n-4)}(0),\\
+    \frac{n+2}{n} y_5^{(n)}(0)=& \frac{p_1^{(n)}(0)}{n}+\frac{a\lambda^{5/2}}{2n}\left(\frac{3a(3y_4+y_8)-3c(3y_1+y_5)+3y_2y_7+3y_3y_6+2y_6y_7}{\sqrt{Q}}\right)^{(n)}(0)\\
+   &+\frac{\lambda^{5/2}}{2}\left(\frac{3a(y_1y_8-y_4y_5)-y_5(a(3y_4+y_8)-c(3y_1+y_5)+y_2y_7+y_3y_6)+2y_1y_6y_7}{\sqrt{Q}}\right)^{(n-2)}(0)\\
+   &+3\lambda^{5/2} \left(\frac{y_5(y_1y_8-y_4y_5)}{\sqrt{Q}}\right)^{(n-4)}(0),\\
+    \frac{n+2}{n} y_4^{(n)}(0)=& -\frac{p_1^{(n)}(0)}{n}+\frac{c\lambda^{5/2}}{2n}\left(\frac{a(3y_4+y_8)-c(3y_1+y_5)+y_2y_7+y_3y_6+6y_2y_3}{\sqrt{Q}}\right)^{(n)}(0)\\
+   &+\frac{\lambda^{5/2}}{2}\left(\frac{c(y_1y_8-y_4y_5)+y_4(a(3y_4+y_8)-c(3y_1+y_5)+y_2y_7+y_3y_6)-2y_2y_3y_8}{\sqrt{Q}}\right)^{(n-2)}(0)\\
+   &+3\lambda^{5/2} \left(\frac{y_4(y_1y_8-y_4y_5)}{\sqrt{Q}}\right)^{(n-4)}(0),\\
+    \frac{n+2}{n} y_8^{(n)}(0)=& -\frac{c\lambda^{5/2}}{2n}\left(\frac{3a(3y_4+y_8)-3c(3y_1+y_5)-3y_2y_7-3y_3y_6-2y_6y_7}{\sqrt{Q}}\right)^{(n)}(0)\\
+   &-\frac{\lambda^{5/2}}{2}\left(\frac{3c(y_1y_8-y_4y_5)-y_8(a(3y_4+y_8)-c(3y_1+y_5)-y_2y_7-y_3y_6)-2y_4y_6y_7}{\sqrt{Q}}\right)^{(n-2)}(0)\\
+   &+3\lambda^{5/2} \left(\frac{y_8(y_1y_8-y_4y_5)}{\sqrt{Q}}\right)^{(n-4)}(0).
+\end{aligned}
+\end{equation*}
+
+From above
+\begin{align*}
+     \frac{n+2}{n} (3y_1+y_5)^{(n)}(0)=&\frac{p_1^{(n)}(0)}{n} +\frac{a\lambda^{5/2}}{n}\left(\frac{(3y_2+y_7)(3y_3+y_6)}{\sqrt{Q}}\right)^{(n)}(0)+\xi_{3,n-2},
+   % &-\frac{\lambda^{5/2}}{2}\left(\frac{(3y_1+y_5)(a(3y_4+y_8)-c(3y_1+y_5))-(3y_1-y_5)(y_2y_7+y_3y_6)+6y_2y_3y_5-2y_1y_6y_7}{\sqrt{Q}}\right)^{(n-2)}(0)\\
+   % &-3\lambda^{5/2} \left(\frac{(3y_1-y_5)(y_1y_8-y_4y_5)}{\sqrt{Q}}\right)^{(n-4)}(0),
+\end{align*} where $\xi_{3,n-2}$ depends only on $y_i^{(k)}(0)$ for $k\leq n-2$.  From \eqref{eq:pp_t=0} $p_1^{(n)}(0)$ can be computed using $y_2^{(i)}(0), y_6^{(i)}(0)$ for $i\leq n$ and $y_4^{(i)}(0), y_4^{(i)}(0)$ for $i\leq n-2$ so overall  $(3y_1+y_5)^{(n)}(0)$ can also be computed using the same.
+Similarly one can show that 
+
+\begin{align*}
+     \frac{n+2}{n} (3y_4+y_8)^{(n)}(0)=&-\frac{3p_1^{(n)}(0)}{n} +\frac{c\lambda^{5/2}}{n}\left(\frac{(3y_2+y_7)(3y_3+y_6)}{\sqrt{Q}}\right)^{(n)}(0)+\xi_{4,n-2},
+\end{align*} where $\xi_{4,n-2}$ can be computed by $y_i^{(k)}(0)$ for $k\leq n-2$ as before.
+
+Thus, both $(3y_1+y_5)^{(n)}(0), (3y_4+y_8)^{(n)}(0)$ can be obtained from the values of  $y_2^{(i)}(0), y_6^{(i)}(0)$ for $i\leq n$ and $y_4^{(i)}(0), y_4^{(i)}(0)$ for $i\leq n-2$. It is then clear that $y_k^{(n)}(0)$ for $k=1,4,5,8$ can also be computed using $a,c$ and $y_2'(0)$. 
+
+\section{Maximal volume orbit}
+Any 1-parameter family $(\omega(t),\gamma(t))$ of SU(3)-structures on $N^6$ with initial data $(\omega(0),\gamma(0))=(\omega_0,\gamma_0)$ satisfying the evolution equation 
+\begin{align*}
+    \gamma'(t)=d\omega(t)-\lambda J\gamma(t)
+\end{align*} for non-zero constant $\lambda$ such that $(\omega_0,\gamma_0)$ is a nearly half-flat $\SU(3)$-structure
+\begin{align*}
+    d\gamma_0=\frac{\lambda}{2}\omega_0^2
+\end{align*} defines a nearly parallel $\G2$-structure on $I\times N^6$ for an interval $I\subset \R$. The volume $V(t)$ of the hypersurface $\{t\}\times N$ is given by 
+\begin{align*}
+    V(t)&=\frac{\omega^3(t)}{6}.
+\end{align*} 
+In order to compute the hypersurface with maximum volume amongst the family of nearly half-flat $\SU(3)$-structures we need to compute $V'(t)$. the volume of the 
+\begin{align*}
+    V'(t)&=2\omega'(t)\wedge\omega^2(t).
+\end{align*}
+But since $(d\gamma)'(t)=d(\gamma'(t))$ the nearly half-flat condition tell us that 
+\[d\gamma'(t)=\lambda\omega'(t)\wedge\omega(t)\] thus 
+\begin{align*}
+    V'(t)&=\frac{2}{\lambda}(d\gamma'(t))\wedge\omega(t)
+\end{align*} which using the evolution equation implies 
+\begin{align*}
+    V'(t)&=-2d(J\gamma(t))\wedge\omega(t) = 
+\frac{4}{3}w_1(t)\omega^3(t) =8w_1(t)V(t).
+\end{align*} Thus the nearly half-flat $\SU(3)$-structure $(\omega(t),\gamma(t))$ is a critical point of the volume functional if and only if the intrinsic torsion form $w_1(t)$ vanishes.
+
+Let $\bar{g}=dt^2+g_t$ be the nearly G2-metric on $I\times N^6$, $\bar\del$ be the Levi-Civita connection corresponding to $\bar{g}$ and $\nu$ be the unit normal of the family of hypersurfaces $N_t:=\{t\}\times N$. The the Weingarten operator $L(t)$ is defined for all $X\in TN$ by 
+\begin{align*}
+    L_t(X)&= \bar{\del}_X\nu. 
+\end{align*}
+The mean curvature of $N_t$ is given by $l_t=\tr{L_t}$.
+
+Since nearly parallel $\G2$-manifolds are positive Einstein with Einstein constant $\frac{3\lambda^2}{8}$ one can use the Riccati equations and Einstein conditions to show 
+\begin{align*}
+    l_t'&= -\tr(L_t^2)-\frac{3}{8}\lambda^2.
+\end{align*}
+In terms of the metric matrix the Weingarten operator $L_t=\frac{1}{2}g^{-1}_t g'_t$. Thus $l=\frac{1}{2}\tr(g^{-1}g')=\frac{(\sqrt{\det g})'}{\sqrt{\det g}}=\frac{V'}{V}$. Now if $t_0$ is a critical point of $V(t)$ i.e. $V'(t_0)=0$ (equivalently $l_{t_0}=0$) then 
+\begin{align}\label{eq:V_critical}
+    V''(t_0)&=l'(t_0)V(t_0)=-(\tr(L_{t_0}^2)+\frac{3\lambda^2}{8})V(t_0)<0.
+\end{align}
+
+Thus every critical point of the volume functional is a maxima. More details are given in \cite[Section 5]{Haskins-Lorenzo}. The discussion follows verbatim in our case. 
+
+\begin{prop}
+    Let $\Psi$ be a solution of \eqref{eqns:gen_ng2} defined on $(T_1,T_2)$. Let $V$ be the orbital volume functional and $l$ be the mean curvature as defined above. Then we have for $\Lambda=\frac{3\lambda^2}{8}$
+    \begin{enumerate}
+    \item $|T_2-T_1|\leq \pi$.
+        \item for a fix $t_0\in (0,\pi)$ such that $l(0)=\Lambda \cot(t_0)$ we have that 
+        \begin{align*}
+            l(t)&\leq \Lambda \cot(t+t_0) \ \ \ for \ t>0, \\
+            l(t)&\geq \Lambda \cot(t+t_0) \ \ \ for \ t<0. 
+        \end{align*}
+        \item for the same $t_0$ as above and any $t\in(T_1,T_2)$,
+        \begin{align*}
+            V(t)\leq V(0)\frac{\sin^\Lambda (t+t_0)}{\sin^\Lambda(t_0)}.
+        \end{align*}
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    The proof follows verbatim from \cite[Proposition 5.5]{Haskins-Lorenzo} by replacing $n=6, \Lambda=3\lambda^2/8$ ({\red{We can also set $\Lambda=5$ by choosing $\lambda=4$ although it is not necessary for the proof}}). The proof essentially uses the fact that 
+\begin{align*}
+    \tr(L_t^2)= \frac{1}{6}l_t^2+\tr(\hat{L}_t^2)
+\end{align*} and thus $l_t$ satisfies the equation 
+\begin{align}
+    l_t^2+\frac{1}{6}l_t^2+\Lambda = -\tr(\hat{L}_t^2). \leq 0
+\end{align}
+Then one can compare $l_t$ with a solution of the Riccati equation $l_t'+\frac{1}{6}l_t^2+\Lambda=0$ found in \cite[Theorem 4.1]{Eschenburg-comparison}.
+\end{proof}
+
+
+From \eqref{eqns:gen_ng2} we can compute $l_t$ in terms of the functions $q_i, i=1\dots 8$
+\begin{align*}
+    l=\frac{(p_1p_2p_3)'}{p_1p_2p_3}=&\frac{(q_2+q_7)'}{q_2+q_7}+\frac{(q_3+q_6)'}{q_3+q_6}+\frac{(q_4+q_5)'}{q_4+q_5}\\
+    =\frac{\lambda}{2p_1p_2p_3} &\left(\frac{(q_7-q_2)(q_2q_7-q_3q_6-q_4q_5-q_1q_8)+2(q_1q_4q_6-q_3q_5q_8)}{q_2+q_7}\right.\\
+    &+\left.\frac{(q_6-q_3)(q_3q_6-q_2q_7-q_4q_5-q_1q_8)+2(q_1q_4q_7-q_2q_5q_8)}{q_3+q_6}\right.\\
+    &+\left.\frac{(q_4-q_5)(q_4q_5-q_2q_7-q_3q_6-q_1q_8)+2(q_1q_6q_7-q_2q_3q_8)}{q_4+q_5}\right)
+\end{align*}
+
+
+
+
+
+
+
+% We now try to find a solution to the nearly parallel $\G2$ conditions by imposing symmetries in accordance with the Eschenburg--Wang conditions. 
+
+% \begin{itemize}
+%     \item \textbf{Symmetry 1: $q_1=q_8, q_2=q_6, q_3=q_7, q_4=q_5$}
+    
+%     \begin{align*}
+%         \g2=&p_1e^{127}+p_2e^{347}+p_3e^{567}+ q_1(e^{135}+e^{246}) q_2(e^{136}+e^{236})+q_3(e^{145}+e^{245})+q_4(e^{146}+e^{235}),\\
+%         *_\g2\g2=\psi=& \frac{e^{1234}}{p_3}+\frac{e^{1256}}{p_2}
+%         +\frac{e^{3456}}{p_1}+\frac{2q_2 (e^{1367}-e^{2367})}{(q_1+q_4)^2-4q_2q_3}+\frac{2q_3 (e^{1457}-e^{2457})}{(q_1+q_4)^2-4q_2q_3}\\ &+\frac{2}{(q_1+q_4)^2-4q_2q_3}\left(\frac{q_1^2+q_1q_4-2q_2q_3}{q_1-q_4}(e^{1357}-e^{2467})  - \frac{q_4^2+q_1q_4-2q_2q_3}{q_1-q_4}(e^{1457}-e^{2357}) \right).
+%     \end{align*}
+%     Note that $\det g_\g2=2^{-2/3} (p_1p_2p_3(q_1-q_4)^2((q_1+q_4)^2-4q_2q_3))^{1/3}$ hence no denominator is zero in the expression for $\psi$ and it is well defined. From above we get
+%     \begin{align*}
+%         d\g2=& -(q_2+q_3)(e^{1234}+e^{1256})-2q_4e^{3456}\\
+%         &-q_1'e^{1357}+\left(p_3-q_2'\right)e^{1367}+\left(p_2-q_3'\right)e^{1457}-\left(p_1+q_4'\right)e^{1467}\\ &+\left(p_1-q_4'\right)e^{2357}-\left(p_2+q_2'\right)e^{2367}-\left(p_3+q_3'\right)e^{2457}-q_1'e^{2467},\\
+%         d\psi=&-\left(\frac{2(q_2-q_3)}{(q_1+q_4)^2-4q_2q_3)}+\frac{p_3'}{p_3^2}\right)e^{12347}+\left(\frac{2(q_2-q_3)}{(q_1+q_4)^2-4q_2q_3)}-\frac{p_3'}{p_3^2}\right)e^{12567}-\frac{p_1'}{p_1^2}e^{34567}.
+%     \end{align*}
+    
+%     \item \textbf{Symmetry 2: $q_2=q_6,q_3=q_7$}
+%     \begin{align*}
+%         \g2=&p_1e^{127}+p_2e^{347}+p_3e^{567}+q_1e^{135}+ q_2(e^{136}+e^{236})+q_3(e^{145}+e^{245})+q_4 e^{146}+q_5 e^{235}+q_8e^{246}.
+%     \end{align*}
+%     The determinant of the induced metric is 
+%     \begin{align*}
+%         \det g_\g2=& 2^{-2/3}(p_1p_2p_3((q_1q_8-q_4q_5)^2+4q_2q_3(q_1-q_5)(q_4-q_8)))^{1/3}.
+%     \end{align*} If we let $\alpha:=(q_1q_8-q_4q_5)^2+4q_2q_3(q_1-q_5)(q_4-q_8))$ then the $4$-form is 
+%     \begin{align*}
+%         \psi=&\frac{e^{1234}}{p_3}+\frac{e^{1256}}{p_2}
+%         +\frac{e^{3456}}{p_1}\\
+%         &+\frac{2}{\alpha}((q_1(q_1q_8-q_4q_5)-2q_2q_3(q_1-q_5))e^{1357}-(q_8(q_1q_8-q_4q_5)+2q_2q_3(q_4-q_8))e^{2467})\\
+%         &-\frac{2}{\alpha}((q_4(q_1q_8-q_4q_5)+2q_2q_3(q_4-q_8))e^{1467}-(q_5(q_1q_8-q_4q_5)-2q_2q_3(q_1-q_5))e^{2357})\\
+%         &+\frac{2(q_4(q_1-q_5)+q_1(q_4-q_8))}{\alpha}(q_2e^{1367}+q_3e^{1457})+\frac{2(q_8(q_1-q_5)+q_5(q_4-q_8))}{\alpha}(q_2e^{2367}+q_3e^{2457}).
+%       \end{align*}
+% \end{itemize}
+
+
+
+    \phantomsection
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{amsalpha}
+\bibliography{Berger}
+   
+\end{document}
