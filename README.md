@@ -44,6 +44,9 @@ python -m experiments.non_mirrored_recovery_calibration
 python -m experiments.non_mirrored_grid_search
 python -m experiments.non_mirrored_grid_refine
 python -m experiments.berger_branch_audit
+python -m experiments.berger_s3_bundle_action_audit
+python -m experiments.berger_max_volume_calibration
+python -m experiments.berger_max_volume_scout --dry-run
 python -m experiments.non_mirrored_search
 python -m experiments.non_mirrored_surrogate_search
 python -m experiments.non_mirrored_surrogate_wide_search
@@ -62,6 +65,20 @@ python -m experiments.s7.right_endpoint_moduli_probe
 python -m experiments.s7.scout_search
 python -m experiments.s7.full_moduli_firstjet_scout
 python -m experiments.s7.full_moduli_offset_scout
+python -m experiments.s7_max_volume_calibration
+python -m experiments.s7_max_volume_scout --dry-run
+python -m experiments.s7_action_census
+python -m experiments.s7_su2_cubed_action_audit
+python -m experiments.s7_su2_cubed_defect_audit
+python -m experiments.s7_su2_cubed_scout --dry-run
+python -m experiments.s7_su2_cubed_tail_defect
+python -m experiments.stiefel_feasibility
+python -m experiments.aloff_wallach_feasibility
+python -m experiments.aloff_wallach_ansatz
+python -m experiments.aloff_wallach_endpoint_smoothness
+python -m experiments.aloff_wallach_homogeneous_recovery
+python -m experiments.aloff_wallach_recovery_calibration --dry-run
+python -m experiments.aloff_wallach_scout --dry-run
 ```
 
 If you prefer not to activate the virtual environment, run:
@@ -84,6 +101,9 @@ If you prefer not to activate the virtual environment, run:
 .venv/bin/python -m experiments.non_mirrored_grid_search
 .venv/bin/python -m experiments.non_mirrored_grid_refine
 .venv/bin/python -m experiments.berger_branch_audit
+.venv/bin/python -m experiments.berger_s3_bundle_action_audit
+.venv/bin/python -m experiments.berger_max_volume_calibration
+.venv/bin/python -m experiments.berger_max_volume_scout --dry-run
 .venv/bin/python -m experiments.non_mirrored_search
 .venv/bin/python -m experiments.non_mirrored_surrogate_search
 .venv/bin/python -m experiments.non_mirrored_surrogate_wide_search
@@ -102,6 +122,20 @@ If you prefer not to activate the virtual environment, run:
 .venv/bin/python -m experiments.s7.scout_search
 .venv/bin/python -m experiments.s7.full_moduli_firstjet_scout
 .venv/bin/python -m experiments.s7.full_moduli_offset_scout
+.venv/bin/python -m experiments.s7_max_volume_calibration
+.venv/bin/python -m experiments.s7_max_volume_scout --dry-run
+.venv/bin/python -m experiments.s7_action_census
+.venv/bin/python -m experiments.s7_su2_cubed_action_audit
+.venv/bin/python -m experiments.s7_su2_cubed_defect_audit
+.venv/bin/python -m experiments.s7_su2_cubed_scout --dry-run
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect
+.venv/bin/python -m experiments.stiefel_feasibility
+.venv/bin/python -m experiments.aloff_wallach_feasibility
+.venv/bin/python -m experiments.aloff_wallach_ansatz
+.venv/bin/python -m experiments.aloff_wallach_endpoint_smoothness
+.venv/bin/python -m experiments.aloff_wallach_homogeneous_recovery
+.venv/bin/python -m experiments.aloff_wallach_recovery_calibration --dry-run
+.venv/bin/python -m experiments.aloff_wallach_scout --dry-run
 ```
 
 `experiments.berger` performs the validated homogeneous Berger check.
@@ -259,6 +293,18 @@ closure report:
 .venv/bin/python -m experiments.berger_branch_audit --write-json output/berger_branch_audits
 ```
 
+`experiments.berger_s3_bundle_action_audit` checks the tempting
+Grove-Ziller `S3`-bundle route to another Berger action. It verifies that
+the Berger topology matches the `M_{6,4}` sphere-bundle representative, but
+also records the obstruction: Grove-Ziller's cohomogeneity-one action is on
+the ten-dimensional principal `SO(4)` bundle, while the induced action on the
+seven-dimensional associated `S3`-bundle is only cohomogeneity four:
+
+```zsh
+.venv/bin/python -m experiments.berger_s3_bundle_action_audit
+.venv/bin/python -m experiments.berger_s3_bundle_action_audit --json
+```
+
 `experiments.non_mirrored_search` runs the corresponding JSONL-checkpointed
 seeded search with independent left and right endpoint data; output is written
 under `output/non_mirrored_searches/`.
@@ -321,6 +367,146 @@ the best residuals and nearest-neighbor local minima, but do not use the known
 FH root locations for selection. The default spacings are useful first-pass
 checks; the two explicit `--spacing` commands above are the intended overnight
 rediscovery grids.
+
+`experiments.berger_max_volume_calibration` and
+`experiments.s7_max_volume_calibration` are the G2 analogue of the
+Foscolo-Haskins maximal-volume matching test. Each side is marched only until
+the principal-orbit volume is stationary; the matching residual compares the raw
+`q` states there, and the original interval length is reconstructed as
+`tau_left + tau_right` rather than imposed as a midpoint condition:
+
+```zsh
+.venv/bin/python -m experiments.berger_max_volume_calibration
+.venv/bin/python -m experiments.s7_max_volume_calibration
+```
+
+For blind follow-up scouts, the Berger runner searches six endpoint coordinates
+because the interval is reconstructed from the two maximal-volume events. The S7
+runner searches the existing fixed-right-chart 3D boxes for the round `p_3` and
+squashed `p_2` targets:
+
+```zsh
+.venv/bin/python -m experiments.berger_max_volume_scout --dry-run --region near --spacing 0.4
+.venv/bin/python -m experiments.berger_max_volume_scout --region near --spacing 0.4 --workers 4
+.venv/bin/python -m experiments.berger_max_volume_scout --region symmetric-alpha-omega --spacing 0.4 --workers 4
+.venv/bin/python -m experiments.s7_max_volume_scout --dry-run --spacing 0.075
+.venv/bin/python -m experiments.s7_max_volume_scout --spacing 0.075 --workers 4
+.venv/bin/python -m experiments.s7_max_volume_scout --region positive-ac --spacing 0.075 --workers 4
+```
+
+These scouts write resumable JSONL output and summaries under
+`output/berger_max_volume_scouts/` and `output/s7_max_volume_scouts/`.
+Rerunning the same command resumes the newest compatible incomplete checkpoint,
+and the summaries list best scouts plus nearest-neighbor local minima.
+
+`experiments.stiefel_feasibility` records the current status of the standard
+Stiefel manifold `V_{5,2}=SO(5)/SO(3)`. It verifies the known homogeneous
+nearly parallel algebraic parameter conditions, but also shows that the natural
+`SO(4)` action on `V_{5,2}` is cohomogeneity two, not cohomogeneity one. Thus
+standard Stiefel is not currently a valid endpoint-chart target for the
+`SO(4)/Z_2^2` `q_i` marcher:
+
+```zsh
+.venv/bin/python -m experiments.stiefel_feasibility
+.venv/bin/python -m experiments.stiefel_feasibility --json
+```
+
+`experiments.aloff_wallach_feasibility` performs the analogous first-pass audit
+for Aloff-Wallach spaces. Generic `N_{k,l}=SU(3)/S^1_{k,l}` has known
+homogeneous nearly parallel `G_2` structures, but the calibrated `SU(3)` action
+is transitive and the usual proper connected subgroups are too small for
+six-dimensional principal orbits. The exceptional `N_{1,1}` case remains
+promising: the audit records the fibration `SO(3) -> N_{1,1} -> CP^2` and the
+candidate `SO(3)_real x SO(3)_fiber` cohomogeneity-one action. This is not
+ready for the current `SO(4)/Z_2^2` `q_i` equations; it needs a new invariant
+form basis and endpoint charts first.
+
+```zsh
+.venv/bin/python -m experiments.aloff_wallach_feasibility
+.venv/bin/python -m experiments.aloff_wallach_feasibility --json
+```
+
+`experiments.aloff_wallach_ansatz` is the next calibration checkpoint for
+`N_{1,1}`. It records the `SO(3)_real x SO(3)_fiber` cohomogeneity-one route,
+uses the Ball-Oliveira `A,B,C,D` homogeneous form conventions, computes the
+`SU(3)/U(1)_{1,1}` exterior derivative from the matrix bracket, and verifies the
+known tri-Sasakian-metric and squashed nearly parallel structures. It also
+records the full model principal-orbit invariant `SU(3)` variables: 7 `omega`
+coefficients, 12 `gamma` coefficients, the two explicit
+`omega wedge gamma = 0` equations, and the Hitchin volume normalization. The two
+`A,B,C,D` known structures pass these model principal-orbit algebraic checks.
+The extra Sasaki-Einstein nearly parallel form outside the `A,B,C,D` family is
+converted from Geipel's Sasaki-Einstein source coframe to Ball-Oliveira
+coordinates, verified by `d phi = 4 psi`, and checked in the same model
+principal-orbit `SU(3)` variables.
+
+```zsh
+.venv/bin/python -m experiments.aloff_wallach_ansatz
+.venv/bin/python -m experiments.aloff_wallach_ansatz --json
+```
+
+`experiments.aloff_wallach_endpoint_smoothness` derives the first singular
+endpoint restrictions for the same full 19-variable chart.  It splits
+`base_3/fiber_3` into the collapsing circle and surviving singular-orbit
+direction, applies the Eschenburg-Wang equivariant-polynomial test at the
+`RP^2` and null-conic `CP^1` endpoints, and records the resulting weighted
+smooth jet dimensions.  Smoothness alone reduces the 19 raw endpoint values to
+four zeroth-order constants; the ODE and algebraic `SU(3)` constraints still
+need to be imposed before choosing scout coordinates.
+
+```zsh
+.venv/bin/python -m experiments.aloff_wallach_endpoint_smoothness
+.venv/bin/python -m experiments.aloff_wallach_endpoint_smoothness --json
+```
+
+`experiments.aloff_wallach_homogeneous_recovery` is the direct calibration for
+the `SO(3)_real x SO(3)_fiber` action model.  It constructs the exact
+homogeneous trajectory in the action basis, uses the derived product
+Maurer-Cartan scales `base=-1`, `fiber=-2`, and integrates from both ends to an
+interior slice.  In this action the squashed `A,B,C,D` structure is recovered,
+while the tri-Sasakian `A,B,C,D` form is rejected because it is not invariant
+under the selected right-fiber `SO(3)` action:
+
+```zsh
+.venv/bin/python -m experiments.aloff_wallach_homogeneous_recovery
+.venv/bin/python -m experiments.aloff_wallach_homogeneous_recovery --targets squashed --no-write
+```
+
+`experiments.aloff_wallach_recovery_calibration` is the known-solution
+calibration layer for the experimental `N_{1,1}` endpoint chart.  It starts
+from the verified tri-Sasakian and squashed homogeneous `A,B,C,D` structures,
+rescales them to the requested normalized `lambda`, and tests deterministic
+left/right endpoint sign branches with resumable JSONL output under
+`output/aloff_wallach_recovery_calibrations/`.  This is the Aloff-Wallach
+analogue of first asking whether the numerical pipeline can rediscover the
+known solutions before trusting broad scouts.
+
+```zsh
+.venv/bin/python -m experiments.aloff_wallach_recovery_calibration --dry-run
+.venv/bin/python -m experiments.aloff_wallach_recovery_calibration --branch-mode all-signs --scale-multipliers 0.75,1,1.25 --structure-scales 0.5,1,2 --workers 4
+```
+
+`experiments.aloff_wallach_scout` is the first endpoint-reduced
+maximal-volume scout for this topology.  It searches the eight smooth endpoint
+constants
+
+```text
+left_A, left_B, left_C, left_D, right_A, right_B, right_C, right_D
+```
+
+coming from the `RP^2` and null-conic `CP^1` endpoint smoothness charts.  The
+higher endpoint Taylor layers are not exposed as scout coordinates; they are
+fitted internally against the invariant `SU(3)` nearly-parallel evolution
+equations, then each side is marched to a maximal-volume orbit and compared.
+This is intentionally more experimental than the calibrated Berger/S7 runners:
+it is the first plumbing check for the new Aloff-Wallach ODE layer, and failed
+germ or march attempts are ordinary scout classifications.
+
+```zsh
+.venv/bin/python -m experiments.aloff_wallach_scout --dry-run
+.venv/bin/python -m experiments.aloff_wallach_scout --radius 1 --spacing 1 --workers 4
+```
+
 `experiments.s7.round_validation` validates the derived round-`S^7` oracle using
 the fixed-data `p_3` right endpoint chart. The right endpoint is not the Berger
 chart: it has constant offset proportional to `(1,-1,-2,2,-2,2,19,-19)` and
@@ -424,6 +610,7 @@ at orders 14 and 18:
 The refinement output is written under
 `output/s7_full_moduli_offset_refinements/`; rerunning the same command resumes
 the newest compatible incomplete checkpoint and skips already classified seeds.
+
 `experiments.s7.full_moduli_firstjet_refine` processes a completed full-moduli
 first-jet scout checkpoint without rerunning the 7D grid. It selects the
 target-wise nearest-neighbor local minima and re-evaluates those same 7D points
@@ -438,6 +625,233 @@ at orders 8, 10, and 14 with fresh finite-order calibration:
 
 The diagnostic output is written under
 `output/s7_full_moduli_firstjet_refinements/`.
+
+`experiments.s7_action_census` records the next S7 action-selection audit after
+the Podesta large-`|a|` proof route stalled.  It lists candidate
+cohomogeneity-one actions, filters already-tested and dimensionally unsuitable
+actions, computes invariant principal-orbit 2-form and 3-form dimensions, checks
+known round/squashed visibility, and ranks the viable next scouting targets:
+
+```zsh
+.venv/bin/python -m experiments.s7_action_census
+.venv/bin/python -m experiments.s7_action_census --write-markdown docs/s7-action-census.md
+```
+
+The current recommendation is the intermediate
+`Sp(1) x Sp(1) x U(1)` action on the same `S3 x S3` orbit foliation as
+Podesta's `Sp(1)^3` action: it keeps round and squashed calibration visibility,
+strictly weakens the already-tested symmetry, and has a moderate 13-function
+invariant `dt^omega + gamma` chart.
+
+`experiments.s7_su2_cubed_action_audit` checks the separate Podesta
+`SU(2)^3` cohomogeneity-one action on `S7`. Its principal orbit is
+`S3 x S3`, both singular orbits are `S3`, and the compact group diagram is
+exactly the unit sphere `S7` in `H^2`. The command records the five-function
+invariant form chart, endpoint smoothness conditions, and verifies both round
+and squashed `S7` in that chart:
+
+```zsh
+.venv/bin/python -m experiments.s7_su2_cubed_action_audit
+.venv/bin/python -m experiments.s7_su2_cubed_action_audit --json
+```
+
+This is a readiness check for a dedicated Podesta-system marcher, not a long
+scout yet.
+
+`experiments.s7_su2_cubed_scout` is the first dedicated Podesta-system marcher
+for that action. It fixes `lambda=1`, uses the one-parameter left singular
+`S3` endpoint data, detects standard `K-` terminal closure, and scans the scalar
+parameter `a`. The direct homogeneous terminal checks are `a=-36` for round
+`S7` and `a=108/5` for squashed `S7`; the positive round value is equivalent by
+Podesta's outer automorphism but does not close in the unmodified standard
+terminal chart.
+
+```zsh
+.venv/bin/python -m experiments.s7_su2_cubed_scout --recover-known
+.venv/bin/python -m experiments.s7_su2_cubed_scout --dry-run
+.venv/bin/python -m experiments.s7_su2_cubed_scout
+```
+
+The scout writes JSONL and summary output under `output/s7_su2_cubed_scouts/`.
+
+`experiments.s7_su2_cubed_tail_defect` tests a scale-free shooting defect for
+excluding large `|a|` in the same Podesta family. If `T_a` is the first zero of
+`f0`, standard `K-` closure requires `f2(T_a)=0`; after scaling
+`h0=a x0`, `h2=a^3 x2`, the exact tail defect is
+`X2(a)=x2(T_a)`. The command compares finite large-`|a|` samples with the
+large-`|a|` limiting ODE:
+
+```zsh
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --json
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --tube-check --tube-a 100000000 --tube-subdivisions 2,2,1,2
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --segmented-tube-check --tube-a 100000000 --tube-subdivisions 2,2,1,2
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --tuned-tube-check --tube-a 100000000 --tube-start 2.0 --tube-end 2.75 --tube-step 0.001 --tube-block-steps 1 --tuned-tube-max-attempts 60 --tuned-tube-max-growth 0.5,5.0,0.5,0.5
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --restart-tuned-chain-check --tube-a 100000000 --tube-start 2.0 --tube-end 2.95 --tube-step 0.001 --restart-interval 0.05 --tuned-tube-max-attempts 200 --tuned-tube-max-growth 2,20,20,2
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --restart-tuned-chain-check --tube-a 100000000 --tube-start 2.0 --tube-end 3.1 --tube-step 0.001 --restart-interval 0.05 --tuned-tube-max-attempts 450 --tuned-tube-max-growth 20,200,50,10
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --p-tube-check --tube-a 100000000 --p-tube-start 0.305 --p-tube-end 0.25 --p-tube-step 0.00005
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --p-tube-check --p-tube-asymmetric-profiles --tube-a 100000000 --p-tube-start 0.305 --p-tube-end 0.2 --p-tube-step 0.00005
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --tuned-p-tube-check --tube-a 100000000 --p-tube-entry-time 2.6 --p-tube-start 0.65 --p-tube-end 0.423 --p-tube-step 0.0005 --tuned-p-tube-max-growth 20,200,2,50 --tuned-p-tube-max-attempts 120
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --staged-union-p-tube-check --tube-a 100000000 --p-tube-start 0.423 --p-tube-step 0.0005 --tuned-p-tube-max-growth 20,200,2,50 --tuned-p-tube-max-attempts 120
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --adaptive-union-p-tube-check --tube-a 100000000 --p-tube-start 0.4 --p-tube-end 0.395 --p-tube-step 0.0005 --tuned-p-tube-max-growth 20,200,2,50 --tuned-p-tube-max-attempts 120 --adaptive-union-max-depth 2
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --adaptive-union-p-tube-check --adaptive-union-p-tube-source-json output/s7_tail_proof/adaptive_union_p_tube_0.4_to_0.395.json --tube-a 100000000 --p-tube-start 0.395 --p-tube-end 0.39 --p-tube-step 0.0005 --tuned-p-tube-max-growth 20,200,2,50 --tuned-p-tube-max-attempts 120 --adaptive-union-max-depth 3 --p-tube-cancellation-prime
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --adaptive-union-p-tube-check --adaptive-union-p-tube-source-json output/s7_tail_proof/adaptive_union_p_tube_0.395_to_0.39_cprime_splitq.json --tube-a 100000000 --p-tube-start 0.39 --p-tube-end 0.3885 --p-tube-step 0.0005 --tuned-p-tube-max-growth 20,200,2,50 --tuned-p-tube-max-attempts 120 --adaptive-union-max-depth 3 --p-tube-cancellation-prime
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --adaptive-carried-c-union-p-tube-check --adaptive-union-p-tube-source-json output/s7_tail_proof/adaptive_union_p_tube_0.395_to_0.39_cprime_splitq.json --tube-a 100000000 --p-tube-start 0.39 --p-tube-end 0.3895 --p-tube-step 0.0005 --tuned-p-tube-max-attempts 140 --adaptive-union-max-depth 5
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --sampled-carried-c-p-tube-check --sampled-carried-c-p-tube-profile-set tight --sampled-carried-c-p-tube-end 0.3255 --tuned-p-tube-max-attempts 120
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --carried-c-p-tube-from-box-check --carried-c-p-tube-source-json output/s7_tail_proof/sampled_carried_c_p_tube_0.65_to_0.3255_tight_attempts120.json --carried-c-p-tube-start 0.3255 --carried-c-p-tube-end 0.32 --carried-c-p-tube-step 0.0001 --carried-c-p-tube-initial-growth 0.01,0.2,0.002,0.02,0.02 --carried-c-p-tube-max-growth 20,200,5,50,10 --tuned-p-tube-max-attempts 200 --carried-c-p-tube-subdivisions 1,1,1,2,1
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --automatic-carried-c-p-corridor-check --carried-c-p-corridor-end 0.32
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --carried-c-p-wall-check --carried-c-p-wall-component 2 --carried-c-p-wall-side lower --carried-c-p-wall-value 0 --carried-c-p-wall-end 0.005 --carried-c-p-wall-source-json output/s7_tail_proof/automatic_carried_c_p_corridor_0.298_to_0.29_from_tight_sampled.json
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --x2-zero-factor-check
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --p-corridor-check --tube-a 100000000 --p-corridor-start 0.25 --p-corridor-end 0.2 --p-corridor-step 0.0005
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --p-corridor-tune --tube-a 100000000 --p-corridor-start 0.25 --p-corridor-end 0.2 --p-corridor-step 0.0005 --p-corridor-tune-x2-slopes=0.02505,0.025075,0.0251 --p-corridor-tune-x1-upper-slopes=-150,-151 --p-corridor-tune-max-runs 6
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --terminal-takeover-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --frontier-continuation-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --hybrid-handoff-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --p-start-slice-bridge-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-even-parity-audit --tube-a 100000000 --taylor-p-slice-tail-order 40 --taylor-p-slice-tail-working-dps 80 --taylor-p-slice-b-samples 3 --taylor-b-cauchy-enclosure-radius 4e-7 --taylor-b-cauchy-enclosure-samples 8
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-even-s-series-audit --taylor-ratio-profile-b-mode limit --tube-a 100000000 --taylor-p-slice-tail-order 160 --taylor-p-slice-tail-start 50 --taylor-p-slice-tail-working-dps 140 --taylor-ratio-profile-circle-radius 3.5 --taylor-ratio-profile-circle-ratio-bound 0.95 --taylor-ratio-profile-p-slice-ratio-bound 0.6
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-recurrence-forcing-audit --tube-a 100000000 --taylor-p-slice-tail-order 60 --taylor-p-slice-tail-start 50 --taylor-p-slice-b-samples 3 --taylor-p-slice-tail-working-dps 90 --taylor-ratio-profile-circle-radius 3.5 --taylor-ratio-profile-circle-ratio-bound 0.95
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-ratio-profile-audit --taylor-ratio-profile-b-mode limit --tube-a 100000000 --taylor-p-slice-tail-order 160 --taylor-p-slice-ratio-start 50 --taylor-p-slice-tail-working-dps 140 --taylor-ratio-profile-circle-radius 3.5 --taylor-ratio-profile-circle-ratio-bound 0.95 --taylor-ratio-profile-p-slice-ratio-bound 0.6
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-geometric-envelope-audit --taylor-ratio-profile-b-mode limit --tube-a 100000000 --taylor-p-slice-tail-order 160 --taylor-p-slice-tail-start 50 --taylor-p-slice-tail-working-dps 140 --taylor-ratio-profile-circle-radius 3.5 --taylor-ratio-profile-circle-ratio-bound 0.95 --taylor-ratio-profile-p-slice-ratio-bound 0.6
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-p-slice-required-a-audit --tube-a 100000000 --taylor-p-slice-tail-order 40 --taylor-p-slice-tail-start 30 --taylor-p-slice-ratio-start 25 --taylor-p-slice-ratio-bound 0.6 --taylor-p-slice-b-samples 3 --taylor-p-slice-tail-working-dps 80 --taylor-b-cauchy-radius 1e-7 --taylor-b-cauchy-samples 8 --taylor-b-cauchy-outer-radius 2e-7 --taylor-b-cauchy-outer-samples 8 --taylor-b-cauchy-enclosure-radius 4e-7 --taylor-b-cauchy-enclosure-samples 8 --taylor-b-cauchy-skip-direct
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-start-block-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-time-bridge-check --taylor-bridge-end 0.01 --taylor-progress-every-blocks 20 --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-frontier-continuation-check --taylor-bridge-end 0.01 --taylor-frontier-end 0.011 --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-restart-chain-check --taylor-bridge-end 0.01 --taylor-restart-end 0.012 --taylor-restart-interval 0.001 --tube-step 0.001 --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-time-bridge-check --taylor-bridge-end 2.0 --taylor-progress-every-blocks 250 --json > output/s7_tail_proof/taylor_bridge_2.0.json 2> output/s7_tail_proof/taylor_bridge_2.0.log
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --taylor-restart-chain-check --taylor-bridge-end 2.0 --taylor-restart-end 2.6 --taylor-restart-bridge-json output/s7_tail_proof/taylor_bridge_2.0.json --taylor-restart-progress-every-segments 1 --tube-step 0.001 --tube-a 100000000 --json > output/s7_tail_proof/taylor_restart_2.0_to_2.6_retry.json 2> output/s7_tail_proof/taylor_restart_2.0_to_2.6_retry.log
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --regular-time-corridor-check --regular-time-start 0.5 --regular-time-end 0.6 --regular-time-step 0.001 --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --x3-zero-wall-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --late-x3-descent-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --piecewise-corridor-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --late-tail-closure-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --broad-tail-closure-check --tube-a 100000000
+.venv/bin/python -m experiments.s7_su2_cubed_tail_defect --support-tail-closure-check --tube-a 100000000
+```
+
+`experiments.s7_su2_cubed_defect_audit` is the broader follow-up to the
+single-`X2` tail-defect attempt. It evaluates a registry of necessary scalar
+defects (`x3`, `x2`, `C`, positive endpoint norms, linear combinations,
+polynomial numerator defects, and endpoint-equivalent integrating-factor
+defects), ranks them by known-solution calibration and large-`|a|` behavior,
+then records the current bounded `x3` uniform-exclusion attempt:
+
+```zsh
+.venv/bin/python -m experiments.s7_su2_cubed_defect_audit
+.venv/bin/python -m experiments.s7_su2_cubed_defect_audit --write-markdown docs/s7-su2-cubed-defect-audit.md
+.venv/bin/python -m experiments.s7_su2_cubed_defect_audit --write-json output/s7_su2_cubed_defect_audits/audit.json --write-csv output/s7_su2_cubed_defect_audits/defects.csv
+```
+
+The optional `--tube-check` mode runs a conditional interval moving-tube face
+check for the late tail segment. It is a proof-building diagnostic: success
+certifies the displayed end box assuming the displayed start box has already
+been validated. The `--segmented-tube-check` variant chains local tubes and
+reports the certified frontier. The `--tuned-tube-check` variant uses the failed
+face diagnostics to tune local centered-tube growth; the displayed command
+certifies the conditional bridge `t=2.0 -> 2.75` with worst margin about
+`3.77e-7`. The `--restart-tuned-chain-check` variant explicitly contains
+carried boxes in fresh centered restart boxes; the displayed command certifies
+to `t=2.936` before failing on the lower `x2` face, and the stronger growth-cap
+variant certifies to `t=3.021` before the lower `x1`/`x3` faces become too wide
+for this rectangular tube strategy. The `--p-tube-check` variant switches to
+`p=x0` as the independent variable for the singular terminal tail. The
+`--p-tube-asymmetric-profiles` option is an experimental variant that lets
+lower and upper tube faces widen at different rates. The `--tuned-p-tube-check`
+variant applies the same failed-face tuning in p-time; the displayed early
+`p=0.65 -> 0.423` command is conditional on validating the `p=0.65` slice, and
+moves the transformed-time frontier to the natural `x3` transition region
+before a lower-`t`/lower-`x2` face failure. The `--staged-union-p-tube-check`
+variant then partitions the certified `p=0.423` source box into 16 midpoint
+centred p-time tubes and certifies all branches to `p=0.4` with worst margin
+about `3.95e-6`. The `--adaptive-union-p-tube-check` mode continues a saved
+finite union by splitting only failed boxes. The optional
+`--p-tube-cancellation-prime` flag sharpens the transformed denominator with
+`C=x1*x2-p^2*x3/6` on boxes with `x2>=0`; using it certifies the saved
+finite-union frontier to `p=0.3885`. Attempts below that point show the present
+four-dimensional rectangular p-time tubes losing the `C` correlation, so the
+next proof step is to carry `C` as a state/corridor variable rather than just
+increase split depth. The `--adaptive-carried-c-union-p-tube-check` mode is the
+first version of that idea: it adds `C` as a fifth variable and constrains the
+denominator with the intersection of carried and algebraic `C` intervals. It
+also sharpens the outgoing `C` handoff by intersecting with the algebraic
+end-slice interval. With that handoff, the carried-`C` chain now certifies past
+the old failed target, from `p=0.39` down to `p=0.377`. The segment below
+`p=0.3805` needs a wider local growth profile plus a graph-prime denominator
+sharpening that intersects the carried-`C` and expanded `p'` formulas. The next
+quarter-step `p=0.377 -> 0.37675` is not yet certified by the current
+rectangular p-time boxes; diagnostics point to renewed component-0 branching,
+not to a sampled trajectory approaching terminal closure. The
+`--sampled-carried-c-p-tube-check` command is a complementary narrow-chain
+diagnostic: with the default profiles it certifies the conditional sampled tube
+from `p=0.65` to `p=0.325` for `A=100000000`, though the end box is still too
+broad to finish the terminal proof. The
+`--sampled-carried-c-p-tube-profile-set tight --tuned-p-tube-max-attempts 120`
+variant reproduces the sharper `p=0.3255` box. The
+`--carried-c-p-tube-from-box-check` command continues a tuned carried-`C`
+p-time tube from such a saved five-dimensional certificate, giving a
+reproducible way to test whether the tight source box can be pushed farther
+without falling back to the broader affine corridor. The
+`--automatic-carried-c-p-corridor-check` command checks the corresponding
+automatic affine p-corridor while carrying `C`; from that sharper source it now
+reaches `p=0.29` with `x3_high<0`. The `--carried-c-p-wall-check` mode then
+certifies the `x2=0` lower wall from `p=0.29` to `p=0.005`; the remaining
+large-tail gap is the `x3` wall/tiny-p closure. The
+`--x2-zero-factor-check` command records the exact finite-`A` factorization of
+`x2'` on `x2=0`, certifying the ordinary-time `x2` wall down to `p=3.5e-4`
+for the current late `x3` range. The `--p-corridor-check`
+mode checks an affine barrier corridor from the certified p-tube frontier. The
+`--p-corridor-tune` mode scans the active corridor slopes around the current
+lower-`x2`/upper-`x1` bottleneck. The `--terminal-takeover-check` mode verifies
+the conditional late `x3=-0.5` wall certificate down to `p=0`, assuming the
+coarse late box and positive `x2` floor are preserved. The
+`--frontier-continuation-check` mode continues the certified p-tube frontier
+from `p=0.25` to `p=0.23595`. The `--hybrid-handoff-check` mode certifies a
+separate p-time handoff from the `p=0.325` slice to a broader `p=0.25` frontier
+box
+`t in [3.545,3.60]`, `x1 in [6.35,8.30]`, `x2 in [0.0052,0.012]`,
+`x3 in [-0.78,-0.58]`, conditional on validating that `p=0.325` start slice.
+`--broad-tail-closure-check` composes that hybrid handoff with an automatic
+760-step p-time affine corridor to `p=0.212` and the terminal `x3=-0.6` wall;
+it conditionally excludes closure from the `p=0.325` start slice down to
+`p=0` for `|a| >= 100000000`.
+`--p-start-slice-bridge-check` verifies that the t-time support tube crosses
+into that `p=0.325` start slice between `t=3.5055` and `t=3.5056`.
+`--taylor-start-block-check` uses the explicit smooth singular-end expansion
+`x=(1,27/4,-1/27,3)+c2(1/a)t^2+O(t^4)` to certify the first slab
+`t=0.001 -> 0.00105`, conditional on the Taylor remainder lying in the displayed
+`1e-8` start radius.
+`--taylor-time-bridge-check`, `--taylor-frontier-continuation-check`, and
+`--taylor-restart-chain-check` compose that Taylor start with tuned
+ordinary-time face barriers. The restart-chain variant preserves the Taylor
+conditional across centered restart boxes; the displayed short command is a
+fast smoke certificate. The current long proof-building run certifies through
+`t=2.6` and stops just after `t=2.604` on a `2.75` target because the carried
+axis-aligned box is too wide. Use `--taylor-restart-bridge-json` to reuse a
+saved `--taylor-time-bridge-check --json` payload instead of recomputing the
+expensive Taylor bridge prefix for every restart-chain attempt.
+`--taylor-progress-every-blocks` writes progress lines to stderr, so stdout can
+still be redirected into a clean JSON certificate. The current rectangular
+frontier reaches about `t=2.603` in the direct continuation, so the remaining
+compact bridge still needs sharper correlation control.
+With retry subdivisions enabled, the cached restart-chain proof certifies
+through `t=2.6`. A longer `t=2.75` target currently stops just after
+`t=2.604`, where the carried axis-aligned box is already very wide and the
+lower `x0` face fails. This honest composed certificate confirms that the next
+gap is a correlation/shaped-tube problem after `t~2.6`, not a numerical sign
+change in the sampled trajectory.
+`--regular-time-corridor-check` is the ordinary-time analogue of the automatic
+p-corridor; the displayed command certifies the short conditional bridge
+`t=0.5 -> 0.6` with worst margin about `4.72e-4`.
+`--support-tail-closure-check` composes the support bridge with the broad-tail
+certificate, conditionally excluding closure from the support box at `t=3.5`
+down to terminal. The remaining large-`|a|` proof obligation is to validate the
+support start box itself from the original scaled IVP.
+`--piecewise-corridor-check` then checks the current affine-corridor chain down
+to `p=0.20995` from the older narrow frontier. The
+`--late-tail-closure-check` command composes those stages with the stronger
+`x3=-0.6` terminal wall and conditionally excludes closure from the `p=0.25`
+frontier box down to `p=0`.
+
 `experiments.s7.scout_refine` processes a completed S7 scout checkpoint without
 rerunning the grid. It selects target-wise nearest-neighbor local minima, by
 default with scout residual `< 0.15`, and promotes them through the calibrated

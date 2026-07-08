@@ -1,0 +1,2 @@
+"""Stiefel-manifold feasibility helpers."""
+
