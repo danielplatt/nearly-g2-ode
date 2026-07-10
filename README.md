@@ -643,6 +643,34 @@ Podesta's `Sp(1)^3` action: it keeps round and squashed calibration visibility,
 strictly weakens the already-tested symmetry, and has a moderate 13-function
 invariant `dt^omega + gamma` chart.
 
+`experiments.s7_sp1xsp1xu1_system` is the first explicit system layer for that
+intermediate action.  It records the five invariant 2-forms, eight invariant
+3-forms, the Maurer-Cartan table normalized against Podesta's chart, the
+orientation-sensitive Hitchin-dual evolution equations, the leading endpoint
+weights, and verifies that both round and squashed `S7` are recovered inside
+the 13-function system:
+
+```zsh
+.venv/bin/python -m experiments.s7_sp1xsp1xu1_system
+.venv/bin/python -m experiments.s7_sp1xsp1xu1_system --json
+```
+
+`experiments.s7_sp1xsp1xu1_matching` adds endpoint germs and two-sided
+max-volume matching.  It verifies exact endpoint germs for round and squashed,
+then `experiments.s7_sp1xsp1xu1_scout` runs a target-independent endpoint box
+scout using fitted germs.  The optional `--target round` or `--target squashed`
+modes are local known-solution refinement modes, while the default `--target
+none` samples an absolute endpoint-parameter box:
+
+```zsh
+.venv/bin/python -m experiments.s7_sp1xsp1xu1_matching --recover-known
+.venv/bin/python -m experiments.s7_sp1xsp1xu1_scout --dry-run --samples 3 --radius 40 --include-known-controls
+.venv/bin/python -m experiments.s7_sp1xsp1xu1_scout --samples 2 --radius 40 --include-known-controls --workers 1
+```
+
+The scout writes JSONL and summary output under
+`output/s7_sp1xsp1xu1_scouts/`.
+
 `experiments.s7_su2_cubed_action_audit` checks the separate Podesta
 `SU(2)^3` cohomogeneity-one action on `S7`. Its principal orbit is
 `S3 x S3`, both singular orbits are `S3`, and the compact group diagram is

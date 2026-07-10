@@ -67,6 +67,9 @@ import experiments.s7.right_germ
 import experiments.s7.right_moduli_chart
 import experiments.s7.su2_cubed_action_audit
 import experiments.s7.action_census
+import experiments.s7.sp1xsp1xu1_system
+import experiments.s7.sp1xsp1xu1_matching
+import experiments.s7.sp1xsp1xu1_scout
 import experiments.s7.su2_cubed_defect_audit
 import experiments.s7.su2_cubed_next_sprint_audit
 import experiments.s7.su2_cubed_scout
@@ -77,6 +80,9 @@ import experiments.s7_max_volume_calibration
 import experiments.s7_max_volume_scout
 import experiments.s7_su2_cubed_action_audit
 import experiments.s7_action_census
+import experiments.s7_sp1xsp1xu1_system
+import experiments.s7_sp1xsp1xu1_matching
+import experiments.s7_sp1xsp1xu1_scout
 import experiments.s7_su2_cubed_defect_audit
 import experiments.s7_su2_cubed_next_sprint_audit
 import experiments.s7_su2_cubed_scout
@@ -185,6 +191,11 @@ def test_named_experiments_construct_parameter_packages_without_executing() -> N
         assert experiments.s7_su2_cubed_action_audit.main is experiments.s7.su2_cubed_action_audit.main
         assert experiments.s7.action_census.ACTION_CENSUS_VERSION == "s7-action-census-v1"
         assert experiments.s7_action_census.main is experiments.s7.action_census.main
+        assert experiments.s7.sp1xsp1xu1_system.SYSTEM_VERSION == "s7-sp1xsp1xu1-system-v1"
+        assert experiments.s7_sp1xsp1xu1_system.main is experiments.s7.sp1xsp1xu1_system.main
+        assert experiments.s7.sp1xsp1xu1_matching.MATCHING_VERSION == "s7-sp1xsp1xu1-matching-v1"
+        assert experiments.s7.sp1xsp1xu1_scout.SCOUT_VERSION == "s7-sp1xsp1xu1-scout-v1"
+        assert experiments.s7_sp1xsp1xu1_scout.main is experiments.s7.sp1xsp1xu1_scout.main
         assert experiments.s7.su2_cubed_defect_audit.DEFECT_AUDIT_VERSION == "s7-su2-cubed-defect-audit-v1"
         assert experiments.s7_su2_cubed_defect_audit.main is experiments.s7.su2_cubed_defect_audit.main
         assert (
